@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chanukah Expo</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F7; --surface:#FFFFFF; --ink:#1B2547; --muted:#58627F; --line:#D3D9E6;
+  --gold:#A8761C; --gold-bright:#E6A93A; --gold-soft:#F6EBCF; --olive:#5B6B28; --olive-soft:#E8EDD6;
+  --bad:#A33A2A; --bad-soft:#F7E1DC; --good:#3E6B2A; --good-soft:#E2EFD9;
+  --seg1:#1B2547; --seg2:#A8761C; --seg3:#5B6B28; --seg-ink:#FFFFFF;
+  --night:#1B2547; --night-ink:#F3F5FA;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1528; --surface:#182039; --ink:#E8ECF6; --muted:#A2ACC6; --line:#2C3657;
+    --gold:#E3B24F; --gold-bright:#F2C463; --gold-soft:#3A3120; --olive:#B3C278; --olive-soft:#2A3220;
+    --bad:#F0927F; --bad-soft:#3D221E; --good:#A9D58E; --good-soft:#22341C;
+    --seg1:#2E3B6B; --seg2:#9C7220; --seg3:#56652A; --seg-ink:#FFFFFF;
+    --night:#0A0F1E; --night-ink:#F3F5FA;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1528; --surface:#182039; --ink:#E8ECF6; --muted:#A2ACC6; --line:#2C3657;
+  --gold:#E3B24F; --gold-bright:#F2C463; --gold-soft:#3A3120; --olive:#B3C278; --olive-soft:#2A3220;
+  --bad:#F0927F; --bad-soft:#3D221E; --good:#A9D58E; --good-soft:#22341C;
+  --seg1:#2E3B6B; --seg2:#9C7220; --seg3:#56652A; --seg-ink:#FFFFFF;
+  --night:#0A0F1E; --night-ink:#F3F5FA;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:"Frank Ruhl Libre","Times New Roman",serif;line-height:1.15;margin:0}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--gold-bright);outline-offset:2px;border-radius:6px}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:12px 20px;font-weight:600}
+.btn:hover{filter:brightness(1.12)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.gold{background:var(--gold);color:#fff}
+.muted{color:var(--muted)}
+.hidden{display:none !important}
+
+/* ---------- Login ---------- */
+.login{min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--night);color:var(--night-ink);padding:32px 20px;text-align:center}
+.login h1{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:900;letter-spacing:.01em;margin-top:18px}
+.login p{margin:.4rem 0 1.6rem;color:#C7CEE2}
+.menorah{width:min(420px,88vw);height:auto;display:block}
+.menorah .flame{fill:#F2C463;opacity:0;transform-box:fill-box;transform-origin:50% 100%;transform:scale(.3);transition:opacity .35s ease,transform .35s ease}
+.menorah .flame.on{opacity:1;transform:scale(1)}
+.menorah .glow{opacity:0;transition:opacity .35s ease}
+.menorah .glow.on{opacity:1}
+.he{white-space:nowrap}
+.code-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.code-form input{background:#fff;color:#1B2547;border:0;border-radius:10px;padding:12px 16px;width:220px;font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.code-form .btn{background:#E6A93A;color:#1B2547}
+.err{min-height:1.6em;color:#F6B4A6;margin-top:12px}
+
+/* ---------- Dashboard ---------- */
+.top{background:var(--night);color:var(--night-ink)}
+.top .wrap{padding-top:22px;padding-bottom:24px}
+.top-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.top-bar .who{color:#C7CEE2;font-size:.95rem}
+.top-bar .btn.ghost{color:var(--night-ink);border-color:#3A4570;padding:8px 14px;font-size:.9rem}
+.topic-num{font-family:"Frank Ruhl Libre",serif;color:#E6A93A;font-size:1.05rem;font-weight:700}
+.topic-title{font-size:clamp(2rem,6vw,3rem);font-weight:900;margin-top:2px}
+.topic-about{color:#D7DCEB;margin:.5rem 0 0;font-size:1.05rem}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs .wrap::-webkit-scrollbar{display:none}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:14px 12px 11px;font-weight:500;color:var(--muted);white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+body.has-tabs::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+main.panel{padding:28px 0 64px}
+.section{margin-bottom:30px}
+.section h2{font-size:1.45rem;margin-bottom:10px}
+.focus{border-left:4px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 26px}
+.pages{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.pages li{background:var(--gold-soft);border-radius:8px;padding:6px 12px;font-weight:500}
+.slot{border:1.5px dashed var(--line);border-radius:12px;padding:16px 18px;color:var(--muted)}
+.reading p{margin:0 0 .9em}
+.today{background:var(--olive-soft);border-radius:12px;padding:18px 20px}
+.today h2{color:var(--olive);font-size:1.25rem;margin-bottom:6px}
+.today p{margin:0;font-size:1.1rem}
+
+/* ---------- Wheel ---------- */
+.wheel-area{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:28px;align-items:center}
+@media (max-width:640px){.wheel-area{grid-template-columns:1fr;justify-items:center}}
+.wheel-box{position:relative;width:100%;max-width:340px;aspect-ratio:1}
+.wheel{width:100%;height:100%;transition:transform 3.6s cubic-bezier(.17,.67,.12,1)}
+.pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:24px solid var(--gold-bright);filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+.wheel text{font-family:"Rubik",sans-serif;font-size:11.5px;font-weight:500;fill:var(--seg-ink)}
+.result{min-height:150px}
+.result h3{font-size:1.6rem;margin:6px 0 8px}
+.ideas-all summary{cursor:pointer;font-weight:500;margin-top:26px}
+.ideas-all ul{padding-left:20px}
+.ideas-all li{margin:.4em 0}
+
+/* ---------- Quiz ---------- */
+.modes{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.modes .btn{padding:9px 16px}
+.modes .btn[aria-pressed="false"]{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.q-count{color:var(--muted);font-size:.95rem}
+.q-text{font-size:1.35rem;font-family:"Frank Ruhl Libre",serif;font-weight:700;margin:6px 0 16px}
+.q-topic{color:var(--gold);font-weight:500;font-size:.95rem}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:13px 16px;font-size:1.02rem}
+.opt:hover:not(:disabled){border-color:var(--gold)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--good-soft);border-color:var(--good);color:var(--good);font-weight:600}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.feedback{margin:16px 0;font-weight:500}
+.score{font-family:"Frank Ruhl Libre",serif;font-size:2.4rem;font-weight:900}
+
+/* ---------- Proposal ---------- */
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:600;margin-bottom:6px}
+.field .hint{display:block;font-weight:400;color:var(--muted);font-size:.92rem}
+.field textarea{width:100%;min-height:92px;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical}
+.field textarea:focus{border-color:var(--gold);outline:none}
+.saved{color:var(--muted);font-size:.9rem;margin-left:12px}
+.due{background:var(--gold-soft);border-radius:10px;padding:10px 14px;display:inline-block;margin-bottom:22px;font-weight:500}
+
+/* ---------- Deadlines ---------- */
+.dates{list-style:none;padding:0;margin:0;border-left:2px solid var(--line);margin-left:8px}
+.dates li{position:relative;padding:0 0 22px 24px}
+.dates li::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--surface);border:2px solid var(--gold)}
+.dates li.past{color:var(--muted)}
+.dates li.past::before{background:var(--line);border-color:var(--line)}
+.dates li.next::before{background:var(--gold)}
+.dates .when{font-weight:600}
+.dates .left{color:var(--gold);font-weight:500;margin-left:8px}
+
+/* ---------- Teacher ---------- */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.tgrid button{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.tgrid button:hover{border-color:var(--gold)}
+.tgrid .n{color:var(--gold);font-weight:600;margin-right:6px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:.92rem}
+.preview-bar{background:var(--gold);color:#fff;text-align:center;padding:8px;font-weight:500}
+.preview-bar button{background:#fff;color:#1B2547;border:0;border-radius:8px;padding:4px 10px;margin-left:10px;font-weight:600}
+
+@media (prefers-reduced-motion: reduce){
+  .wheel{transition-duration:.4s}
+  .menorah .flame,.menorah .glow{transition:none}
+}
+
+/* ---------- Print: proposal sheet only ---------- */
+#print{display:none}
+@media print{
+  @page{margin:0.75in}
+  body{background:#fff;color:#000;font-family:Arial,sans-serif;font-size:12pt}
+  body > *:not(#print){display:none !important}
+  body::before{display:none}
+  #print{display:block}
+  #print .bsd{text-align:right;margin:0 0 8pt}
+  #print h1{font-family:Arial,sans-serif;font-size:18pt;text-align:center;margin:0 0 12pt}
+  #print .row{margin:0 0 6pt}
+  #print .box{border:1px solid #000;padding:8pt;min-height:70pt;margin:3pt 0 12pt;white-space:pre-wrap}
+  #print b{font-weight:bold}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="print"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+"use strict";
+const D = window.EXPO;
+const app = document.getElementById("app");
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const txt = s => esc(s).replace(/[\u05D0-\u05EA][\u05D0-\u05EA\u05F3\u05F4 ]*[\u05D0-\u05EA\u05F3\u05F4]/g, m => `<span class="he">${m}</span>`);
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+const topicByN = n => D.topics.find(t => t.n === Number(n));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const names = arr => !arr || !arr.length ? "" : arr.length === 1 ? arr[0] : arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+
+let state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0 };
+
+/* ================= LOGIN ================= */
+function menorahSVG(){
+  // 8 lights in one straight row at the same height, shamash higher – a kosher menorah
+  const xs = [40, 78, 116, 154, 266, 304, 342, 380];
+  let s = '<svg class="menorah" viewBox="0 -24 420 254" aria-hidden="true"><defs><radialGradient id="glw"><stop offset="0" stop-color="#F2C463" stop-opacity=".6"/><stop offset="1" stop-color="#F2C463" stop-opacity="0"/></radialGradient></defs>';
+  s += '<rect x="30" y="150" width="360" height="9" rx="4" fill="#E6A93A"/>';
+  s += '<rect x="205" y="70" width="10" height="132" fill="#E6A93A"/>';
+  s += '<path d="M168 214 h84 l-12 -14 h-60 z" fill="#E6A93A"/>';
+  xs.forEach((x, i) => {
+    s += `<rect x="${x-6}" y="110" width="12" height="40" rx="2" fill="#F3F5FA"/>`;
+    s += `<circle class="glow" data-i="${7-i}" cx="${x}" cy="92" r="24" fill="url(#glw)"/>`;
+    s += `<path class="flame" data-i="${7-i}" d="M${x} 78 C ${x+9} 92, ${x+7} 106, ${x} 107 C ${x-7} 106, ${x-9} 92, ${x} 78 Z"/>`;
+  });
+  s += '<rect x="204" y="30" width="12" height="40" rx="2" fill="#F3F5FA"/>';
+  s += '<circle class="glow on" cx="210" cy="12" r="24" fill="url(#glw)"/>';
+  s += '<path class="flame on" d="M210 -2 C 219 12, 217 26, 210 27 C 203 26, 201 12, 210 -2 Z" transform="translate(0,0)"/>';
+  s += '</svg>';
+  return s;
+}
+function lightUp(n){
+  document.querySelectorAll(".menorah [data-i]").forEach(el => el.classList.toggle("on", Number(el.dataset.i) < n));
+}
+function renderLogin(msg){
+  state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0 };
+  document.body.classList.remove("has-tabs");
+  app.innerHTML = `
+    <section class="login">
+      ${menorahSVG()}
+      <h1>Chanukah Expo</h1>
+      <p>Type your group code to open your page.</p>
+      <form class="code-form" autocomplete="off">
+        <input id="code" name="code" aria-label="Group code" maxlength="12" spellcheck="false" autocapitalize="characters" placeholder="Group code">
+        <button class="btn" type="submit">Open</button>
+      </form>
+      <div class="err" role="alert">${esc(msg || "")}</div>
+    </section>`;
+  const input = app.querySelector("#code");
+  input.addEventListener("input", () => lightUp(Math.min(8, input.value.trim().length)));
+  app.querySelector("form").addEventListener("submit", e => {
+    e.preventDefault();
+    tryCode(input.value);
+  });
+  input.focus();
+}
+function tryCode(raw){
+  const code = String(raw || "").trim().toUpperCase();
+  if (!code) return;
+  if (code === String(D.teacherCode).toUpperCase()) {
+    lightUp(8);
+    store.set("expo:code", code);
+    setTimeout(renderTeacher, 300);
+    return;
+  }
+  const g = D.groups.find(x => String(x.code).toUpperCase() === code);
+  if (!g) { renderLogin("That code doesn’t match a group. Check the code your teacher gave you."); return; }
+  lightUp(8);
+  store.set("expo:code", code);
+  setTimeout(() => openGroup(g, false), 300);
+}
+
+/* ================= DASHBOARD ================= */
+const TABS = [["topic","Your topic"],["wheel","Idea wheel"],["quiz","Review game"],["proposal","Proposal"],["dates","Deadlines"]];
+
+function openGroup(g, preview){
+  state.group = g; state.preview = !!preview; state.tab = "topic"; state.quiz = null; state.wheelRot = 0;
+  renderDash();
+}
+function renderDash(){
+  const g = state.group, t = topicByN(g.topic);
+  document.body.classList.add("has-tabs");
+  const who = state.preview ? "Preview" : `Grade ${esc(g.grade)}${g.members && g.members.length ? ": " + esc(names(g.members)) : ""}`;
+  app.innerHTML = `
+    ${state.preview ? `<div class="preview-bar">Teacher preview of topic ${t.n} <button type="button" id="back">Back to teacher view</button></div>` : ""}
+    <header class="top"><div class="wrap">
+      <div class="top-bar"><span class="who">${who}</span>${state.preview ? "" : '<button class="btn ghost" type="button" id="logout">Log out</button>'}</div>
+      <div class="topic-num">Topic ${t.n}</div>
+      <h1 class="topic-title">${txt(t.name)}</h1>
+      <p class="topic-about">${txt(t.about)}</p>
+    </div></header>
+    <nav class="tabs" aria-label="Sections"><div class="wrap" role="tablist">
+      ${TABS.map(([k,l]) => `<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${state.tab===k}">${l}</button>`).join("")}
+    </div></nav>
+    <main class="panel"><div class="wrap" id="panel"></div></main>`;
+  app.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; renderDash(); window.scrollTo({top: 0}); }));
+  const lo = app.querySelector("#logout"); if (lo) lo.addEventListener("click", () => { store.del("expo:code"); renderLogin(); });
+  const bk = app.querySelector("#back"); if (bk) bk.addEventListener("click", renderTeacher);
+  const panel = app.querySelector("#panel");
+  ({ topic: panelTopic, wheel: panelWheel, quiz: panelQuiz, proposal: panelProposal, dates: panelDates })[state.tab](panel, t);
+}
+
+/* ----- Your topic ----- */
+function readingHTML(r){
+  if (!r) return null;
+  if (typeof r === "string") return `<p><a href="${esc(r)}" target="_blank" rel="noopener">Open the reading sheet</a></p>`;
+  return r.map(p => `<p>${esc(p)}</p>`).join("");
+}
+function panelTopic(panel, t){
+  const reading = readingHTML(t.reading), extra = readingHTML(t.extra);
+  panel.innerHTML = `
+    <p class="focus">${txt(t.focus)}</p>
+    <div class="section">
+      <h2>Read in your Chanukah booklet</h2>
+      <ul class="pages">${t.pages.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+    </div>
+    <div class="section">
+      <h2>Reading sheet</h2>
+      ${reading ? `<div class="reading">${reading}</div>` : `<div class="slot">Your reading sheet will be here soon. Start with the booklet pages.</div>`}
+    </div>
+    ${extra ? `<div class="section"><h2>More to read</h2><div class="reading">${extra}</div></div>` : ""}
+    <div class="today">
+      <h2>Connect it to today</h2>
+      <p>${txt(t.today)}</p>
+    </div>`;
+}
+
+/* ----- Idea wheel ----- */
+function wheelSVG(ideas){
+  const n = ideas.length, R = 148, C = 150, seg = 360 / n;
+  const pt = a => [C + R * Math.sin(a * Math.PI / 180), C - R * Math.cos(a * Math.PI / 180)];
+  let s = `<svg class="wheel" id="wheel" viewBox="0 0 300 300" role="img" aria-label="Idea wheel">`;
+  ideas.forEach((idea, i) => {
+    const a0 = i * seg, a1 = (i + 1) * seg, mid = a0 + seg / 2;
+    const [x0, y0] = pt(a0), [x1, y1] = pt(a1);
+    const fill = ["var(--seg1)","var(--seg2)","var(--seg3)"][i % 3];
+    s += `<path d="M${C} ${C} L${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${seg > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z" fill="${fill}" stroke="var(--surface)" stroke-width="2"/>`;
+    if (mid < 180) s += `<text x="${C + 30}" y="${C}" dominant-baseline="middle" transform="rotate(${mid - 90} ${C} ${C})">${esc(idea.short)}</text>`;
+    else s += `<text x="${C - 30}" y="${C}" dominant-baseline="middle" text-anchor="end" transform="rotate(${mid + 90} ${C} ${C})">${esc(idea.short)}</text>`;
+  });
+  s += `<circle cx="${C}" cy="${C}" r="22" fill="var(--surface)" stroke="var(--gold)" stroke-width="3"/></svg>`;
+  return s;
+}
+function panelWheel(panel, t){
+  panel.innerHTML = `
+    <div class="wheel-area">
+      <div class="wheel-box"><div class="pointer"></div>${wheelSVG(t.ideas)}</div>
+      <div class="result" id="result" aria-live="polite">
+        <h2>Need a booth idea?</h2>
+        <p class="muted">Spin the wheel for an idea that fits your topic. Spin as many times as you want.</p>
+        <button class="btn gold" type="button" id="spin">Spin</button>
+      </div>
+    </div>
+    <details class="ideas-all"><summary>See all the ideas</summary>
+      <ul>${t.ideas.map(i => `<li><b>${txt(i.short)}:</b> ${txt(i.how)}</li>`).join("")}</ul>
+    </details>
+    <p class="muted">Have your own idea? Put it in your proposal.</p>`;
+  const wheel = panel.querySelector("#wheel");
+  wheel.style.transform = `rotate(${state.wheelRot}deg)`;
+  let spinning = false;
+  const spin = () => {
+    if (spinning) return;
+    spinning = true;
+    const n = t.ideas.length, seg = 360 / n, pick = Math.floor(Math.random() * n);
+    const mid = pick * seg + seg / 2;
+    const jitter = (Math.random() - 0.5) * seg * 0.6;
+    const k = Math.ceil(state.wheelRot / 360) + 5;
+    state.wheelRot = k * 360 - mid + jitter;
+    wheel.style.transform = `rotate(${state.wheelRot}deg)`;
+    const done = () => {
+      const idea = t.ideas[pick];
+      panel.querySelector("#result").innerHTML = `
+        <div class="q-topic">Your idea</div>
+        <h3>${txt(idea.short)}</h3>
+        <p>${txt(idea.how)}</p>
+        <button class="btn gold" type="button" id="spin">Spin again</button>`;
+      panel.querySelector("#spin").addEventListener("click", spin);
+      spinning = false;
+    };
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(done, reduce ? 450 : 3700);
+  };
+  panel.querySelector("#spin").addEventListener("click", spin);
+}
+
+/* ----- Review game ----- */
+function newQuiz(mode, t){
+  let pool;
+  if (mode === "all") pool = shuffle(D.topics.flatMap(tp => tp.quiz.map(q => Object.assign({ topic: tp }, q)))).slice(0, 10);
+  else pool = shuffle(t.quiz.map(q => Object.assign({ topic: t }, q)));
+  return { mode, items: pool.map(q => Object.assign({}, q, { opts: shuffle([q.a].concat(q.w)) })), i: 0, score: 0, answered: false };
+}
+function panelQuiz(panel, t){
+  if (!state.quiz) state.quiz = newQuiz("mine", t);
+  const Q = state.quiz;
+  const modes = `<div class="modes" role="group" aria-label="Which questions">
+      <button class="btn" type="button" data-mode="mine" aria-pressed="${Q.mode==="mine"}">My topic</button>
+      <button class="btn" type="button" data-mode="all" aria-pressed="${Q.mode==="all"}">Whole expo</button>
+    </div>`;
+  if (Q.i >= Q.items.length) {
+    const total = Q.items.length;
+    const line = Q.score === total ? "Every one right. You’re ready." : Q.score >= total * 0.7 ? "Nice work. Review the ones you missed." : "Go back to the booklet pages and try again.";
+    panel.innerHTML = `${modes}
+      <div class="score">${Q.score} of ${total}</div>
+      <p>${line}</p>
+      <button class="btn gold" type="button" id="again">Play again</button>`;
+    panel.querySelector("#again").addEventListener("click", () => { state.quiz = newQuiz(Q.mode, t); panelQuiz(panel, t); });
+  } else {
+    const q = Q.items[Q.i];
+    panel.innerHTML = `${modes}
+      <div class="q-count">Question ${Q.i + 1} of ${Q.items.length}</div>
+      ${Q.mode === "all" ? `<div class="q-topic">Topic ${q.topic.n}: ${txt(q.topic.name)}</div>` : ""}
+      <div class="q-text">${txt(q.q)}</div>
+      <div class="opts">${q.opts.map((o, k) => `<button class="opt" type="button" data-k="${k}">${txt(o)}</button>`).join("")}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+      <button class="btn hidden" type="button" id="next">${Q.i + 1 < Q.items.length ? "Next question" : "See my score"}</button>`;
+    panel.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => {
+      if (Q.answered) return;
+      Q.answered = true;
+      const pickTxt = q.opts[Number(b.dataset.k)], right = pickTxt === q.a;
+      if (right) Q.score++;
+      panel.querySelectorAll(".opt").forEach(x => {
+        x.disabled = true;
+        const txt = q.opts[Number(x.dataset.k)];
+        if (txt === q.a) x.classList.add("right");
+        else if (x === b) x.classList.add("wrong");
+      });
+      panel.querySelector("#fb").textContent = (right ? "Right! " : "Not quite. ") + (q.p ? `It’s on ${q.p}.` : "");
+      const nx = panel.querySelector("#next"); nx.classList.remove("hidden"); nx.focus();
+    }));
+    panel.querySelector("#next").addEventListener("click", () => { Q.i++; Q.answered = false; panelQuiz(panel, t); });
+  }
+  panel.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.quiz = newQuiz(b.dataset.mode, t); panelQuiz(panel, t); }));
+}
+
+/* ----- Proposal ----- */
+const FIELDS = [
+  ["idea", "Our idea", "Your booth in one or two sentences."],
+  ["see", "What visitors will see", "Posters, models, displays, pictures."],
+  ["make", "What we’ll make", "What you’ll build or create, and what visitors will do."],
+  ["today", "How it connects to today", "Every booth shows what this means in our lives now."],
+  ["materials", "Materials we need", "List everything, and how much. Say what you can bring from home."]
+];
+function propKey(){ return "expo:proposal:" + (state.preview ? "PREVIEW-" + state.group.topic : state.group.code); }
+function loadProp(){ try { return JSON.parse(store.get(propKey()) || "{}"); } catch(e){ return {}; } }
+function fmtDate(iso){
+  if (!iso) return "Date coming";
+  const d = new Date(iso + "T12:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+function panelProposal(panel, t){
+  const data = loadProp();
+  const dl = D.deadlines[D.proposalDeadline];
+  panel.innerHTML = `
+    ${dl ? `<div class="due">Due ${esc(fmtDate(dl.date))}</div>` : ""}
+    <p class="muted">Topic ${t.n}: ${txt(t.name)}. Your teacher approves every proposal before you start building.</p>
+    ${FIELDS.map(([k, l, h]) => `<div class="field"><label for="f-${k}">${l}<span class="hint">${h}</span></label><textarea id="f-${k}" data-k="${k}">${esc(data[k] || "")}</textarea></div>`).join("")}
+    <button class="btn gold" type="button" id="print-btn">Print proposal</button><span class="saved" id="saved">Saves on this computer as you type.</span>`;
+  let timer;
+  panel.querySelectorAll("textarea").forEach(ta => ta.addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const d = loadProp(); d[ta.dataset.k] = ta.value; store.set(propKey(), JSON.stringify(d));
+      panel.querySelector("#saved").textContent = "Saved.";
+    }, 300);
+  }));
+  panel.querySelector("#print-btn").addEventListener("click", () => {
+    const d = {}; panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value);
+    store.set(propKey(), JSON.stringify(d));
+    const g = state.group;
+    document.getElementById("print").innerHTML = `
+      <p class="bsd">בס״ד</p>
+      <h1>Chanukah Expo Proposal</h1>
+      <p class="row"><b>Names:</b> ${esc(names(g.members || []))}</p>
+      <p class="row"><b>Grade:</b> ${esc(g.grade || "")}</p>
+      <p class="row"><b>Topic:</b> ${t.n}. ${esc(t.name)}</p>
+      ${FIELDS.map(([k, l]) => `<p class="row"><b>${l}</b></p><div class="box">${esc(d[k] || "")}</div>`).join("")}
+      <p class="row"><b>Approved:</b> ______________________</p>`;
+    window.print();
+  });
+}
+
+/* ----- Deadlines ----- */
+function panelDates(panel){
+  const today = new Date(); today.setHours(0,0,0,0);
+  let nextMarked = false;
+  const items = D.deadlines.map(d => {
+    let cls = "", left = "";
+    if (d.date) {
+      const day = new Date(d.date + "T00:00:00");
+      const diff = Math.round((day - today) / 86400000);
+      if (diff < 0) cls = "past";
+      else {
+        left = diff === 0 ? "Today" : diff === 1 ? "Tomorrow" : `In ${diff} days`;
+        if (!nextMarked) { cls = "next"; nextMarked = true; }
+      }
+    }
+    return `<li class="${cls}"><span class="when">${esc(fmtDate(d.date))}</span>${left ? `<span class="left">${left}</span>` : ""}<br>${esc(d.what)}</li>`;
+  }).join("");
+  panel.innerHTML = `<div class="section"><h2>Deadlines</h2></div><ul class="dates">${items}</ul>`;
+}
+
+/* ================= TEACHER ================= */
+function renderTeacher(){
+  state.teacher = true; state.preview = false;
+  document.body.classList.remove("has-tabs");
+  const rows = D.groups.map(g => {
+    const t = topicByN(g.topic);
+    return `<tr><td><b>${esc(g.code)}</b></td><td>${esc(g.grade)}</td><td>${esc(names(g.members))}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td></tr>`;
+  }).join("");
+  app.innerHTML = `
+    <header class="top"><div class="wrap">
+      <div class="top-bar"><span class="who">Teacher view</span><button class="btn ghost" type="button" id="logout">Log out</button></div>
+      <h1 class="topic-title">Chanukah Expo</h1>
+      <p class="topic-about">${D.groups.length} groups, ${D.topics.length} topics</p>
+    </div></header>
+    <main class="panel"><div class="wrap">
+      <div class="section"><h2>Groups</h2>
+        <div class="table-wrap"><table><thead><tr><th>Code</th><th>Grade</th><th>Members</th><th>Topic</th></tr></thead><tbody>${rows}</tbody></table></div>
+      </div>
+      <div class="section"><h2>Preview a topic</h2>
+        <p class="muted">Opens the page a group with that topic will see.</p>
+        <div class="tgrid">${D.topics.map(t => `<button type="button" data-n="${t.n}"><span class="n">${t.n}</span>${txt(t.name)}</button>`).join("")}</div>
+      </div>
+    </div></main>`;
+  app.querySelector("#logout").addEventListener("click", () => { store.del("expo:code"); renderLogin(); });
+  app.querySelectorAll(".tgrid button").forEach(b => b.addEventListener("click", () => {
+    openGroup({ code: "PREVIEW", grade: "", members: [], topic: Number(b.dataset.n) }, true);
+    window.scrollTo({ top: 0 });
+  }));
+}
+
+/* ================= START ================= */
+const saved = store.get("expo:code");
+if (saved && String(saved).toUpperCase() === String(D.teacherCode).toUpperCase()) renderTeacher();
+else {
+  const g = saved && D.groups.find(x => String(x.code).toUpperCase() === String(saved).toUpperCase());
+  if (g) openGroup(g, false); else renderLogin();
+}
+})();
+</script>
+</body>
+</html>
