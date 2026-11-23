@@ -464,6 +464,10 @@ function loadQuizBest(){
       }
     });
     state.quizBest = best;
+    if (state.tab === "quiz" && state.quiz && state.quiz.i >= state.quiz.items.length) {
+      const panel = document.querySelector("#panel");
+      if (panel) panelQuiz(panel, topicByN(state.group.topic));
+    }
   }).catch(() => {});
 }
 function bestLine(mode){
