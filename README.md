@@ -77,7 +77,7 @@ cd test && npm install && npm test
 
 ## Hebrew reading practice
 
-`reading.html` is open without a group login. It has a stopwatch and tap-to-mark word practice. The three blessings, Hanerot Halalu and V'al Hanissim have separate Chabad.org and Alevsky booklet options, with pointed Hebrew and links to their sources. The booklet's printed parentheses are retained, not combined with the Chabad.org text. Text lives in `reading-texts.mjs`.
+`reading.html` is open without a group login. It has a stopwatch and tap-to-mark word practice. The three blessings, Hanerot Halalu, Al Hanissim and Ya'aleh V'yavo have separate Nusach Ashkenaz, Nusach Ari (Alter Rebbe), Nusach Sefard and Edot HaMizrach options. Texts are copied from the named Hebrew editions on Sefaria, not inferred from the mixed-nusach booklet. Ya'aleh V'yavo uses each edition's own Rosh Chodesh alternative. HTML/rubrics are omitted, vowels, words and punctuation are retained. Source editions can differ within a nusach. `reading-sources.json` records source references, editions, licenses and exact included text; `reading-texts.mjs` contains the website text. Metsudah Hebrew is CC-BY, attributed next to its source link.
 
 Solo practice is held in the current page only and is lost on refresh. A partner session shares only a passage id, marked word indexes and timer state. Its 128-bit random code is a bearer secret: anyone with it may read/change the session. Sessions cannot be listed. They expire after at most two hours and can be explicitly closed/deleted from either screen. Expired records are inaccessible but may remain stored until manually cleaned up. Open room creation uses the project's Spark quota; no paid functions or scheduled cleanup are configured. Group rules and data are separate.
 

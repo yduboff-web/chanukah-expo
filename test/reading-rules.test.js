@@ -4,7 +4,7 @@ import {doc,setDoc,getDoc,getDocs,collection,updateDoc,deleteDoc,serverTimestamp
 const env=await initializeTestEnvironment({projectId:'demo-expo',firestore:{rules:readFileSync(new URL('../firestore.rules',import.meta.url),'utf8')}});
 const db=env.unauthenticatedContext().firestore();
 const id='abcdef0123456789abcdef0123456789';const room=doc(db,'readingSessions',id);
-const data=()=>({passage:'blessing1',marks:[],elapsedMs:0,startedAt:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+119*60000)});
+const data=()=>({passage:'blessing1-ash',marks:[],elapsedMs:0,startedAt:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+119*60000)});
 let count=0;async function ok(name,p,pass){await(pass?assertSucceeds(p):assertFails(p));console.log('ok',name);count++;}
 await env.clearFirestore();
 await ok('anonymous valid room creation',setDoc(room,data()),true);
