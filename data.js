@@ -1,27 +1,11 @@
 /* =========================================================
    CHANUKAH EXPO – SITE DATA
    Everything the site shows comes from this file.
-   Edit groups, dates, reading sheets and extra readings here.
+   Edit dates, topics, reading sheets and extra readings here.
+   Groups and logins live in Firebase now, not in this file. See README.
    ========================================================= */
 
 window.EXPO = {
-
-  /* Code that opens the teacher view (all groups and all topics). */
-  teacherCode: "RD5787",
-
-  /* ---------------------------------------------------------
-     GROUPS – fill in after matching.
-     code:    what the group types to log in (letters/numbers)
-     grade:   5 or 6
-     members: FIRST NAMES ONLY – this site is public
-     topic:   topic number 1–18
-     Delete the two DEMO groups before going live.
-     --------------------------------------------------------- */
-  groups: [
-    { code: "DEMO5", grade: 5, members: ["Student A", "Student B"], topic: 2 },
-    { code: "DEMO6", grade: 6, members: ["Student C", "Student D"], topic: 4 },
-     { code: "PLAY1", grade: 6, members: ["Test Student A", "Test Student B"], topic: 1 },
-  ],
 
   /* ---------------------------------------------------------
      DATES – shown on every group's Deadlines tab.

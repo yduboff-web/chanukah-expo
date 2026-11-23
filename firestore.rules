@@ -1,0 +1,62 @@
+rules_version = '2';
+
+// Chanukah Expo – Firestore security rules.
+// Before deploying: replace TEACHER_UID with the real teacher account UID
+// (admin/create-teacher.js prints it).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn()  { return request.auth != null; }
+    function isTeacher() { return signedIn() && request.auth.uid == "TEACHER_UID"; }
+    function ownsGroup(gid) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/groups/$(gid))
+        && get(/databases/$(database)/documents/groups/$(gid)).data.uid == request.auth.uid;
+    }
+
+    match /groups/{gid} {
+      allow read: if isTeacher() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow write: if false;   // admin script only
+
+      match /work/{doc} {
+        allow read: if isTeacher() || ownsGroup(gid);
+        allow write: if doc == 'proposal' && (isTeacher() || (ownsGroup(gid) && groupMayWrite()));
+      }
+      match /quiz/{id} {
+        allow read: if isTeacher() || ownsGroup(gid);
+        allow create: if ownsGroup(gid) && validQuiz();
+        allow update, delete: if false;
+      }
+    }
+
+    // A group may: only write the allowed fields; text fields are strings of
+    // at most 4000 characters; only set status to draft or submitted; never
+    // change teacherNote; never edit once approved.
+    function groupMayWrite() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['idea','see','make','today','materials','status','teacherNote','updatedAt'])
+        && textOk(d, 'idea') && textOk(d, 'see') && textOk(d, 'make')
+        && textOk(d, 'today') && textOk(d, 'materials')
+        && d.status in ['draft', 'submitted']
+        && d.updatedAt == request.time
+        && (resource == null
+              ? !('teacherNote' in d)
+              : resource.data.status != 'approved'
+                && d.get('teacherNote', null) == resource.data.get('teacherNote', null));
+    }
+    function textOk(d, f) {
+      return !d.keys().hasAny([f]) || (d[f] is string && d[f].size() <= 4000);
+    }
+
+    // A finished review-game round: create-only, fixed shape.
+    function validQuiz() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['score','total','mode','at'])
+        && d.score is int && d.score >= 0 && d.score <= 100
+        && d.total is int && d.total > 0 && d.total <= 100
+        && d.score <= d.total
+        && d.mode in ['mine', 'all']
+        && d.at == request.time;
+    }
+  }
+}

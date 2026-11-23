@@ -66,8 +66,10 @@ button{cursor:pointer}
 .he{white-space:nowrap}
 .code-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .code-form input{background:#fff;color:#1B2547;border:0;border-radius:10px;padding:12px 16px;width:220px;font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.code-form input.email{text-transform:none;letter-spacing:normal;text-align:left;width:260px}
 .code-form .btn{background:#E6A93A;color:#1B2547}
 .err{min-height:1.6em;color:#F6B4A6;margin-top:12px}
+.tlink{background:none;border:0;color:#C7CEE2;text-decoration:underline;font-size:.95rem;margin-top:6px;padding:4px}
 
 /* ---------- Dashboard ---------- */
 .top{background:var(--night);color:var(--night-ink)}
@@ -124,6 +126,7 @@ main.panel{padding:28px 0 64px}
 .opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
 .feedback{margin:16px 0;font-weight:500}
 .score{font-family:"Frank Ruhl Libre",serif;font-size:2.4rem;font-weight:900}
+.best{color:var(--muted);font-size:.95rem;margin-top:4px}
 
 /* ---------- Proposal ---------- */
 .field{margin-bottom:18px}
@@ -131,8 +134,17 @@ main.panel{padding:28px 0 64px}
 .field .hint{display:block;font-weight:400;color:var(--muted);font-size:.92rem}
 .field textarea{width:100%;min-height:92px;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical}
 .field textarea:focus{border-color:var(--gold);outline:none}
+.field textarea[readonly]{background:var(--bg);color:var(--muted)}
 .saved{color:var(--muted);font-size:.9rem;margin-left:12px}
 .due{background:var(--gold-soft);border-radius:10px;padding:10px 14px;display:inline-block;margin-bottom:22px;font-weight:500}
+.chip{display:inline-block;border-radius:999px;padding:4px 14px;font-size:.92rem;font-weight:600;margin-bottom:16px}
+.chip.draft{background:var(--gold-soft);color:var(--gold)}
+.chip.submitted{background:var(--olive-soft);color:var(--olive)}
+.chip.approved{background:var(--good-soft);color:var(--good)}
+.chip.changes{background:var(--bad-soft);color:var(--bad)}
+.note{border-left:4px solid var(--bad);background:var(--bad-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 18px}
+.note b{color:var(--bad)}
+.prop-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
 
 /* ---------- Deadlines ---------- */
 .dates{list-style:none;padding:0;margin:0;border-left:2px solid var(--line);margin-left:8px}
@@ -153,8 +165,12 @@ main.panel{padding:28px 0 64px}
 table{border-collapse:collapse;width:100%;min-width:480px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
 th{font-weight:600;color:var(--muted);font-size:.92rem}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--gold-soft)}
 .preview-bar{background:var(--gold);color:#fff;text-align:center;padding:8px;font-weight:500}
 .preview-bar button{background:#fff;color:#1B2547;border:0;border-radius:8px;padding:4px 10px;margin-left:10px;font-weight:600}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.note-input{width:100%;min-height:70px;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;margin:8px 0 12px}
 
 @media (prefers-reduced-motion: reduce){
   .wheel{transition-duration:.4s}
@@ -182,10 +198,20 @@ th{font-weight:600;color:var(--muted);font-size:.92rem}
 <div id="print"></div>
 
 <script src="data.js"></script>
-<script>
-(function(){
+<script src="firebase-config.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
+         doc, getDoc, setDoc, updateDoc, collection, addDoc, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
 "use strict";
 const D = window.EXPO;
+const GROUP_DOMAIN = "@groups.bha-expo.app";
+const fb = initializeApp(window.FIREBASE_CONFIG);
+const auth = getAuth(fb);
+const db = initializeFirestore(fb, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) });
+
 const app = document.getElementById("app");
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const txt = s => esc(s).replace(/[\u05D0-\u05EA][\u05D0-\u05EA\u05F3\u05F4 ]*[\u05D0-\u05EA\u05F3\u05F4]/g, m => `<span class="he">${m}</span>`);
@@ -196,9 +222,10 @@ const store = {
 };
 const topicByN = n => D.topics.find(t => t.n === Number(n));
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-const names = arr => !arr || !arr.length ? "" : arr.length === 1 ? arr[0] : arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
 
-let state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0 };
+let state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
+              proposal: undefined, quizBest: {}, unsub: [], groupSubs: {} };
+function clearSubs(){ state.unsub.forEach(u => { try { u(); } catch(e){} }); state.unsub = []; state.groupSubs = {}; }
 
 /* ================= LOGIN ================= */
 function menorahSVG(){
@@ -222,55 +249,88 @@ function menorahSVG(){
 function lightUp(n){
   document.querySelectorAll(".menorah [data-i]").forEach(el => el.classList.toggle("on", Number(el.dataset.i) < n));
 }
-function renderLogin(msg){
-  state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0 };
+function renderLogin(msg, teacherMode){
+  clearSubs();
+  state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
+            proposal: undefined, quizBest: {}, unsub: [], groupSubs: {} };
   document.body.classList.remove("has-tabs");
   app.innerHTML = `
     <section class="login">
       ${menorahSVG()}
       <h1>Chanukah Expo</h1>
-      <p>Type your group code to open your page.</p>
+      <p>${teacherMode ? "Teacher sign in." : "Type your group code to open your page."}</p>
+      ${teacherMode ? `
+      <form class="code-form" autocomplete="off" style="flex-direction:column;align-items:center">
+        <input id="email" name="email" class="email" type="email" aria-label="Email" spellcheck="false" autocomplete="username" placeholder="Email">
+        <input id="pass" name="pass" class="email" type="password" aria-label="Password" autocomplete="current-password" placeholder="Password">
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+      <button class="tlink" type="button" id="swap">Back to group code</button>` : `
       <form class="code-form" autocomplete="off">
         <input id="code" name="code" aria-label="Group code" maxlength="12" spellcheck="false" autocapitalize="characters" placeholder="Group code">
         <button class="btn" type="submit">Open</button>
       </form>
+      <button class="tlink" type="button" id="swap">Teacher sign in</button>`}
       <div class="err" role="alert">${esc(msg || "")}</div>
     </section>`;
-  const input = app.querySelector("#code");
-  input.addEventListener("input", () => lightUp(Math.min(8, input.value.trim().length)));
+  const first = app.querySelector("input");
+  first.addEventListener("input", () => lightUp(Math.min(8, first.value.trim().length)));
   app.querySelector("form").addEventListener("submit", e => {
     e.preventDefault();
-    tryCode(input.value);
+    if (teacherMode) teacherLogin(app.querySelector("#email").value, app.querySelector("#pass").value);
+    else groupLogin(app.querySelector("#code").value);
   });
-  input.focus();
+  app.querySelector("#swap").addEventListener("click", () => renderLogin("", !teacherMode));
+  first.focus();
 }
-function tryCode(raw){
-  const code = String(raw || "").trim().toUpperCase();
+function loginError(err){
+  const code = err && err.code ? err.code : "";
+  if (code === "auth/network-request-failed") return "No connection. Try again when you're online.";
+  if (code === "auth/too-many-requests") return "Too many tries. Wait a few minutes and try again.";
+  return null;
+}
+function groupLogin(raw){
+  const code = String(raw || "").trim().toLowerCase();
   if (!code) return;
-  if (code === String(D.teacherCode).toUpperCase()) {
-    lightUp(8);
-    store.set("expo:code", code);
-    setTimeout(renderTeacher, 300);
-    return;
-  }
-  const g = D.groups.find(x => String(x.code).toUpperCase() === code);
-  if (!g) { renderLogin("That code doesn’t match a group. Check the code your teacher gave you."); return; }
-  lightUp(8);
-  store.set("expo:code", code);
-  setTimeout(() => openGroup(g, false), 300);
+  signInWithEmailAndPassword(auth, code + GROUP_DOMAIN, code).catch(err => {
+    renderLogin(loginError(err) || "That code doesn't match. Check with your teacher.");
+  });
+}
+function teacherLogin(email, pass){
+  if (!email || !pass) return;
+  signInWithEmailAndPassword(auth, String(email).trim(), pass).catch(err => {
+    renderLogin(loginError(err) || "That email and password don't match.", true);
+  });
+}
+function renderSplash(){
+  document.body.classList.remove("has-tabs");
+  app.innerHTML = `<section class="login">${menorahSVG()}<h1>Chanukah Expo</h1><p>Opening…</p></section>`;
 }
 
 /* ================= DASHBOARD ================= */
 const TABS = [["topic","Your topic"],["wheel","Idea wheel"],["quiz","Review game"],["proposal","Proposal"],["dates","Deadlines"]];
 
 function openGroup(g, preview){
+  clearSubs();
   state.group = g; state.preview = !!preview; state.tab = "topic"; state.quiz = null; state.wheelRot = 0;
+  state.proposal = preview ? null : undefined; state.quizBest = {};
+  if (!preview) {
+    state.unsub.push(onSnapshot(doc(db, "groups", g.gid, "work", "proposal"), snap => {
+      const first = state.proposal === undefined;
+      state.proposal = snap.exists() ? snap.data() : null;
+      if (state.tab === "proposal") {
+        if (first) renderDash();
+        else updateProposalStatus();
+      }
+    }, () => {}));
+    loadQuizBest();
+  }
   renderDash();
 }
 function renderDash(){
   const g = state.group, t = topicByN(g.topic);
   document.body.classList.add("has-tabs");
-  const who = state.preview ? "Preview" : `Grade ${esc(g.grade)}${g.members && g.members.length ? ": " + esc(names(g.members)) : ""}`;
+  const who = state.preview ? "Preview" : `Grade ${esc(g.grade)} · Code ${esc(String(g.code || "").toUpperCase())}`;
   app.innerHTML = `
     ${state.preview ? `<div class="preview-bar">Teacher preview of topic ${t.n} <button type="button" id="back">Back to teacher view</button></div>` : ""}
     <header class="top"><div class="wrap">
@@ -284,7 +344,7 @@ function renderDash(){
     </div></nav>
     <main class="panel"><div class="wrap" id="panel"></div></main>`;
   app.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; renderDash(); window.scrollTo({top: 0}); }));
-  const lo = app.querySelector("#logout"); if (lo) lo.addEventListener("click", () => { store.del("expo:code"); renderLogin(); });
+  const lo = app.querySelector("#logout"); if (lo) lo.addEventListener("click", () => signOut(auth));
   const bk = app.querySelector("#back"); if (bk) bk.addEventListener("click", renderTeacher);
   const panel = app.querySelector("#panel");
   ({ topic: panelTopic, wheel: panelWheel, quiz: panelQuiz, proposal: panelProposal, dates: panelDates })[state.tab](panel, t);
@@ -378,7 +438,24 @@ function newQuiz(mode, t){
   let pool;
   if (mode === "all") pool = shuffle(D.topics.flatMap(tp => tp.quiz.map(q => Object.assign({ topic: tp }, q)))).slice(0, 10);
   else pool = shuffle(t.quiz.map(q => Object.assign({ topic: t }, q)));
-  return { mode, items: pool.map(q => Object.assign({}, q, { opts: shuffle([q.a].concat(q.w)) })), i: 0, score: 0, answered: false };
+  return { mode, items: pool.map(q => Object.assign({}, q, { opts: shuffle([q.a].concat(q.w)) })), i: 0, score: 0, answered: false, saved: false };
+}
+function loadQuizBest(){
+  getDocs(collection(db, "groups", state.group.gid, "quiz")).then(qs => {
+    const best = {};
+    qs.forEach(d => {
+      const q = d.data();
+      if (q.total > 0) {
+        const frac = q.score / q.total;
+        if (!best[q.mode] || frac > best[q.mode].frac) best[q.mode] = { frac, score: q.score, total: q.total };
+      }
+    });
+    state.quizBest = best;
+  }).catch(() => {});
+}
+function bestLine(mode){
+  const b = state.quizBest[mode];
+  return b ? `Your best: ${b.score} of ${b.total}` : "";
 }
 function panelQuiz(panel, t){
   if (!state.quiz) state.quiz = newQuiz("mine", t);
@@ -389,9 +466,17 @@ function panelQuiz(panel, t){
     </div>`;
   if (Q.i >= Q.items.length) {
     const total = Q.items.length;
+    if (!Q.saved && !state.preview) {
+      Q.saved = true;
+      addDoc(collection(db, "groups", state.group.gid, "quiz"),
+        { score: Q.score, total, mode: Q.mode, at: serverTimestamp() })
+        .then(loadQuizBest).catch(() => {});
+    }
     const line = Q.score === total ? "Every one right. You’re ready." : Q.score >= total * 0.7 ? "Nice work. Review the ones you missed." : "Go back to the booklet pages and try again.";
+    const best = bestLine(Q.mode);
     panel.innerHTML = `${modes}
       <div class="score">${Q.score} of ${total}</div>
+      ${best ? `<div class="best">${esc(best)}</div>` : ""}
       <p>${line}</p>
       <button class="btn gold" type="button" id="again">Play again</button>`;
     panel.querySelector("#again").addEventListener("click", () => { state.quiz = newQuiz(Q.mode, t); panelQuiz(panel, t); });
@@ -411,8 +496,8 @@ function panelQuiz(panel, t){
       if (right) Q.score++;
       panel.querySelectorAll(".opt").forEach(x => {
         x.disabled = true;
-        const txt = q.opts[Number(x.dataset.k)];
-        if (txt === q.a) x.classList.add("right");
+        const txt2 = q.opts[Number(x.dataset.k)];
+        if (txt2 === q.a) x.classList.add("right");
         else if (x === b) x.classList.add("wrong");
       });
       panel.querySelector("#fb").textContent = (right ? "Right! " : "Not quite. ") + (q.p ? `It’s on ${q.p}.` : "");
@@ -431,43 +516,105 @@ const FIELDS = [
   ["today", "How it connects to today", "Every booth shows what this means in our lives now."],
   ["materials", "Materials we need", "List everything, and how much. Say what you can bring from home."]
 ];
-function propKey(){ return "expo:proposal:" + (state.preview ? "PREVIEW-" + state.group.topic : state.group.code); }
-function loadProp(){ try { return JSON.parse(store.get(propKey()) || "{}"); } catch(e){ return {}; } }
+const STATUS_LABEL = { draft: "Draft", submitted: "Submitted – waiting for your teacher", approved: "Approved", changes: "Needs changes" };
+function propKey(){ return "expo:proposal:PREVIEW-" + state.group.topic; }
+function loadPreviewProp(){ try { return JSON.parse(store.get(propKey()) || "{}"); } catch(e){ return {}; } }
 function fmtDate(iso){
   if (!iso) return "Date coming";
   const d = new Date(iso + "T12:00:00");
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 }
+function propRef(){ return doc(db, "groups", state.group.gid, "work", "proposal"); }
 function panelProposal(panel, t){
-  const data = loadProp();
   const dl = D.deadlines[D.proposalDeadline];
-  panel.innerHTML = `
-    ${dl ? `<div class="due">Due ${esc(fmtDate(dl.date))}</div>` : ""}
-    <p class="muted">Topic ${t.n}: ${txt(t.name)}. Your teacher approves every proposal before you start building.</p>
+  const dueLine = dl ? `<div class="due">Due ${esc(fmtDate(dl.date))}</div>` : "";
+  const intro = `<p class="muted">Topic ${t.n}: ${txt(t.name)}. Your teacher approves every proposal before you start building.</p>`;
+
+  if (state.preview) {
+    const data = loadPreviewProp();
+    panel.innerHTML = `${dueLine}${intro}
+      ${FIELDS.map(([k, l, h]) => `<div class="field"><label for="f-${k}">${l}<span class="hint">${h}</span></label><textarea id="f-${k}" data-k="${k}">${esc(data[k] || "")}</textarea></div>`).join("")}
+      <div class="prop-actions"><button class="btn gold" type="button" id="print-btn">Print proposal</button><span class="saved" id="saved">Preview – saves only on this computer.</span></div>`;
+    let timer;
+    panel.querySelectorAll("textarea").forEach(ta => ta.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const d = loadPreviewProp(); d[ta.dataset.k] = ta.value; store.set(propKey(), JSON.stringify(d));
+        panel.querySelector("#saved").textContent = "Saved on this computer.";
+      }, 300);
+    }));
+    panel.querySelector("#print-btn").addEventListener("click", () => printProposal(panel, t));
+    return;
+  }
+
+  if (state.proposal === undefined) { panel.innerHTML = `<p class="muted">Loading…</p>`; return; }
+  const data = state.proposal || {};
+  panel.innerHTML = `${dueLine}${intro}
+    <div id="status-area"></div>
     ${FIELDS.map(([k, l, h]) => `<div class="field"><label for="f-${k}">${l}<span class="hint">${h}</span></label><textarea id="f-${k}" data-k="${k}">${esc(data[k] || "")}</textarea></div>`).join("")}
-    <button class="btn gold" type="button" id="print-btn">Print proposal</button><span class="saved" id="saved">Saves on this computer as you type.</span>`;
+    <div class="prop-actions">
+      <button class="btn gold" type="button" id="submit-btn">Submit for approval</button>
+      <button class="btn ghost" type="button" id="print-btn">Print proposal</button>
+      <span class="saved" id="saved"></span>
+    </div>`;
+  updateProposalStatus();
+
   let timer;
+  const save = () => {
+    const d = {};
+    panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value.slice(0, 4000));
+    const cur = (state.proposal && state.proposal.status) || "draft";
+    const status = cur === "changes" ? "draft" : cur;
+    panel.querySelector("#saved").textContent = "Saving…";
+    setDoc(propRef(), Object.assign(d, { status, updatedAt: serverTimestamp() }), { merge: true })
+      .then(() => { const s = panel.querySelector("#saved"); if (s) s.textContent = "Saved."; })
+      .catch(() => { const s = panel.querySelector("#saved"); if (s) s.textContent = "Not saved – check your connection."; });
+  };
   panel.querySelectorAll("textarea").forEach(ta => ta.addEventListener("input", () => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      const d = loadProp(); d[ta.dataset.k] = ta.value; store.set(propKey(), JSON.stringify(d));
-      panel.querySelector("#saved").textContent = "Saved.";
-    }, 300);
+    timer = setTimeout(save, 1000);
   }));
-  panel.querySelector("#print-btn").addEventListener("click", () => {
-    const d = {}; panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value);
-    store.set(propKey(), JSON.stringify(d));
-    const g = state.group;
-    document.getElementById("print").innerHTML = `
-      <p class="bsd">בס״ד</p>
-      <h1>Chanukah Expo Proposal</h1>
-      <p class="row"><b>Names:</b> ${esc(names(g.members || []))}</p>
-      <p class="row"><b>Grade:</b> ${esc(g.grade || "")}</p>
-      <p class="row"><b>Topic:</b> ${t.n}. ${esc(t.name)}</p>
-      ${FIELDS.map(([k, l]) => `<p class="row"><b>${l}</b></p><div class="box">${esc(d[k] || "")}</div>`).join("")}
-      <p class="row"><b>Approved:</b> ______________________</p>`;
-    window.print();
+  panel.querySelector("#submit-btn").addEventListener("click", () => {
+    clearTimeout(timer);
+    const d = {};
+    panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value.slice(0, 4000));
+    const btn = panel.querySelector("#submit-btn");
+    btn.disabled = true; btn.textContent = "Submitting…";
+    setDoc(propRef(), Object.assign(d, { status: "submitted", updatedAt: serverTimestamp() }), { merge: true })
+      .catch(() => { btn.disabled = false; btn.textContent = "Submit for approval"; });
   });
+  panel.querySelector("#print-btn").addEventListener("click", () => printProposal(panel, t));
+}
+function updateProposalStatus(){
+  const area = document.querySelector("#status-area");
+  if (!area) return;
+  const p = state.proposal || {};
+  const status = p.status || "draft";
+  const locked = status === "approved";
+  area.innerHTML = `<span class="chip ${esc(status)}">${esc(STATUS_LABEL[status] || status)}</span>` +
+    (status === "changes" && p.teacherNote ? `<div class="note"><b>From your teacher:</b> ${esc(p.teacherNote)}</div>` : "");
+  document.querySelectorAll("#panel textarea").forEach(ta => ta.readOnly = locked);
+  const sb = document.querySelector("#submit-btn");
+  if (sb) {
+    sb.classList.toggle("hidden", !(status === "draft" || status === "changes"));
+    sb.disabled = false; sb.textContent = "Submit for approval";
+  }
+  const saved = document.querySelector("#saved");
+  if (saved && !saved.textContent) saved.textContent = locked ? "Approved – locked." : "Saves online as you type.";
+}
+function printProposal(panel, t){
+  const d = {};
+  panel.querySelectorAll("textarea[data-k]").forEach(ta => d[ta.dataset.k] = ta.value);
+  const g = state.group;
+  document.getElementById("print").innerHTML = `
+    <p class="bsd">בס״ד</p>
+    <h1>Chanukah Expo Proposal</h1>
+    <p class="row"><b>Names:</b> ______________________</p>
+    <p class="row"><b>Grade:</b> ${esc(g.grade || "")}</p>
+    <p class="row"><b>Topic:</b> ${t.n}. ${esc(t.name)}</p>
+    ${FIELDS.map(([k, l]) => `<p class="row"><b>${l}</b></p><div class="box">${esc(d[k] || "")}</div>`).join("")}
+    <p class="row"><b>Approved:</b> ______________________</p>`;
+  window.print();
 }
 
 /* ----- Deadlines ----- */
@@ -492,42 +639,141 @@ function panelDates(panel){
 
 /* ================= TEACHER ================= */
 function renderTeacher(){
-  state.teacher = true; state.preview = false;
+  clearSubs();
+  state.teacher = true; state.preview = false; state.detail = null;
   document.body.classList.remove("has-tabs");
-  const rows = D.groups.map(g => {
-    const t = topicByN(g.topic);
-    return `<tr><td><b>${esc(g.code)}</b></td><td>${esc(g.grade)}</td><td>${esc(names(g.members))}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td></tr>`;
-  }).join("");
   app.innerHTML = `
     <header class="top"><div class="wrap">
       <div class="top-bar"><span class="who">Teacher view</span><button class="btn ghost" type="button" id="logout">Log out</button></div>
       <h1 class="topic-title">Chanukah Expo</h1>
-      <p class="topic-about">${D.groups.length} groups, ${D.topics.length} topics</p>
+      <p class="topic-about" id="tcount">Loading groups…</p>
     </div></header>
     <main class="panel"><div class="wrap">
       <div class="section"><h2>Groups</h2>
-        <div class="table-wrap"><table><thead><tr><th>Code</th><th>Grade</th><th>Members</th><th>Topic</th></tr></thead><tbody>${rows}</tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Code</th><th>Grade</th><th>Topic</th><th>Proposal</th><th>Updated</th><th>Best quiz</th></tr></thead><tbody id="trows"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody></table></div>
       </div>
+      <div id="detail"></div>
       <div class="section"><h2>Preview a topic</h2>
         <p class="muted">Opens the page a group with that topic will see.</p>
         <div class="tgrid">${D.topics.map(t => `<button type="button" data-n="${t.n}"><span class="n">${t.n}</span>${txt(t.name)}</button>`).join("")}</div>
       </div>
     </div></main>`;
-  app.querySelector("#logout").addEventListener("click", () => { store.del("expo:code"); renderLogin(); });
+  app.querySelector("#logout").addEventListener("click", () => signOut(auth));
   app.querySelectorAll(".tgrid button").forEach(b => b.addEventListener("click", () => {
-    openGroup({ code: "PREVIEW", grade: "", members: [], topic: Number(b.dataset.n) }, true);
+    openGroup({ gid: "", code: "PREVIEW", grade: "", topic: Number(b.dataset.n) }, true);
     window.scrollTo({ top: 0 });
   }));
+  state.unsub.push(onSnapshot(collection(db, "groups"), qs => {
+    const groups = qs.docs.map(d => Object.assign({ gid: d.id }, d.data()));
+    groups.sort((a, b) => (a.grade - b.grade) || String(a.code).localeCompare(String(b.code)));
+    state.groups = groups;
+    const seen = {};
+    groups.forEach(g => {
+      seen[g.gid] = true;
+      if (!state.groupSubs[g.gid]) {
+        const subs = [
+          onSnapshot(doc(db, "groups", g.gid, "work", "proposal"), s => {
+            g.proposal = s.exists() ? s.data() : null; renderGroupRows();
+          }, () => {}),
+          onSnapshot(collection(db, "groups", g.gid, "quiz"), s => {
+            let best = null;
+            s.forEach(d => { const q = d.data(); if (q.total > 0) { const f = q.score / q.total; if (!best || f > best.frac) best = { frac: f, score: q.score, total: q.total }; } });
+            g.best = best; renderGroupRows();
+          }, () => {})
+        ];
+        state.groupSubs[g.gid] = subs;
+        state.unsub.push(...subs);
+      }
+    });
+    Object.keys(state.groupSubs).forEach(gid => { if (!seen[gid]) { state.groupSubs[gid].forEach(u => u()); delete state.groupSubs[gid]; } });
+    const tc = app.querySelector("#tcount");
+    if (tc) tc.textContent = `${groups.length} groups, ${D.topics.length} topics`;
+    renderGroupRows();
+  }, err => {
+    const tc = app.querySelector("#tcount");
+    if (tc) tc.textContent = "Could not load groups: " + (err && err.message ? err.message : "error");
+  }));
+}
+function renderGroupRows(){
+  const body = app.querySelector("#trows");
+  if (!body || !state.groups) return;
+  if (!state.groups.length) { body.innerHTML = `<tr><td colspan="6" class="muted">No groups yet.</td></tr>`; return; }
+  body.innerHTML = state.groups.map(g => {
+    const t = topicByN(g.topic);
+    const p = g.proposal;
+    const status = p ? (STATUS_LABEL[p.status] || p.status || "Draft").split(" ")[0] : "–";
+    const updated = p && p.updatedAt && p.updatedAt.toDate ? p.updatedAt.toDate().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "–";
+    const best = g.best ? `${g.best.score}/${g.best.total}` : "–";
+    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${esc(g.grade)}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
+  }).join("");
+  body.querySelectorAll("tr.clickable").forEach(r => r.addEventListener("click", () => renderTeacherDetail(r.dataset.gid)));
+  if (state.detail) renderTeacherDetail(state.detail);
+}
+function renderTeacherDetail(gid){
+  state.detail = gid;
+  const g = (state.groups || []).find(x => x.gid === gid);
+  const box = app.querySelector("#detail");
+  if (!g || !box) return;
+  const t = topicByN(g.topic);
+  const p = g.proposal || {};
+  const status = p.status || "draft";
+  box.innerHTML = `
+    <div class="section">
+      <h2>Group ${esc(String(g.code || "").toUpperCase())} – Grade ${esc(g.grade)}${t ? `, Topic ${t.n}: ${txt(t.name)}` : ""}</h2>
+      <span class="chip ${esc(status)}">${esc(STATUS_LABEL[status] || status)}</span>
+      ${p.teacherNote && status === "changes" ? `<div class="note"><b>Your note:</b> ${esc(p.teacherNote)}</div>` : ""}
+      ${FIELDS.map(([k, l]) => `<div class="field"><label>${l}</label><div class="slot" style="color:var(--ink);white-space:pre-wrap">${esc(p[k] || "") || "–"}</div></div>`).join("")}
+      <label for="tnote"><b>Send back with a note</b></label>
+      <textarea id="tnote" class="note-input" placeholder="What should they change?">${esc(status === "changes" ? (p.teacherNote || "") : "")}</textarea>
+      <div class="detail-actions">
+        <button class="btn gold" type="button" id="approve">Approve</button>
+        <button class="btn" type="button" id="sendback">Send back</button>
+        <button class="btn ghost" type="button" id="tprint">Print proposal</button>
+      </div>
+      <div class="err" id="terr" role="alert"></div>
+    </div>`;
+  box.querySelector("#approve").addEventListener("click", () => {
+    updateDoc(doc(db, "groups", gid, "work", "proposal"), { status: "approved", updatedAt: serverTimestamp() })
+      .catch(e => { box.querySelector("#terr").textContent = "Not saved: " + e.message; });
+  });
+  box.querySelector("#sendback").addEventListener("click", () => {
+    const note = box.querySelector("#tnote").value.trim();
+    if (!note) { box.querySelector("#terr").textContent = "Write a note first."; return; }
+    updateDoc(doc(db, "groups", gid, "work", "proposal"), { status: "changes", teacherNote: note, updatedAt: serverTimestamp() })
+      .catch(e => { box.querySelector("#terr").textContent = "Not saved: " + e.message; });
+  });
+  box.querySelector("#tprint").addEventListener("click", () => {
+    document.getElementById("print").innerHTML = `
+      <p class="bsd">בס״ד</p>
+      <h1>Chanukah Expo Proposal</h1>
+      <p class="row"><b>Names:</b> ______________________</p>
+      <p class="row"><b>Grade:</b> ${esc(g.grade || "")} &nbsp; <b>Group code:</b> ${esc(String(g.code || "").toUpperCase())}</p>
+      <p class="row"><b>Topic:</b> ${t ? t.n + ". " + esc(t.name) : "?"}</p>
+      ${FIELDS.map(([k, l]) => `<p class="row"><b>${l}</b></p><div class="box">${esc(p[k] || "")}</div>`).join("")}
+      <p class="row"><b>Approved:</b> ______________________</p>`;
+    window.print();
+  });
 }
 
 /* ================= START ================= */
-const saved = store.get("expo:code");
-if (saved && String(saved).toUpperCase() === String(D.teacherCode).toUpperCase()) renderTeacher();
-else {
-  const g = saved && D.groups.find(x => String(x.code).toUpperCase() === String(saved).toUpperCase());
-  if (g) openGroup(g, false); else renderLogin();
-}
-})();
+renderSplash();
+onAuthStateChanged(auth, user => {
+  if (!user) { renderLogin(); return; }
+  const email = (user.email || "").toLowerCase();
+  if (email.endsWith(GROUP_DOMAIN)) {
+    const gid = email.slice(0, -GROUP_DOMAIN.length);
+    getDoc(doc(db, "groups", gid)).then(snap => {
+      if (!snap.exists()) {
+        signOut(auth).then(() => renderLogin("That code isn't set up yet. Check with your teacher."));
+        return;
+      }
+      const g = Object.assign({ gid }, snap.data());
+      if (!state.group || state.group.gid !== gid || state.preview) openGroup(g, false);
+    }).catch(() => renderLogin("No connection. Try again when you're online."));
+  } else {
+    renderTeacher();
+  }
+});
 </script>
 </body>
 </html>
