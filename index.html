@@ -295,10 +295,17 @@ function renderDash(){
 }
 
 /* ----- Your topic ----- */
+function linkify(s){
+  return s.split(/(https?:\/\/[^\s]+)/g).map((p, i) => {
+    if (i % 2 === 0) return esc(p);
+    const m = p.match(/^(.*?)([.,;)\]]*)$/);
+    return `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(m[1])}</a>${esc(m[2])}`;
+  }).join("");
+}
 function readingHTML(r){
   if (!r) return null;
   if (typeof r === "string") return `<p><a href="${esc(r)}" target="_blank" rel="noopener">Open the reading sheet</a></p>`;
-  return r.map(p => `<p>${esc(p)}</p>`).join("");
+  return r.map(p => `<p dir="auto">${linkify(p)}</p>`).join("");
 }
 function panelTopic(panel, t){
   const reading = readingHTML(t.reading), extra = readingHTML(t.extra);
@@ -310,6 +317,7 @@ function panelTopic(panel, t){
     </div>
     <div class="section">
       <h2>Reading sheet</h2>
+      ${t.overview ? `<p class="muted" dir="auto">${txt(t.overview)}</p>` : ""}
       ${reading ? `<div class="reading">${reading}</div>` : `<div class="slot">Your reading sheet will be here soon. Start with the booklet pages.</div>`}
     </div>
     ${extra ? `<div class="section"><h2>More to read</h2><div class="reading">${extra}</div></div>` : ""}
