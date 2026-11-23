@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js';
 import {getFirestore,doc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,Timestamp,arrayUnion,arrayRemove} from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js';
-import {passages} from './reading-texts.mjs';
+import {passages} from './reading-texts.mjs?v=nusach4-20261123';
 const $=id=>document.getElementById(id), db=getFirestore(initializeApp(window.FIREBASE_CONFIG));
 let current=null,marks=[],elapsed=0,startedAt=null,session=null,unsub=null,closing=false,ready=false,expiry=null;
 let words=[];
