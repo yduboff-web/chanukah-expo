@@ -54,6 +54,9 @@ button{cursor:pointer}
 .muted{color:var(--muted)}
 .hidden{display:none !important}
 
+/* בס״ד badge: fixed top-right on every screen, hidden in print by the print rule below */
+.bsd-corner{position:fixed;top:8px;right:12px;z-index:30;color:var(--night-ink);background:rgba(27,37,71,.45);border-radius:6px;padding:2px 7px;font-size:.85rem;line-height:1.4;pointer-events:none}
+
 /* ---------- Login ---------- */
 .login{min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--night);color:var(--night-ink);padding:32px 20px;text-align:center}
 .login h1{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:900;letter-spacing:.01em;margin-top:18px}
@@ -194,6 +197,7 @@ tr.clickable:hover td{background:var(--gold-soft)}
 </style>
 </head>
 <body>
+<div class="bsd-corner" lang="he">בס״ד</div>
 <div id="app"></div>
 <div id="print"></div>
 
