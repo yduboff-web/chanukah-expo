@@ -681,7 +681,10 @@ function renderTeacher(){
     window.scrollTo({ top: 0 });
   }));
   state.unsub.push(onSnapshot(collection(db, "groups"), qs => {
-    const groups = qs.docs.map(d => Object.assign({ gid: d.id }, d.data()));
+    const groups = qs.docs.map(d => {
+      const existing = (state.groups || []).find(g => g.gid === d.id);
+      return Object.assign(existing || { gid: d.id }, d.data());
+    });
     groups.sort((a, b) => (a.grade - b.grade) || String(a.code).localeCompare(String(b.code)));
     state.groups = groups;
     const seen = {};
