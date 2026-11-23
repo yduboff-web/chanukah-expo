@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js';
 import {getFirestore,doc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,Timestamp,arrayUnion,arrayRemove} from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js';
-import {passages} from './reading-texts.mjs?v=nusach4-20261123';
+import {passages} from './reading-texts.mjs?v=selectors-20261123';
 const $=id=>document.getElementById(id), db=getFirestore(initializeApp(window.FIREBASE_CONFIG));
 let current=null,marks=[],elapsed=0,startedAt=null,session=null,unsub=null,closing=false,ready=false,expiry=null;
 let words=[];
@@ -8,15 +8,16 @@ const err=e=>{$('error').textContent=e?.message||String(e||'');};
 function total(){return elapsed+(startedAt===null?0:Math.max(0,Date.now()-startedAt));}
 function tick(){const n=Math.floor(total()/1000);$('clock').textContent=Math.floor(n/60)+':'+String(n%60).padStart(2,'0');}
 setInterval(tick,250);
-function controls(){const enabled=!!current&&(!session||ready);for(const id of ['start','reset','clear','share'])$(id).disabled=!enabled; $('passage').disabled=!!session;$('start').textContent=startedAt===null?(elapsed?'Resume timer':'Start timer'):'Pause timer';$('share').hidden=!!session;$('close').hidden=!session;}
+function controls(){const enabled=!!current&&(!session||ready);for(const id of ['start','reset','clear','share'])$(id).disabled=!enabled; $('prayer').disabled=!!session;$('nusach').disabled=!!session;$('start').textContent=startedAt===null?(elapsed?'Resume timer':'Start timer'):'Pause timer';$('share').hidden=!!session;$('close').hidden=!session;}
 function renderMarks(){document.querySelectorAll('.word').forEach(b=>b.setAttribute('aria-pressed',String(marks.includes(Number(b.dataset.i)))));$('mark-count').textContent=marks.length+' word'+(marks.length===1?'':'s')+' marked';$('empty').hidden=marks.length>0;$('practice-list').replaceChildren();marks.slice().sort((a,b)=>a-b).forEach(i=>{const s=document.createElement('span');s.textContent=words[i]+'  ';$('practice-list').append(s);});}
-function choose(id){current=passages.find(p=>p.id===id)||null;$('passage').value=current?.id||'';words=[];$('reading').replaceChildren();if(!current){controls();return;}current.paragraphs.forEach(text=>{const p=document.createElement('p');p.style.margin='0 0 18px';text.split(/(\s+)/u).forEach(token=>{if(/^\s+$/u.test(token)){p.append(document.createTextNode(token));return;}const i=words.length;words.push(token);const b=document.createElement('button');b.type='button';b.className='word';b.dataset.i=i;b.textContent=token;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>toggle(i));p.append(b);});$('reading').append(p);});$('source').replaceChildren();const a=document.createElement('a');a.href=current.source;a.target='_blank';a.rel='noopener';a.textContent=current.sourceLabel;$('source').append('Text: ',a);$('intro').textContent=current.note||'Read the pointed Hebrew exactly as shown.';renderMarks();controls();}
+function choose(id){current=passages.find(p=>p.id===id)||null;if(current){const cut=current.id.lastIndexOf('-');$('prayer').value=current.id.slice(0,cut);$('nusach').value=current.id.slice(cut+1);}words=[];$('reading').replaceChildren();if(!current){controls();return;}current.paragraphs.forEach(text=>{const p=document.createElement('p');p.style.margin='0 0 18px';text.split(/(\s+)/u).forEach(token=>{if(/^\s+$/u.test(token)){p.append(document.createTextNode(token));return;}const i=words.length;words.push(token);const b=document.createElement('button');b.type='button';b.className='word';b.dataset.i=i;b.textContent=token;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>toggle(i));p.append(b);});$('reading').append(p);});$('source').replaceChildren();const a=document.createElement('a');a.href=current.source;a.target='_blank';a.rel='noopener';a.textContent=current.sourceLabel;$('source').append('Text: ',a);$('intro').textContent=current.note||'Read the pointed Hebrew exactly as shown.';renderMarks();controls();}
 async function toggle(i){if(session){if(!ready)return;try{await updateDoc(session,{marks:marks.includes(i)?arrayRemove(i):arrayUnion(i),updatedAt:serverTimestamp()});}catch(e){err(e);}}else{marks=marks.includes(i)?marks.filter(n=>n!==i):[...marks,i];renderMarks();}}
 async function timer(change){err('');try{if(session){if(!ready)return;await updateDoc(session,{...change,updatedAt:serverTimestamp()});}else{if('elapsedMs'in change)elapsed=change.elapsedMs;if('startedAt'in change)startedAt=change.startedAt?.toMillis?.()??null;controls();tick();}}catch(e){err(e);}}
 $('start').onclick=()=>timer(startedAt===null?{startedAt:Timestamp.now()}:{elapsedMs:Math.min(7200000,total()),startedAt:null});
 $('reset').onclick=()=>{if(confirm('Reset the timer to zero? Word marks will stay.'))timer({elapsedMs:0,startedAt:null});};
 $('clear').onclick=async()=>{if(!confirm('Clear all word marks on both screens?'))return;try{if(session)await updateDoc(session,{marks:[],updatedAt:serverTimestamp()});else{marks=[];renderMarks();}}catch(e){err(e);}};
-$('passage').onchange=()=>{elapsed=0;startedAt=null;marks=[];choose($('passage').value);tick();};
+function changeChoice(){elapsed=0;startedAt=null;marks=[];choose($('prayer').value+'-'+$('nusach').value);tick();}
+$('prayer').onchange=changeChoice;$('nusach').onchange=changeChoice;
 function sessionLink(id){const u=new URL(location.href);u.hash='session='+id;return u.href;}
 function leave(){clearTimeout(expiry);unsub?.();unsub=null;session=null;ready=false;closing=false;history.replaceState(null,'',location.pathname);$('sharing').hidden=true;$('session-status').textContent='Solo practice stays on this screen.';controls();}
 function listen(id){unsub?.();session=doc(db,'readingSessions',id);ready=false;history.replaceState(null,'','#session='+id);$('sharelink').textContent='Code: '+id;$('sharing').hidden=false;controls();
@@ -25,5 +26,11 @@ $('share').onclick=async()=>{if(!current)return;err('');$('share').disabled=true
 $('join').onclick=()=>{const id=$('join-code').value.trim().toLowerCase();if(!/^[0-9a-f]{32}$/.test(id)){err('Paste the full 32-character code from your partner.');return;}err('');listen(id);};
 $('copy').onclick=async()=>{if(!session)return;try{await navigator.clipboard.writeText(sessionLink(session.id));$('session-status').textContent='Partner link copied. Share it only with your reading partner.';}catch(e){err('Copy this partner link: '+sessionLink(session.id));}};
 $('close').onclick=async()=>{if(!session||!confirm('Close this shared session for both screens?'))return;closing=true;try{await deleteDoc(session);leave();$('session-status').textContent='Shared record removed. Practice can continue on this screen.';}catch(e){closing=false;err('Could not close the session. Check your connection and try again.');}};
-if(passages.length){$('passage').replaceChildren(...passages.map(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.title;return o;}));choose(passages[0].id);}
+if(passages.length){
+ const prayers=new Map(passages.map(p=>[p.id.slice(0,p.id.lastIndexOf('-')),p.title.split(' · ')[0]]));
+ const nuschaos=[['ash','Nusach Ashkenaz'],['ari','Nusach Ari'],['sef','Nusach Sefard'],['edot','Edot HaMizrach']];
+ for(const [id,title] of prayers){const o=document.createElement('option');o.value=id;o.textContent=title;$('prayer').append(o);}
+ for(const [id,title] of nuschaos){const o=document.createElement('option');o.value=id;o.textContent=title;$('nusach').append(o);}
+ choose(passages[0].id);
+}
 const join=new URLSearchParams(location.hash.slice(1)).get('session');if(join&&/^[0-9a-f]{32}$/.test(join))listen(join);
