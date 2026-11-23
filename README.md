@@ -82,3 +82,5 @@ cd test && npm install && npm test
 Solo practice is held in the current page only and is lost on refresh. A partner session shares only a passage id, marked word indexes and timer state. Its 128-bit random code is a bearer secret: anyone with it may read/change the session. Sessions cannot be listed. They expire after at most two hours and can be explicitly closed/deleted from either screen. Expired records are inaccessible but may remain stored until manually cleaned up. Open room creation uses the project's Spark quota; no paid functions or scheduled cleanup are configured. Group rules and data are separate.
 
 Run `node test/reading-rules.test.js` with the Firestore emulator to test room access, expiry, field limits and group isolation.
+
+Partner sessions show an on-device QR code for the same secret link. QR generation uses the bundled MIT-licensed qrcode-generator 2.0.4 by Kazuhiko Arase (`qr-code.mjs`), with no external QR service or tracking request. The privacy/expiry rules are identical to the link.

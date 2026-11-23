@@ -1,6 +1,7 @@
+import qrcode from './qr-code.mjs';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js';
 import {getFirestore,doc,setDoc,updateDoc,deleteDoc,onSnapshot,serverTimestamp,Timestamp,arrayUnion,arrayRemove} from 'https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js';
-import {passages} from './reading-texts.mjs?v=selectors-20261123';
+import {passages} from './reading-texts.mjs?v=qr-20261123';
 const $=id=>document.getElementById(id), db=getFirestore(initializeApp(window.FIREBASE_CONFIG));
 let current=null,marks=[],elapsed=0,startedAt=null,session=null,unsub=null,closing=false,ready=false,expiry=null;
 let words=[];
@@ -19,8 +20,18 @@ $('clear').onclick=async()=>{if(!confirm('Clear all word marks on both screens?'
 function changeChoice(){elapsed=0;startedAt=null;marks=[];choose($('prayer').value+'-'+$('nusach').value);tick();}
 $('prayer').onchange=changeChoice;$('nusach').onchange=changeChoice;
 function sessionLink(id){const u=new URL(location.href);u.hash='session='+id;return u.href;}
-function leave(){clearTimeout(expiry);unsub?.();unsub=null;session=null;ready=false;closing=false;history.replaceState(null,'',location.pathname);$('sharing').hidden=true;$('session-status').textContent='Solo practice stays on this screen.';controls();}
-function listen(id){unsub?.();session=doc(db,'readingSessions',id);ready=false;history.replaceState(null,'','#session='+id);$('sharelink').textContent='Code: '+id;$('sharing').hidden=false;controls();
+function renderQR(id){
+ const box=$('partner-qr');box.replaceChildren();
+ try{const code=qrcode(0,'M');code.addData(sessionLink(id));code.make();
+ const count=code.getModuleCount(),scale=6,margin=4,canvas=document.createElement('canvas');canvas.width=canvas.height=(count+margin*2)*scale;
+ canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Scan to open this reading session on your partner device');
+ const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';
+ for(let row=0;row<count;row++)for(let col=0;col<count;col++)if(code.isDark(row,col))ctx.fillRect((col+margin)*scale,(row+margin)*scale,scale,scale);
+ box.append(canvas);$('qr-help').textContent='Your partner can scan this QR code with their camera or Chromebook camera app to open the session. No email needed.';
+ }catch(e){$('qr-help').textContent='QR code unavailable. Use the partner link or session code below.';}
+}
+function leave(){$('partner-qr').replaceChildren();clearTimeout(expiry);unsub?.();unsub=null;session=null;ready=false;closing=false;history.replaceState(null,'',location.pathname);$('sharing').hidden=true;$('session-status').textContent='Solo practice stays on this screen.';controls();}
+function listen(id){unsub?.();session=doc(db,'readingSessions',id);ready=false;history.replaceState(null,'','#session='+id);$('sharelink').textContent='Code: '+id;$('sharing').hidden=false;renderQR(id);controls();
  unsub=onSnapshot(session,s=>{clearTimeout(expiry);if(!s.exists()){leave();$('session-status').textContent='This session is closed or does not exist.';return;}const d=s.data();if(d.expiresAt.toMillis()<=Date.now()){leave();$('session-status').textContent='This partner session has expired.';return;}if(!passages.some(p=>p.id===d.passage)){err('This passage is not available in this version.');leave();return;}if(current?.id!==d.passage)choose(d.passage);marks=d.marks;elapsed=d.elapsedMs;startedAt=d.startedAt?.toMillis()??null;ready=true;renderMarks();controls();tick();$('session-status').textContent=s.metadata.hasPendingWrites?'Sharing changes…':'Shared session connected. Expires '+d.expiresAt.toDate().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'.';expiry=setTimeout(()=>{leave();$('session-status').textContent='This partner session has expired.';},Math.max(0,d.expiresAt.toMillis()-Date.now()));},e=>{if(closing)return;leave();if(e.code==='permission-denied')$('session-status').textContent='This session is closed, expired, or unavailable.';else err('Cannot connect to this session. Check the code and connection.');});}
 $('share').onclick=async()=>{if(!current)return;err('');$('share').disabled=true;const bytes=crypto.getRandomValues(new Uint8Array(16));const id=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');try{await setDoc(doc(db,'readingSessions',id),{passage:current.id,marks,elapsedMs:Math.min(7200000,total()),startedAt:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+119*60*1000)});startedAt=null;listen(id);}catch(e){err('Could not create a partner session. Solo practice still works.');controls();}};
 $('join').onclick=()=>{const id=$('join-code').value.trim().toLowerCase();if(!/^[0-9a-f]{32}$/.test(id)){err('Paste the full 32-character code from your partner.');return;}err('');listen(id);};
