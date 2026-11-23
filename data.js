@@ -19,7 +19,8 @@ window.EXPO = {
      --------------------------------------------------------- */
   groups: [
     { code: "DEMO5", grade: 5, members: ["Student A", "Student B"], topic: 2 },
-    { code: "DEMO6", grade: 6, members: ["Student C", "Student D"], topic: 4 }
+    { code: "DEMO6", grade: 6, members: ["Student C", "Student D"], topic: 4 },
+     { code: "PLAY1", grade: 6, members: ["Test Student A", "Test Student B"], topic: 1 },
   ],
 
   /* ---------------------------------------------------------
