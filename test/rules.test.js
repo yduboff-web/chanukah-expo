@@ -14,7 +14,7 @@ import { dirname, join } from "path";
 import { initializeTestEnvironment, assertFails, assertSucceeds } from "@firebase/rules-unit-testing";
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, getDocs, collection, serverTimestamp, deleteField } from "firebase/firestore";
 
-const TEACHER_UID = "teacher-uid-123";
+const TEACHER_UID = "yGiW0H7NHteL49G6dBu1nx1Hz5Y2";
 const here = dirname(fileURLToPath(import.meta.url));
 const rules = readFileSync(join(here, "..", "firestore.rules"), "utf8").replaceAll("TEACHER_UID", TEACHER_UID);
 

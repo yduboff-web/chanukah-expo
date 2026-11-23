@@ -8,3 +8,5 @@ code-sheet*.txt
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+expo-export-*.csv
+public/

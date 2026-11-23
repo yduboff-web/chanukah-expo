@@ -17,16 +17,18 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { auth, db, newCode, GROUP_DOMAIN } from "./setup.js";
 
+import { normalizeCode, groupPassword } from "../group-credentials.mjs";
+
 const here = dirname(fileURLToPath(import.meta.url));
 const groups = JSON.parse(readFileSync(join(here, "groups.json"), "utf8"));
 
 const rows = [];
 for (const g of groups) {
-  const code = (g.code || newCode()).toLowerCase();
+  const code = normalizeCode(g.code || newCode());
   const email = code + GROUP_DOMAIN;
   let uid;
   try {
-    const user = await auth.createUser({ email, password: code });
+    const user = await auth.createUser({ email, password: groupPassword(code) });
     uid = user.uid;
   } catch (e) {
     if (e.code === "auth/email-already-exists") {
@@ -35,17 +37,17 @@ for (const g of groups) {
     } else throw e;
   }
   await db.collection("groups").doc(code).set(
-    { uid, code, grade: g.grade, topic: g.topic },
+    { uid, code, grade: g.grade ?? null, topic: g.topic },
     { merge: true }
   );
-  rows.push({ code, grade: g.grade, topic: g.topic });
+  rows.push({ code, grade: g.grade ?? null, topic: g.topic });
 }
 
 const lines = [
   "CHANUKAH EXPO - GROUP CODES",
   "Each code is that group's whole login. Keep this sheet safe.",
   "",
-  ...rows.map(r => `Code: ${r.code.toUpperCase()}    Grade ${r.grade}    Topic ${r.topic}    Names: ______________________`)
+  ...rows.map(r => `Code: ${r.code.toUpperCase()}    Grade ${r.grade || "not assigned"}    Topic ${r.topic}    Names: ______________________`)
 ];
 const text = lines.join("\n");
 console.log("\n" + text);

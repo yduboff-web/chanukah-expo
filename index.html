@@ -191,7 +191,7 @@ tr.clickable:hover td{background:var(--gold-soft)}
   #print .bsd{text-align:right;margin:0 0 8pt}
   #print h1{font-family:Arial,sans-serif;font-size:18pt;text-align:center;margin:0 0 12pt}
   #print .row{margin:0 0 6pt}
-  #print .box{border:1px solid #000;padding:8pt;min-height:70pt;margin:3pt 0 12pt;white-space:pre-wrap}
+  #print .box{border:1px solid #000;padding:8pt;min-height:58pt;margin:3pt 0 10pt;white-space:pre-wrap}
   #print b{font-weight:bold}
 }
 </style>
@@ -211,6 +211,7 @@ import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager
 
 "use strict";
 const D = window.EXPO;
+import { normalizeCode, groupPassword } from "./group-credentials.mjs";
 const GROUP_DOMAIN = "@groups.bha-expo.app";
 const fb = initializeApp(window.FIREBASE_CONFIG);
 const auth = getAuth(fb);
@@ -271,7 +272,7 @@ function renderLogin(msg, teacherMode){
       </form>
       <button class="tlink" type="button" id="swap">Back to group code</button>` : `
       <form class="code-form" autocomplete="off">
-        <input id="code" name="code" aria-label="Group code" maxlength="12" spellcheck="false" autocapitalize="characters" placeholder="Group code">
+        <input id="code" name="code" aria-label="Group code" maxlength="32" spellcheck="false" autocapitalize="characters" placeholder="Group code">
         <button class="btn" type="submit">Open</button>
       </form>
       <button class="tlink" type="button" id="swap">Teacher sign in</button>`}
@@ -294,9 +295,9 @@ function loginError(err){
   return null;
 }
 function groupLogin(raw){
-  const code = String(raw || "").trim().toLowerCase();
-  if (!code) return;
-  signInWithEmailAndPassword(auth, code + GROUP_DOMAIN, code).catch(err => {
+  let code;
+  try { code = normalizeCode(raw); } catch { renderLogin("Check the code your teacher gave you."); return; }
+  signInWithEmailAndPassword(auth, code + GROUP_DOMAIN, groupPassword(code)).catch(err => {
     renderLogin(loginError(err) || "That code doesn't match. Check with your teacher.");
   });
 }
@@ -334,7 +335,7 @@ function openGroup(g, preview){
 function renderDash(){
   const g = state.group, t = topicByN(g.topic);
   document.body.classList.add("has-tabs");
-  const who = state.preview ? "Preview" : `Grade ${esc(g.grade)} · Code ${esc(String(g.code || "").toUpperCase())}`;
+  const who = state.preview ? "Preview" : `${g.grade ? "Grade " + esc(g.grade) : "Grade not assigned"} · Code ${esc(String(g.code || "").toUpperCase())}`;
   app.innerHTML = `
     ${state.preview ? `<div class="preview-bar">Teacher preview of topic ${t.n} <button type="button" id="back">Back to teacher view</button></div>` : ""}
     <header class="top"><div class="wrap">
@@ -716,7 +717,7 @@ function renderGroupRows(){
     const status = p ? (STATUS_LABEL[p.status] || p.status || "Draft").split(" ")[0] : "–";
     const updated = p && p.updatedAt && p.updatedAt.toDate ? p.updatedAt.toDate().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "–";
     const best = g.best ? `${g.best.score}/${g.best.total}` : "–";
-    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${esc(g.grade)}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
+    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${g.grade ? esc(g.grade) : "Not assigned"}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
   }).join("");
   body.querySelectorAll("tr.clickable").forEach(r => r.addEventListener("click", () => renderTeacherDetail(r.dataset.gid)));
   if (state.detail) renderTeacherDetail(state.detail);
@@ -731,7 +732,7 @@ function renderTeacherDetail(gid){
   const status = p.status || "draft";
   box.innerHTML = `
     <div class="section">
-      <h2>Group ${esc(String(g.code || "").toUpperCase())} – Grade ${esc(g.grade)}${t ? `, Topic ${t.n}: ${txt(t.name)}` : ""}</h2>
+      <h2>Group ${esc(String(g.code || "").toUpperCase())} - ${g.grade ? "Grade " + esc(g.grade) : "Grade not assigned"}${t ? `, Topic ${t.n}: ${txt(t.name)}` : ""}</h2>
       <span class="chip ${esc(status)}">${esc(STATUS_LABEL[status] || status)}</span>
       ${p.teacherNote && status === "changes" ? `<div class="note"><b>Your note:</b> ${esc(p.teacherNote)}</div>` : ""}
       ${FIELDS.map(([k, l]) => `<div class="field"><label>${l}</label><div class="slot" style="color:var(--ink);white-space:pre-wrap">${esc(p[k] || "") || "–"}</div></div>`).join("")}

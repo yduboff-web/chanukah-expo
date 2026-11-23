@@ -15,7 +15,7 @@ It runs on Firebase (free Spark plan): Authentication for the logins, Firestore 
 
 ## Logins
 
-- **Groups** type one code (8 letters/numbers, any case). The code IS the login – there is no separate password. Codes are made by `admin/create-groups.js`, never written in this repo, and no student names are stored anywhere. The teacher keeps the code-to-name list offline.
+- **Groups** type one code (topic label plus one digit, any case). The code IS the login – there is no separate password. Codes are made by `admin/create-groups.js`, never written in this repo, and no student names are stored anywhere. The teacher keeps the code-to-name list offline. These chosen codes are predictable: anyone who guesses a code can access that group. The public password expansion only meets Firebase length requirements; it adds no secrecy.
 - **Teacher** taps "Teacher sign in" on the login screen and uses email + password, made by `admin/create-teacher.js`.
 
 ## First-time Firebase setup (once)
@@ -33,9 +33,9 @@ In the `admin/` folder:
 ```sh
 npm install
 # save the service account key from the Firebase console as admin/serviceAccount.json
-cp groups.example.json groups.json   # then fill in one line per group: grade and topic
+cp groups.example.json groups.json   # then fill in one line per group: code, topic and optional grade
 node create-groups.js                # creates the logins, prints a code sheet to copy names onto
-node create-teacher.js you@baderhillel.org
+node create-teacher.js you@baderhillel.org /private/path/to/password.txt
 ```
 
 `groups.json`, `serviceAccount.json`, and the printed code sheet are all in `.gitignore`. Never commit them.
@@ -53,7 +53,11 @@ node admin/export-and-cleanup.js --yes   # then deletes all group logins and dat
 
 ## Editing content (data.js)
 
-Same as before. Reading sheets: each topic's `reading` and `extra` start as `null`; fill with a list of paragraphs or a link. Deadlines: edit `deadlines`; `proposalDeadline` is the position of the proposal due date in that list, counting from 0. Every merge to `main` deploys automatically.
+Same as before. Reading sheets: edit each topic's `reading` and `extra` paragraphs or links. Deadlines: edit `deadlines`; `proposalDeadline` is the position of the proposal due date in that list, counting from 0. Every merge to `main` deploys automatically.
+
+## Hosting build
+
+Run `node build-hosting.mjs` before deploying. Only four website files are copied to `public/`; admin data, logs, and repository metadata are never hosted. GitHub Actions runs this build automatically.
 
 ## Testing changes
 
@@ -69,4 +73,4 @@ cd test && npm install && npm test
 ## Good to know
 
 - The site works on phones, Chromebooks, and laptops, in light and dark mode, and keeps working through shaky school Wi-Fi (offline cache).
-- Only the five proposal fields a group writes, its status, and its quiz scores are stored. No names, no emails, nothing else.
+- Firestore stores group codes, assigned topics and grades, proposals, teacher notes, and quiz scores. Authentication stores generated group login identifiers and the teacher login. No student names are stored.

@@ -1,13 +1,12 @@
 rules_version = '2';
 
 // Chanukah Expo – Firestore security rules.
-// Before deploying: replace TEACHER_UID with the real teacher account UID
-// (admin/create-teacher.js prints it).
+// Teacher access is tied to the configured account UID.
 service cloud.firestore {
   match /databases/{database}/documents {
 
     function signedIn()  { return request.auth != null; }
-    function isTeacher() { return signedIn() && request.auth.uid == "TEACHER_UID"; }
+    function isTeacher() { return signedIn() && request.auth.uid == "yGiW0H7NHteL49G6dBu1nx1Hz5Y2"; }
     function ownsGroup(gid) {
       return signedIn()
         && exists(/databases/$(database)/documents/groups/$(gid))

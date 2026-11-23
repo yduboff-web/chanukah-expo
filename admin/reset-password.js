@@ -7,13 +7,15 @@
 
 import { auth, db, newCode, GROUP_DOMAIN } from "./setup.js";
 
+import { normalizeCode, groupPassword } from "../group-credentials.mjs";
+
 const [oldCodeRaw, newCodeRaw] = process.argv.slice(2);
 if (!oldCodeRaw) {
   console.error("Usage: node reset-password.js <current code> [new code]");
   process.exit(1);
 }
-const oldCode = oldCodeRaw.toLowerCase();
-const newC = (newCodeRaw || newCode()).toLowerCase();
+const oldCode = normalizeCode(oldCodeRaw);
+const newC = normalizeCode(newCodeRaw || newCode());
 
 const oldSnap = await db.collection("groups").doc(oldCode).get();
 if (!oldSnap.exists) {
@@ -22,8 +24,8 @@ if (!oldSnap.exists) {
 }
 const data = oldSnap.data();
 
-// New auth account (email and password are the code).
-const user = await auth.createUser({ email: newC + GROUP_DOMAIN, password: newC });
+// New auth account. Both client and admin use the same public transform.
+const user = await auth.createUser({ email: newC + GROUP_DOMAIN, password: groupPassword(newC) });
 await db.collection("groups").doc(newC).set(
   { uid: user.uid, code: newC, grade: data.grade, topic: data.topic },
   { merge: true }
