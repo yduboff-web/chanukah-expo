@@ -477,7 +477,7 @@ const TABS = [["topic","Your topic"],["wheel","Idea wheel"],["quiz","Review game
 function openGroup(g, preview){
   if (!preview && !topicByN(g.topic)) {
     pendingLoginMsg = "That code isn't active. Check with your teacher.";
-    signOut(auth).then(() => renderLogin());
+    signOut(auth).then(() => renderLogin("That code isn't active. Check with your teacher."));
     return;
   }
   clearSubs();
@@ -1130,7 +1130,7 @@ onAuthStateChanged(auth, user => {
     getDoc(doc(db, "groups", gid)).then(snap => {
       if (!snap.exists()) {
         pendingLoginMsg = "That code isn't set up yet. Check with your teacher.";
-        signOut(auth).then(() => renderLogin());
+        signOut(auth).then(() => renderLogin("That code isn't set up yet. Check with your teacher."));
         return;
       }
       const g = Object.assign({ gid }, snap.data());
