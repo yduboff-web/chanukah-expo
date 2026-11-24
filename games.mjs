@@ -454,4 +454,53 @@ function gJeop(body, t, d) {
   body.append(el("p", "muted", "Play in teams: choose a square, answer out loud, then reveal the answer and award points."), score, board);
 }
 
-render();
+/* Access gate: the teacher gives out the games code, so students only open
+   the games when the class is ready. The code is stored as a hash, not in
+   plain text; it keeps casual visitors out, the way the group codes do. */
+const GATE_FLAG = "expo:games-ok";
+const CODE_HASH = 441260483; // the games code, hashed
+function hashCode(s) {
+  let h = 5381;
+  for (const c of s) h = ((h << 5) + h + c.charCodeAt(0)) >>> 0;
+  return h;
+}
+function normCode(s) {
+  return String(s || "").trim().toLowerCase().replace(/\s+/g, "");
+}
+function renderGate(message) {
+  app.replaceChildren();
+  const card = el("section", "card");
+  card.append(el("h2", null, "Enter the games code"));
+  card.append(el("p", "muted", "Your teacher has the code. Type it to open the games."));
+  const form = el("form", "row");
+  const input = el("input", "gate-input");
+  input.type = "text";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+  input.placeholder = "Games code";
+  input.setAttribute("aria-label", "Games code");
+  const go = button("Open the games", () => {}, "primary");
+  go.type = "submit";
+  form.append(input, go);
+  card.append(form);
+  const err = el("p", "gate-error");
+  err.setAttribute("role", "alert");
+  if (message) err.textContent = message;
+  card.append(err);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (hashCode(normCode(input.value)) === CODE_HASH) {
+      try { localStorage.setItem(GATE_FLAG, "1"); } catch (_) {}
+      render();
+    } else {
+      err.textContent = "That's not the code. Check with your teacher and try again.";
+      input.select();
+    }
+  });
+  app.append(card);
+  input.focus();
+}
+let gateOk = false;
+try { gateOk = localStorage.getItem(GATE_FLAG) === "1"; } catch (_) {}
+if (gateOk) render();
+else renderGate("");

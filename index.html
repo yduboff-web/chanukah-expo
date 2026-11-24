@@ -80,6 +80,8 @@ button{cursor:pointer}
 .top-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
 .top-bar .who{color:#C7CEE2;font-size:.95rem}
 .top-bar .btn.ghost{color:var(--night-ink);border-color:#3A4570;padding:8px 14px;font-size:.9rem}
+.top-bar .actions{display:flex;gap:8px;align-items:center}
+.top-bar a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .topic-num{font-family:"Frank Ruhl Libre",serif;color:#E6A93A;font-size:1.05rem;font-weight:700}
 .topic-title{font-size:clamp(2rem,6vw,3rem);font-weight:900;margin-top:2px}
 .topic-about{color:#D7DCEB;margin:.5rem 0 0;font-size:1.05rem}
@@ -435,6 +437,7 @@ function renderLogin(msg, teacherMode){
       </form>
       <button class="tlink" type="button" id="swap">Teacher sign in</button>`}
       <p><a class="tlink" href="reading.html">Hebrew reading practice · no login needed</a></p>
+      <p><a class="tlink" href="games.html">Topic games · your teacher has the code</a></p>
       <div class="err" role="alert">${esc(msg || "")}</div>
     </section>`;
   const first = app.querySelector("input");
@@ -506,7 +509,7 @@ function renderDash(){
   app.innerHTML = `
     ${state.preview ? `<div class="preview-bar">Teacher preview of topic ${t.n} <button type="button" id="back">Back to teacher view</button></div>` : ""}
     <header class="top"><div class="wrap">
-      <div class="top-bar"><span class="who">${who}</span>${state.preview ? "" : '<button class="btn ghost" type="button" id="logout">Log out</button>'}</div>
+      <div class="top-bar"><span class="who">${who}</span>${state.preview ? "" : '<span class="actions"><a class="btn ghost" href="games.html">Games</a><button class="btn ghost" type="button" id="logout">Log out</button></span>'}</div>
       <div class="topic-num">Topic ${t.n}</div>
       <h1 class="topic-title">${txt(t.name)}</h1>
       <p class="topic-about">${txt(t.about)}</p>
