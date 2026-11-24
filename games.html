@@ -10,18 +10,18 @@ main{padding:24px 20px 60px}.card{background:var(--paper);border:1px solid var(-
 button,select{font:inherit;color:inherit;min-height:46px;border:1px solid var(--line);border-radius:9px;padding:9px 14px;background:var(--paper)}
 button{cursor:pointer;font-weight:600}button.primary{background:#1b2547;color:#fff;border-color:#1b2547}
 button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #b78728;outline-offset:3px}
-.muted{color:var(--muted);font-size:14px}.he{direction:rtl;unicode-bidi:embed}
+.muted{color:var(--muted);font-size:14px}.he{unicode-bidi:plaintext}
 .pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.pick button{text-align:right;min-height:64px}.pick .tname{font-weight:700;font-size:18px}.pick .tsub{font-weight:400;font-size:13px;color:var(--muted);display:block}
+.pick button{text-align:left;min-height:64px}.pick .tname{font-weight:700;font-size:18px}.pick .tsub{font-weight:400;font-size:13px;color:var(--muted);display:block}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.score{font-weight:700}
-.tile{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--paper);cursor:pointer;font-weight:600;text-align:right;min-height:46px}
+.tile{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--paper);cursor:pointer;font-weight:600;text-align:left;min-height:46px}
 .tile.sel{outline:3px solid #b78728}.tile.done{background:#e3f2e6;border-color:var(--good);cursor:default}.tile.wrongflash{background:#f7dcdc;border-color:var(--bad)}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:600px){.cols{grid-template-columns:1fr}}
 .seqitem{display:flex;gap:8px;align-items:center;margin-bottom:8px}.seqitem .txt{flex:1;border:1px solid var(--line);border-radius:9px;padding:10px 12px}
 .seqitem.ok .txt{border-color:var(--good);background:#e3f2e6}.seqitem.no .txt{border-color:var(--bad)}
 .mv{min-width:44px;min-height:40px;padding:4px}
 .clue{border-right:3px solid var(--gold);background:var(--mark);padding:10px 14px;margin:8px 0;border-radius:6px}
-.opts{display:grid;gap:10px;margin-top:12px}.opts button{text-align:right}
+.opts{display:grid;gap:10px;margin-top:12px}.opts button{text-align:left}
 .opts button.right{background:#e3f2e6;border-color:var(--good)}.opts button.wrong{background:#f7dcdc;border-color:var(--bad)}
 .gapline{margin:14px 0;font-size:18px;line-height:2}.gapline select{margin:0 4px;min-height:40px;max-width:200px}
 .gapline.ok{color:var(--good)}.gapline.no{color:var(--bad)}
