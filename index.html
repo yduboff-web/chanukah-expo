@@ -377,8 +377,9 @@ const store = {
 };
 const topicByN = n => D.topics.find(t => t.n === Number(n));
 // Classroom topics selected by the teacher. Other readings stay available by code and in teacher preview.
-const STUDENT_TOPIC_NUMBERS = new Set([1, 2, 3, 5, 6, 10, 11, 15, 16, 17, 18]);
-const studentTopics = () => D.topics.filter(t => STUDENT_TOPIC_NUMBERS.has(t.n));
+// Topics nobody took are not in this file; their content is kept in the repo (teacher-only/) and D.heldTopics lists their numbers.
+const HELD = new Set(D.heldTopics || []);
+const studentTopics = () => D.topics;
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
 let state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
@@ -470,6 +471,10 @@ function renderSplash(){
 const TABS = [["topic","Your topic"],["wheel","Idea wheel"],["quiz","Review game"],["proposal","Proposal"],["dates","Deadlines"]];
 
 function openGroup(g, preview){
+  if (!preview && !topicByN(g.topic)) {
+    signOut(auth).then(() => renderLogin("That code isn't active. Check with your teacher."));
+    return;
+  }
   clearSubs();
   state.group = g; state.preview = !!preview; state.tab = "topic"; state.quiz = null; state.wheelRot = 0;
   state.proposal = preview ? null : undefined; state.quizBest = {};
@@ -997,6 +1002,7 @@ function renderTeacher(){
       <div class="section"><h2>Preview a topic</h2>
         <p class="muted">Opens the page a group with that topic will see.</p>
         <div class="tgrid">${D.topics.map(t => `<button type="button" data-n="${t.n}"><span class="n">${t.n}</span>${txt(t.name)}</button>`).join("")}</div>
+        ${HELD.size ? `<p class="muted">Not taken, kept off the site: topics ${[...HELD].sort((a, b) => a - b).join(", ")}. Their codes still exist but show "That code isn't active."</p>` : ""}
       </div>
     </div></main>`;
   app.querySelector("#logout").addEventListener("click", () => signOut(auth));
@@ -1031,7 +1037,7 @@ function renderTeacher(){
     });
     Object.keys(state.groupSubs).forEach(gid => { if (!seen[gid]) { state.groupSubs[gid].forEach(u => u()); delete state.groupSubs[gid]; } });
     const tc = app.querySelector("#tcount");
-    if (tc) tc.textContent = `${groups.length} groups, ${D.topics.length} topics`;
+    if (tc) tc.textContent = `${groups.length} groups, ${D.topics.length} topics on the site`;
     renderGroupRows();
   }, err => {
     const tc = app.querySelector("#tcount");
@@ -1048,7 +1054,7 @@ function renderGroupRows(){
     const status = p ? (STATUS_LABEL[p.status] || p.status || "Draft").split(" ")[0] : "–";
     const updated = p && p.updatedAt && p.updatedAt.toDate ? p.updatedAt.toDate().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "–";
     const best = g.best ? `${g.best.score}/${g.best.total}` : "–";
-    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${g.grade ? esc(g.grade) : "Not assigned"}</td><td>${t ? t.n + ". " + txt(t.name) : "?"}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
+    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${g.grade ? esc(g.grade) : "Not assigned"}</td><td>${t ? t.n + ". " + txt(t.name) : (HELD.has(Number(g.topic)) ? g.topic + ". (held, not on site)" : "?")}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
   }).join("");
   body.querySelectorAll("tr.clickable").forEach(r => r.addEventListener("click", () => renderTeacherDetail(r.dataset.gid)));
   if (state.detail) renderTeacherDetail(state.detail);
