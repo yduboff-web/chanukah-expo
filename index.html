@@ -375,6 +375,9 @@ const store = {
   del(k){ try { localStorage.removeItem(k); } catch(e){} }
 };
 const topicByN = n => D.topics.find(t => t.n === Number(n));
+// Classroom topics selected by the teacher. Other readings stay available by code and in teacher preview.
+const STUDENT_TOPIC_NUMBERS = new Set([1, 2, 3, 5, 6, 10, 11, 15, 16, 17, 18]);
+const studentTopics = () => D.topics.filter(t => STUDENT_TOPIC_NUMBERS.has(t.n));
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
 let state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
@@ -759,7 +762,7 @@ function panelWheel(panel, t){
 /* ----- Review game ----- */
 function newQuiz(mode, t){
   let pool;
-  if (mode === "all") pool = shuffle(D.topics.flatMap(tp => tp.quiz.map(q => Object.assign({ topic: tp }, q)))).slice(0, 10);
+  if (mode === "all") pool = shuffle(studentTopics().flatMap(tp => tp.quiz.map(q => Object.assign({ topic: tp }, q)))).slice(0, 10);
   else pool = shuffle(t.quiz.map(q => Object.assign({ topic: t }, q)));
   return { mode, items: pool.map(q => Object.assign({}, q, { opts: shuffle([q.a].concat(q.w)) })), i: 0, score: 0, answered: false, saved: false };
 }
