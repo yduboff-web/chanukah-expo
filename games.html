@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Topic games · Chanukah Expo</title>
+<style>
+:root{--bg:#eef1f7;--paper:#fff;--ink:#1b2547;--muted:#56627e;--line:#d8deeb;--gold:#a77919;--mark:#fff0cd;--bad:#9a3034;--good:#1e6b3a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+header{background:#1b2547;color:#f5f6fc;padding:34px 20px}header .inner,main{max-width:940px;margin:auto}
+.bsd{position:fixed;right:12px;top:8px;font-size:13px;z-index:5;background:#1b2547;color:#fff;border-radius:4px;padding:2px 6px}
+header a{color:#e3d19d}h1{font:700 36px/1.2 Georgia,serif;margin:12px 0}h2{font:700 23px Georgia,serif;margin-top:0}
+main{padding:24px 20px 60px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px}
+button,select{font:inherit;color:inherit;min-height:46px;border:1px solid var(--line);border-radius:9px;padding:9px 14px;background:var(--paper)}
+button{cursor:pointer;font-weight:600}button.primary{background:#1b2547;color:#fff;border-color:#1b2547}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #b78728;outline-offset:3px}
+.muted{color:var(--muted);font-size:14px}.he{direction:rtl;unicode-bidi:embed}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.pick button{text-align:right;min-height:64px}.pick .tname{font-weight:700;font-size:18px}.pick .tsub{font-weight:400;font-size:13px;color:var(--muted);display:block}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.score{font-weight:700}
+.tile{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--paper);cursor:pointer;font-weight:600;text-align:right;min-height:46px}
+.tile.sel{outline:3px solid #b78728}.tile.done{background:#e3f2e6;border-color:var(--good);cursor:default}.tile.wrongflash{background:#f7dcdc;border-color:var(--bad)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:600px){.cols{grid-template-columns:1fr}}
+.seqitem{display:flex;gap:8px;align-items:center;margin-bottom:8px}.seqitem .txt{flex:1;border:1px solid var(--line);border-radius:9px;padding:10px 12px}
+.seqitem.ok .txt{border-color:var(--good);background:#e3f2e6}.seqitem.no .txt{border-color:var(--bad)}
+.mv{min-width:44px;min-height:40px;padding:4px}
+.clue{border-right:3px solid var(--gold);background:var(--mark);padding:10px 14px;margin:8px 0;border-radius:6px}
+.opts{display:grid;gap:10px;margin-top:12px}.opts button{text-align:right}
+.opts button.right{background:#e3f2e6;border-color:var(--good)}.opts button.wrong{background:#f7dcdc;border-color:var(--bad)}
+.gapline{margin:14px 0;font-size:18px;line-height:2}.gapline select{margin:0 4px;min-height:40px;max-width:200px}
+.gapline.ok{color:var(--good)}.gapline.no{color:var(--bad)}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.board .cat{font-weight:700;text-align:center;padding:10px 4px;background:#1b2547;color:#fff;border-radius:9px;font-size:15px}
+.board .cell{min-height:64px;text-align:center;font-size:20px;font-weight:700;background:var(--mark);border-color:var(--gold)}
+.board .cell.used{opacity:.35;pointer-events:none}
+.lock{display:inline-block;font-size:22px;margin-left:6px}
+.locks{margin-bottom:10px;letter-spacing:4px;font-size:22px}
+.banner{border-right:4px solid var(--good);background:#e3f2e6;padding:12px 16px;border-radius:8px;font-weight:700;margin:14px 0}
+a{color:var(--gold)}
+@media(max-width:500px){h1{font-size:30px}.card{padding:17px}main{padding:18px 12px 45px}.bsd{font-size:11px}}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1428;--paper:#17223f;--ink:#edf0f8;--muted:#bbc5dc;--line:#34415e;--mark:#473a20;--gold:#e6bc62;--bad:#ffa8a8;--good:#7fd6a0}
+button.primary{background:#334974;border-color:#334974}.board .cat{background:#334974}.tile.done,.opts button.right,.banner{background:#1d3a28}.tile.wrongflash,.opts button.wrong{background:#4a2024}}
+</style></head><body>
+<div class="bsd" lang="he">בס״ד</div>
+<header><div class="inner"><a href="./">Chanukah Expo</a><h1>Topic games</h1><p>Seven games, one per click. Pick your team's topic, pick a game, and see how much of the reading you really know.</p></div></header>
+<main>
+<div id="app"></div>
+<p class="muted">Questions come straight from each topic's reading page and review quiz. No login and no names - scores stay on this screen.</p>
+</main>
+<script src="data.js"></script>
+<script src="games-data.js"></script>
+<script type="module" src="games.mjs"></script>
+</body></html>
