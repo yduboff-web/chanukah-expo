@@ -175,6 +175,114 @@ tr.clickable:hover td{background:var(--gold-soft)}
 .detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
 .note-input{width:100%;min-height:70px;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;margin:8px 0 12px}
 
+/* ---------- Reading page (Your topic tab) ---------- */
+.hx{unicode-bidi:isolate;font-size:1.08em}
+.overview{background:var(--surface);border:1.5px solid var(--line);border-left:5px solid var(--gold);border-radius:12px;padding:18px 22px;margin:0 0 22px}
+.overview h2{font-size:1.1rem;color:var(--gold);margin:0 0 6px}
+.overview p{margin:0;font-size:1.15rem;line-height:1.6}
+.read-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.read-head h2{font-size:1.45rem;margin:0}
+.read-head .btn{padding:8px 14px;font-size:.92rem}
+.read{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px clamp(18px,4.5vw,40px) 26px}
+.read section{padding-top:22px}
+.read section + section{border-top:1px solid var(--line);margin-top:26px}
+.read h3{font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:1.45rem;font-weight:700;margin:0 0 12px}
+.read section > p,.read li,.rsec-body > p,.rsec-body li{font-size:1.06rem;line-height:1.75}
+.read section > p,.rsec-body > p{margin:0 0 14px;max-width:72ch}
+.read a,.cdo a{color:var(--ink);text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:3px}
+.read ol,.read ul,.rsec-body > ol,.rsec-body > ul{margin:-6px 0 14px;padding-left:28px}
+.read li,.rsec-body li{margin:2px 0}
+/* Wide layout: only on the Your topic tab */
+body.has-tabs.topic-wide .top .wrap,body.has-tabs.topic-wide .tabs .wrap,body.has-tabs.topic-wide .panel .wrap{max-width:1240px}
+.toc{display:none}
+@media (min-width:1000px){
+  .topic-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+  .toc{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px)}
+}
+.toc h2{font-family:"Rubik",system-ui,sans-serif;font-size:.95rem;font-weight:500;color:var(--muted);margin:0 0 8px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc button{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;margin-left:-2px;padding:7px 12px;color:var(--muted);font-size:.95rem;line-height:1.35}
+.toc button:hover,.toc button:focus-visible{color:var(--ink);border-left-color:var(--gold)}
+.overview,.rsec,.today{scroll-margin-top:74px}
+/* Drop-down sections */
+.rsecs{display:grid;gap:12px}
+.rsec{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.rsec > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:15px 22px;border-radius:13px}
+.rsec > summary::-webkit-details-marker{display:none}
+.rsec > summary:hover{background:var(--bg)}
+.rsec > summary h3{flex:1;margin:0;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:1.4rem;font-weight:700}
+.rsec > summary::after{content:"";flex:none;width:10px;height:10px;border-right:2.5px solid var(--gold);border-bottom:2.5px solid var(--gold);transform:rotate(45deg);margin:-5px 4px 0 0;transition:transform .2s ease}
+.rsec[open] > summary{border-bottom:1px solid var(--line);border-radius:13px 13px 0 0}
+.rsec[open] > summary::after{transform:rotate(-135deg);margin-top:5px}
+.rsec-body{padding:20px clamp(18px,3vw,34px) 8px}
+.rsec .cdo{background:none;border:0;border-radius:0;border-top:1px solid var(--line);padding:16px 0;margin:0}
+.rsec .cdo:first-child{border-top:0;padding-top:0}
+.read-head .tools{display:flex;gap:8px;flex-wrap:wrap}
+.rtable{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:4px 0 16px}
+.rtable table{border-collapse:collapse;width:100%;min-width:0}
+.rtable th{background:var(--night);color:var(--night-ink);font-weight:600;font-size:.95rem;padding:9px 16px;text-align:left;border:0}
+.rtable td{vertical-align:top;padding:12px 16px;border:0;border-top:1px solid var(--line);font-size:1.04rem;line-height:1.65}
+.rtable td:first-child{background:var(--bg);width:36%}
+.rtable td p{margin:0 0 8px}
+.rtable td p:last-child{margin:0}
+.rsec-body > p.banner,.read section > p.banner{max-width:none;text-align:center;font-weight:700;font-size:1.25rem;letter-spacing:.02em;margin:6px 0 16px}
+.rsec-body > p.gap,.read section > p.gap,.gap{max-width:none;text-align:center;color:var(--muted);letter-spacing:.4em;margin:0 0 14px}
+.rtable.multi td:first-child{width:auto}
+.rtable.multi th{text-align:center}
+.cust{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:6px 0 16px}
+.cust-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:9px 14px;background:var(--night);color:var(--night-ink)}
+.cust-head h4{margin:0;font-size:1rem;font-weight:600}
+.cust-bar{display:flex;flex-wrap:wrap;gap:6px}
+.cust-bar button{border:1.5px solid rgba(255,255,255,.45);background:transparent;color:var(--night-ink);border-radius:999px;padding:4px 12px;font-size:.88rem;line-height:1.3}
+.cust-bar button[aria-pressed="true"]{background:var(--gold-bright);border-color:var(--gold-bright);color:#1B2547;font-weight:600}
+.cust-body{display:grid;grid-template-columns:1fr 1fr}
+.cust-en{grid-column:1;grid-row:1;background:var(--bg);padding:13px 20px;white-space:pre-line;margin:0;font-size:1.04rem;line-height:1.65}
+.cust-he{grid-column:2;grid-row:1;padding:10px 20px}
+.cust-he p{margin:0 0 8px;direction:rtl;text-align:right;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-weight:500;font-size:1.6rem;line-height:1.85}
+.cust [data-k]:not(.on){display:none}
+.cust-src{margin:0;padding:8px 18px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+.cust-src span{display:block}
+@media (max-width:640px){.cust-body{grid-template-columns:1fr}.cust-en,.cust-he{grid-column:1;grid-row:auto}.cust-he p{font-size:1.4rem}}
+.rtable.ctr td{text-align:center}
+.rtable.multi td:first-child{width:auto;background:none}
+.rtable.lbl td:first-child{width:14%;background:var(--bg)}
+.rtable.ctr td:first-child{width:auto}
+.rsec-body > p.heline,.read section > p.heline{max-width:none;direction:rtl;text-align:center;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-weight:700;font-size:2.3rem;line-height:1.5;margin:4px 0 16px}
+.hsrc{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:4px 0 16px}
+.hsrc h4{margin:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 18px;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:1.25rem;font-weight:700;direction:rtl;text-align:right}
+.hsrc p{direction:rtl;text-align:right;margin:0;padding:12px 18px;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-weight:500;font-size:1.4rem;line-height:1.75;white-space:pre-line}
+@media (max-width:640px){
+  .rtable thead{display:none}
+  .rtable table,.rtable tbody,.rtable tr,.rtable td{display:block;width:auto}
+  .rtable td:first-child{width:auto}
+  .rtable td::before{content:attr(data-h);display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:2px}
+}
+.src-tag{display:block;margin:-8px 0 16px;font-size:.86rem;color:var(--muted)}
+.prayer{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:6px 0 8px}
+.pr-row{display:grid;grid-template-columns:1fr 1fr}
+.pr-row + .pr-row{border-top:1px solid var(--line)}
+.pr-he{grid-column:2;grid-row:1;direction:rtl;text-align:right;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-weight:500;font-size:1.72rem;line-height:1.8;padding:10px 20px;white-space:pre-line;margin:0}
+.pr-en{grid-column:1;grid-row:1;background:var(--bg);padding:13px 20px;font-size:1.04rem;line-height:1.65;white-space:pre-line;margin:0}
+.bracha{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 16px;text-align:center}
+.bracha h4{margin:0;background:var(--night);color:var(--night-ink);font-weight:600;font-size:1rem;padding:9px 14px}
+.br-he{direction:rtl;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-weight:500;font-size:1.9rem;line-height:1.75;white-space:pre-line;margin:0;padding:14px 16px 6px}
+.br-en{margin:0 auto;padding:4px 18px 16px;max-width:52ch;font-size:1.02rem;line-height:1.6}
+.cdo-list{margin:0;padding:0;list-style:none}
+.cdo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:0 0 14px}
+.cdo p{margin:0 0 10px;font-size:1.04rem;line-height:1.7}
+.cdo .from{font-size:.95rem;margin:0 0 4px}
+.cdo .cites{font-size:.88rem;color:var(--muted);margin:0}
+.cdo .pid{float:right;margin-left:10px;font-size:.78rem;color:var(--muted)}
+.booklet-ref{margin-top:28px}
+.booklet-ref h2{font-size:1.1rem;margin-bottom:8px}
+@media (max-width:640px){
+  .pr-row{grid-template-columns:1fr}
+  .pr-he,.pr-en{grid-column:1;grid-row:auto}
+  .pr-he{padding:10px 14px 4px;font-size:1.5rem}
+  .pr-en{padding:12px 14px}
+  .br-he{font-size:1.65rem}
+}
+
 @media (prefers-reduced-motion: reduce){
   .wheel{transition-duration:.4s}
   .menorah .flame,.menorah .glow{transition:none}
@@ -193,6 +301,47 @@ tr.clickable:hover td{background:var(--gold-soft)}
   #print .row{margin:0 0 6pt}
   #print .box{border:1px solid #000;padding:8pt;min-height:58pt;margin:3pt 0 10pt;white-space:pre-wrap}
   #print b{font-weight:bold}
+  /* Reading print: only when #print has class "rp" */
+  @page reading{
+    margin:0.7in 0.75in;
+    @top-right{content:"בס״ד";font-family:Arial,sans-serif;font-size:11pt;color:#000}
+  }
+  #print.rp{page:reading;font-family:Arial,sans-serif;font-size:11.5pt;line-height:1.45}
+  #print.rp h1{font-size:17pt;text-align:left;margin:0 0 8pt}
+  #print.rp h2{font-size:13pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1px solid #000;break-after:avoid}
+  #print.rp p{margin:0 0 6pt}
+  #print.rp .ov{border:1px solid #000;padding:6pt 9pt;margin:0 0 6pt}
+  #print.rp .src{font-size:9.5pt;margin:-3pt 0 7pt}
+  #print.rp ol,#print.rp ul{margin:0 0 6pt;padding-left:22pt}
+  #print.rp table{border-collapse:collapse;width:100%;margin:2pt 0 8pt}
+  #print.rp td{border:1px solid #000;padding:4pt 7pt;vertical-align:top;white-space:pre-line;width:50%}
+  #print.rp tr{break-inside:avoid}
+  #print.rp .phe{direction:rtl;text-align:right;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:14pt;line-height:1.6}
+  #print.rp .br{border:1px solid #000;margin:0 0 7pt;break-inside:avoid;text-align:center}
+  #print.rp .br .lbl{border-bottom:1px solid #000;padding:3pt;font-weight:bold}
+  #print.rp .br .bhe{direction:rtl;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:15pt;line-height:1.6;white-space:pre-line;margin:4pt 0 2pt}
+  #print.rp .br .ben{margin:0 8pt 5pt}
+  #print.rp .cd{border:1px solid #000;padding:5pt 8pt;margin:0 0 7pt;break-inside:avoid}
+  #print.rp .cd .meta{font-size:9.5pt;margin:0}
+  #print.rp .today{background:none;border:1px solid #000;border-radius:0;padding:6pt 9pt;margin-top:12pt;break-inside:avoid}
+  #print.rp .today h2{border:0;margin:0 0 3pt;color:#000}
+  #print.rp .keep{break-inside:avoid}
+  #print.rp .cs{border:1px solid #000;margin:0 0 8pt}
+  #print.rp .cs .ch{border-bottom:1px solid #000;padding:3pt 7pt;font-weight:bold}
+  #print.rp .cs td{border:0;border-right:1px solid #000}
+  #print.rp .cs td:last-child{border-right:0}
+  #print.rp .cs table{margin:0}
+  #print.rp .cs tr{break-inside:auto}
+  #print.rp .cs .ch{break-after:avoid}
+  #print.rp .cs .cm{border-top:1px solid #000;padding:2pt 7pt;font-size:9pt}
+  #print.rp table.t2 td{width:auto}
+  #print.rp table.t2 th{border:1px solid #000;padding:3pt 7pt;text-align:left;font-weight:bold}
+  #print.rp table.t2 td:first-child{width:36%}
+  #print.rp table.t2 td p{margin:0 0 3pt}
+  #print.rp .gp{text-align:center;letter-spacing:.4em;margin:0 0 6pt}
+  #print.rp .hl{direction:rtl;text-align:center;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:20pt;margin:2pt 0 6pt}
+  #print.rp .hs{border:1px solid #000;padding:4pt 8pt;margin:0 0 7pt;direction:rtl;text-align:right;font-family:"Frank Ruhl Libre","Times New Roman",serif;font-size:13pt;line-height:1.5;white-space:pre-line;break-inside:avoid}
+  #print.rp .hs b{display:block;border-bottom:1px solid #000;margin-bottom:3pt}
 }
 </style>
 </head>
@@ -336,6 +485,7 @@ function openGroup(g, preview){
 function renderDash(){
   const g = state.group, t = topicByN(g.topic);
   document.body.classList.add("has-tabs");
+  document.body.classList.toggle("topic-wide", state.tab === "topic");
   const who = state.preview ? "Preview" : `${g.grade ? "Grade " + esc(g.grade) : "Grade not assigned"} · Code ${esc(String(g.code || "").toUpperCase())}`;
   app.innerHTML = `
     ${state.preview ? `<div class="preview-bar">Teacher preview of topic ${t.n} <button type="button" id="back">Back to teacher view</button></div>` : ""}
@@ -364,30 +514,189 @@ function linkify(s){
     return `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(m[1])}</a>${esc(m[2])}`;
   }).join("");
 }
-function readingHTML(r){
-  if (!r) return null;
-  if (typeof r === "string") return `<p><a href="${esc(r)}" target="_blank" rel="noopener">Open the reading sheet</a></p>`;
-  return r.map(p => `<p dir="auto">${linkify(p)}</p>`).join("");
+/* Hebrew inside English: each Hebrew word or phrase is isolated right-to-left,
+   so a line that starts with Hebrew no longer flips the whole paragraph. */
+const HE_RUN = /[\u05D0-\u05EA](?:[\u0591-\u05C7\u05D0-\u05EA\u05F3\u05F4]|["'](?=[\u0591-\u05C7\u05D0-\u05EA]))*(?:['\u05F3](?![A-Za-z]))?(?:(?:[ \u00A0]+|-|\u05BE)[\u05D0-\u05EA](?:[\u0591-\u05C7\u05D0-\u05EA\u05F3\u05F4]|["'](?=[\u0591-\u05C7\u05D0-\u05EA]))*(?:['\u05F3](?![A-Za-z]))?)*/g;
+function heIso(s){
+  s = String(s == null ? "" : s);
+  let out = "", last = 0;
+  s.replace(HE_RUN, (m, i) => { out += esc(s.slice(last, i)) + `<bdi class="hx" lang="he" dir="rtl">${esc(m)}</bdi>`; last = i + m.length; return m; });
+  return out + esc(s.slice(last));
+}
+function rich(s){
+  return String(s).split(/(https?:\/\/[^\s]+)/g).map((p, i) => {
+    if (i % 2 === 0) return heIso(p);
+    const m = p.match(/^(.*?)([.,;)\]]*)$/);
+    return `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(m[1])}</a>${esc(m[2])}`;
+  }).join("");
+}
+/* Customs switch for prayers. Texts live in D.customTexts, keyed "<prayer>-<custom>". */
+const CUSTOMS = [["ash", "Ashkenaz"], ["sef", "Sefard"], ["ari", "Chabad (Nusach Ari)"], ["edot", "Edot HaMizrach"]];
+let curCustom = (() => { const c = store.get("expo:custom"); return CUSTOMS.some(x => x[0] === c) ? c : "ash"; })();
+const customLabel = k => (CUSTOMS.find(x => x[0] === k) || ["", ""])[1];
+/* Hashem's Names shown the booklet's way (safe to print); cantillation marks hidden. */
+function shem(s){
+  return String(s).replace(/[\u0591-\u05AF]/g, "")
+    .replace(/י[\u05B0-\u05C7]*ה[\u05B0-\u05C7]*ו[\u05B0-\u05C7]*ה[\u05B0-\u05C7]*/g, "יְ-יָ")
+    .replace(/יְיָ/g, "יְ-יָ")
+    .replace(/(א[\u05B0-\u05C7]*)(?=ל[\u05B0-\u05C7]*ה[\u05B0-\u05C7]*י)/g, "$1-");
+}
+function customHTML(it){
+  const T = D.customTexts || {};
+  const have = CUSTOMS.filter(([k]) => T[it.custom + "-" + k]);
+  const he = have.map(([k]) => `<div data-k="${k}" class="${k === curCustom ? "on" : ""}">${T[it.custom + "-" + k].he.map(p => `<p lang="he" dir="rtl">${esc(shem(p))}</p>`).join("")}</div>`).join("");
+  const src = have.map(([k]) => { const t = T[it.custom + "-" + k]; return `<span data-k="${k}" class="${k === curCustom ? "on" : ""}">Hebrew (${esc(customLabel(k))}): ${esc(t.ref)}, ${esc(t.ver)}, on Sefaria.</span>`; }).join("");
+  return `<div class="cust"><div class="cust-head"><h4 dir="ltr">${rich(it.title)}</h4><div class="cust-bar" role="group" aria-label="Custom">${have.map(([k, l]) => `<button type="button" data-cust="${k}" aria-pressed="${k === curCustom}">${esc(l)}</button>`).join("")}</div></div>
+    <div class="cust-body"><div class="cust-he">${he}</div><p class="cust-en" dir="ltr">${rich(it.en)}</p></div>
+    <p class="cust-src">${src}<span>English: ${rich(it.enSrc)}</span></p></div>`;
+}
+/* Booklet reading. Each item is either a plain paragraph (a string) or one of:
+   { h: "Section heading" }  starts a new drop-down section
+   { p: "Paragraph", list: [...], bullets: [...], src: "Source label" }
+   { prayer: [["Hebrew line(s)", "English"], ...] }   side by side, as in the booklet
+   { bracha: "Label", he: "Hebrew lines", en: "English" } */
+function readingSecs(r){
+  const secs = [];
+  let cur = null;
+  const add = html => { if (!cur) { cur = { h: null, body: [] }; secs.push(cur); } cur.body.push(html); };
+  r.forEach(it => {
+    if (typeof it === "string") return add(`<p dir="ltr">${rich(it)}</p>`);
+    if (it.h) { cur = { h: it.h, body: [] }; secs.push(cur); return; }
+    if (it.prayer) return add(`<div class="prayer">${it.prayer.map(([he, en]) =>
+      `<div class="pr-row"><p class="pr-he" lang="he" dir="rtl">${esc(he)}</p><p class="pr-en" dir="ltr">${rich(en)}</p></div>`).join("")}</div>`);
+    if (it.bracha) return add(`<div class="bracha"><h4 dir="ltr">${rich(it.bracha)}</h4><p class="br-he" lang="he" dir="rtl">${esc(it.he)}</p><p class="br-en" dir="ltr">${rich(it.en)}</p></div>`);
+    if (it.table) { const hd = it.table.head || []; return add(`<div class="rtable${hd.length > 2 ? " multi" : ""}${it.table.center ? " ctr" : ""}${it.table.label ? " lbl" : ""}"><table dir="ltr">${hd.length ? `<thead><tr>${hd.map(x => `<th>${rich(x)}</th>`).join("")}</tr></thead>` : ""}<tbody>${it.table.rows.map(r => `<tr>${r.map((c, j) => `<td data-h="${esc(hd[j] || "")}">${String(c).split("\n").map(x => `<p>${rich(x)}</p>`).join("")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`); }
+    if (it.custom) return add(customHTML(it));
+    if (it.banner) return add(`<p class="banner" dir="ltr">${rich(it.banner)}</p>`);
+    if (it.heline) return add(`<p class="heline" lang="he" dir="rtl">${esc(it.heline)}</p>`);
+    if (it.hsrc) return add(`<div class="hsrc"><h4 lang="he">${esc(it.hsrc.label)}</h4><p lang="he" dir="rtl">${esc(it.hsrc.he)}</p></div>`);
+    if (it.gap) return add(`<p class="gap" role="note" aria-label="Part of the text is skipped here">• • •</p>`);
+    let h = it.p ? `<p dir="ltr">${rich(it.p)}</p>` : "";
+    if (it.list) h += `<ol dir="ltr">${it.list.map(x => `<li>${rich(x)}</li>`).join("")}</ol>`;
+    if (it.bullets) h += `<ul dir="ltr">${it.bullets.map(x => `<li>${rich(x)}</li>`).join("")}</ul>`;
+    if (it.src) h += `<span class="src-tag">${rich(it.src)}</span>`;
+    add(h);
+  });
+  return secs;
+}
+/* chabad.org additions: { id, text, title, by, url, cites }. Older plain strings still work. */
+function cdoHTML(x){
+  return `<ul class="cdo-list">${x.map(c => `<li class="cdo">
+      <span class="pid">${esc(c.id)}</span>
+      <p dir="ltr">${rich(c.text)}</p>
+      <p class="from">From <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a>${c.by ? ` by ${esc(c.by)}` : ""}, chabad.org</p>
+      <p class="cites">Sources: ${rich(c.cites || "The article gives no specific source for this paragraph.")}</p>
+    </li>`).join("")}</ul>`;
 }
 function panelTopic(panel, t){
-  const reading = readingHTML(t.reading), extra = readingHTML(t.extra);
+  const secs = Array.isArray(t.reading) ? readingSecs(t.reading) : [];
+  const ex = Array.isArray(t.extra) ? t.extra : [];
+  const exObj = ex.length > 0 && typeof ex[0] === "object";
+  const dropdowns = secs.some(s => s.h);
+  const menu = [];
+  if (t.overview) menu.push(["sec-short", "In short"]);
+  let block;
+  if (dropdowns) {
+    const parts = secs.map((s, i) => {
+      const id = "sec-" + (i + 1), title = s.h || "Reading";
+      menu.push([id, title]);
+      return `<details class="rsec" id="${id}"${i === 0 ? " open" : ""}><summary><h3>${rich(title)}</h3></summary><div class="rsec-body">${s.body.join("")}</div></details>`;
+    });
+    if (ex.length) {
+      menu.push(["sec-cdo", "From chabad.org"]);
+      const body = exObj ? cdoHTML(ex) : ex.map(p => `<p dir="ltr">${rich(p)}</p>`).join("");
+      parts.push(`<details class="rsec" id="sec-cdo"><summary><h3>From chabad.org</h3></summary><div class="rsec-body">${body}</div></details>`);
+    }
+    block = `<div class="read-head"><h2>Reading</h2><div class="tools"><button class="btn ghost" type="button" id="toggle-all">Open all</button><button class="btn ghost" type="button" id="print-reading">Print reading</button></div></div>
+      <div class="rsecs">${parts.join("")}</div>`;
+  } else {
+    /* Older flat format (topics not converted yet) */
+    const flat = secs.length ? `<div class="read">${secs.map(s => `<section>${s.h ? `<h3>${rich(s.h)}</h3>` : ""}${s.body.join("")}</section>`).join("")}</div>` : "";
+    const link = typeof t.reading === "string" ? `<p><a href="${esc(t.reading)}" target="_blank" rel="noopener">Open the reading sheet</a></p>` : "";
+    if (secs.length) menu.push(["sec-read", "Reading"]);
+    block = `<div class="read-head" id="sec-read"><h2>Reading</h2>${secs.length ? '<div class="tools"><button class="btn ghost" type="button" id="print-reading">Print reading</button></div>' : ""}</div>
+      ${flat || link || `<div class="slot">Your reading sheet will be here soon. Start with the booklet pages.</div>`}`;
+    if (ex.length) {
+      menu.push(["sec-cdo", "From chabad.org"]);
+      block += `<div class="section" id="sec-cdo" style="margin-top:30px"><h2>From chabad.org</h2>${exObj ? cdoHTML(ex) : `<div class="read"><section>${ex.map(p => `<p dir="ltr">${rich(p)}</p>`).join("")}</section></div>`}</div>`;
+    }
+  }
+  menu.push(["sec-today", "Connect it to today"]);
   panel.innerHTML = `
-    <p class="focus">${txt(t.focus)}</p>
-    <div class="section">
-      <h2>Read in your Chanukah booklet</h2>
-      <ul class="pages">${t.pages.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
-    </div>
-    <div class="section">
-      <h2>Reading sheet</h2>
-      ${t.overview ? `<p class="muted" dir="auto">${txt(t.overview)}</p>` : ""}
-      ${reading ? `<div class="reading">${reading}</div>` : `<div class="slot">Your reading sheet will be here soon. Start with the booklet pages.</div>`}
-    </div>
-    ${extra ? `<div class="section"><h2>More to read</h2><div class="reading">${extra}</div></div>` : ""}
-    <div class="today">
-      <h2>Connect it to today</h2>
-      <p>${txt(t.today)}</p>
+    <div class="topic-layout">
+      <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol>${menu.map(([id, l]) => `<li><button type="button" data-go="${id}">${rich(l)}</button></li>`).join("")}</ol></nav>
+      <div class="topic-main">
+        ${t.overview ? `<div class="overview" id="sec-short"><h2>In short</h2><p dir="ltr">${rich(t.overview)}</p></div>` : ""}
+        <p class="focus">${txt(t.focus)}</p>
+        <div class="section">${block}</div>
+        <div class="today" id="sec-today">
+          <h2>Connect it to today</h2>
+          <p dir="ltr">${rich(t.today)}</p>
+        </div>
+        <div class="booklet-ref">
+          <h2>Where this is in your booklet</h2>
+          <ul class="pages">${t.pages.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+        </div>
+      </div>
     </div>`;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  panel.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => {
+    const el = panel.querySelector("#" + b.dataset.go);
+    if (!el) return;
+    if (el.tagName === "DETAILS") el.open = true;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    const f = el.querySelector("summary"); if (f) f.focus({ preventScroll: true });
+  }));
+  const all = [...panel.querySelectorAll(".rsec")];
+  const tg = panel.querySelector("#toggle-all");
+  const sync = () => { if (tg) tg.textContent = all.every(d => d.open) ? "Close all" : "Open all"; };
+  if (tg) tg.addEventListener("click", () => { const open = !all.every(d => d.open); all.forEach(d => d.open = open); sync(); });
+  all.forEach(d => d.addEventListener("toggle", sync));
+  sync();
+  panel.querySelectorAll("[data-cust]").forEach(b => b.addEventListener("click", () => {
+    curCustom = b.dataset.cust; store.set("expo:custom", curCustom);
+    panel.querySelectorAll(".cust [data-k]").forEach(el => el.classList.toggle("on", el.dataset.k === curCustom));
+    panel.querySelectorAll("[data-cust]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.cust === curCustom)));
+  }));
+  const pb = panel.querySelector("#print-reading");
+  if (pb) pb.addEventListener("click", () => printReading(t));
 }
+/* Print: plain black and white, בס״ד at the top right of every page (page margin box). */
+function printReading(t){
+  const r = Array.isArray(t.reading) ? t.reading : [];
+  let body = "";
+  r.forEach(it => {
+    if (typeof it === "string") { body += `<p>${rich(it)}</p>`; return; }
+    if (it.h) { body += `<h2>${rich(it.h)}</h2>`; return; }
+    if (it.prayer) { body += `<table>${it.prayer.map(([he, en]) => `<tr><td>${rich(en)}</td><td class="phe" lang="he" dir="rtl">${esc(he)}</td></tr>`).join("")}</table>`; return; }
+    if (it.table) { const hd = it.table.head || []; body += `<table class="t2">${hd.length ? `<tr>${hd.map(x => `<th>${rich(x)}</th>`).join("")}</tr>` : ""}${it.table.rows.map(r => `<tr>${r.map(c => `<td>${String(c).split("\n").map(x => `<p>${rich(x)}</p>`).join("")}</td>`).join("")}</tr>`).join("")}</table>`; return; }
+    if (it.gap) { body += `<p class="gp">• • •</p>`; return; }
+    if (it.custom) { const tx = (D.customTexts || {})[it.custom + "-" + curCustom] || (D.customTexts || {})[it.custom + "-ash"]; if (tx) body += `<div class="cs"><div class="ch">${rich(it.title)} (custom shown: ${esc(customLabel(curCustom))})</div><table><tr><td>${rich(it.en)}</td><td class="phe" lang="he" dir="rtl">${tx.he.map(p => esc(shem(p))).join("\n")}</td></tr></table><div class="cm">Hebrew: ${esc(tx.ref)}, ${esc(tx.ver)}, on Sefaria. English: ${rich(it.enSrc)}</div></div>`; return; }
+    if (it.banner) { body += `<p style="text-align:center;font-weight:bold;font-size:13pt">${rich(it.banner)}</p>`; return; }
+    if (it.heline) { body += `<p class="hl" lang="he" dir="rtl">${esc(it.heline)}</p>`; return; }
+    if (it.hsrc) { body += `<div class="hs" lang="he" dir="rtl"><b>${esc(it.hsrc.label)}</b>${esc(it.hsrc.he)}</div>`; return; }
+    if (it.bracha) { body += `<div class="br"><div class="lbl">${rich(it.bracha)}</div><div class="bhe" lang="he" dir="rtl">${esc(it.he)}</div><p class="ben">${rich(it.en)}</p></div>`; return; }
+    let k = "";
+    if (it.p) k += `<p>${rich(it.p)}</p>`;
+    if (it.list) k += `<ol>${it.list.map(x => `<li>${rich(x)}</li>`).join("")}</ol>`;
+    if (it.bullets) k += `<ul>${it.bullets.map(x => `<li>${rich(x)}</li>`).join("")}</ul>`;
+    if (it.src) k += `<p class="src">${rich(it.src)}</p>`;
+    body += (it.list || it.bullets) ? `<div class="keep">${k}</div>` : k;
+  });
+  const x = Array.isArray(t.extra) ? t.extra : [];
+  let ex = "";
+  if (x.length && typeof x[0] === "object") ex = `<h2>From chabad.org</h2>` + x.map(c => `<div class="cd"><p>${rich(c.text)}</p><p class="meta">From “${esc(c.title)}”${c.by ? ` by ${esc(c.by)}` : ""}, chabad.org: ${esc(c.url)}</p><p class="meta">Sources: ${rich(c.cites || "The article gives no specific source for this paragraph.")}</p></div>`).join("");
+  else if (x.length) ex = `<h2>From chabad.org</h2>` + x.map(p => `<p>${rich(p)}</p>`).join("");
+  const pr = document.getElementById("print");
+  pr.className = "rp";
+  pr.innerHTML = `
+    <h1>Topic ${t.n}: ${rich(t.name)}</h1>
+    ${t.overview ? `<div class="ov">${rich(t.overview)}</div>` : ""}
+    ${body}${ex}
+    <div class="today"><h2>Connect it to today</h2><p>${rich(t.today)}</p></div>`;
+  window.print();
+}
+window.addEventListener("afterprint", () => { const pr = document.getElementById("print"); if (pr.className === "rp") { pr.className = ""; pr.innerHTML = ""; } });
 
 /* ----- Idea wheel ----- */
 function wheelSVG(ideas){
