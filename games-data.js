@@ -221,7 +221,9 @@ window.EXPO_GAMES = {
     ["נ ג ה פ", "What dreidels say in ארץ ישראל - it happened here"],
     ["ג (גאַנץ)", "Take the whole pot"],
     ["ש (שטעל)", "Put one in"],
-    ["משיח", "The letters נגהש have the same גמטריא as this word"]
+    ["משיח", "The letters נגהש have the same גמטריא as this word"],
+    ["חנוכה געלט", "Yiddish for money - given to children on Chanukah"],
+    ["צדקה", "10% of our gelt goes to this"]
   ],
   seq: [
     "The Greeks forbid children to learn תורה",
@@ -235,7 +237,8 @@ window.EXPO_GAMES = {
     {a:"The dreidel", c:["I am a toy connected to Chanukah.", "I was really a secret cover-up for learning תורה.", "I have 4 letters on my sides."]},
     {a:"The letter ג", c:["I am a letter on the dreidel.", "In the game I am the best letter to spin.", "When you land on me you take the whole pot."]},
     {a:"The letter ש", c:["I am a letter on the dreidel.", "In ארץ ישראל I am replaced by פ.", "When you land on me you put one in."]},
-    {a:"The gragger", c:["I am a toy, but not for Chanukah.", "I belong to פורים.", "I am twirled from the bottom, not spun from the top."]}
+    {a:"The gragger", c:["I am a toy, but not for Chanukah.", "I belong to פורים.", "I am twirled from the bottom, not spun from the top."]},
+    {a:"חנוכה געלט", c:["I am a Yiddish word.", "I mean money.", "Children get me on Chanukah, especially on the fifth night."]}
   ],
   tf: [
     {s:"נ ג ה ש stands for נס גדול היה שם - a great miracle happened there.", t:true},
@@ -243,14 +246,18 @@ window.EXPO_GAMES = {
     {s:"Children played dreidel to hide that they were learning תורה.", t:true},
     {s:"Landing on ה means you take the whole pot.", t:false, fix:"ה means half - you take half the pot."},
     {s:"The letters נגהש have the same גמטריא as משיח.", t:true},
-    {s:"We spin the dreidel from the bottom and the gragger from the top.", t:false, fix:"Dreidel is spun from the top; the gragger is twirled from the bottom."}
+    {s:"We spin the dreidel from the bottom and the gragger from the top.", t:false, fix:"Dreidel is spun from the top; the gragger is twirled from the bottom."},
+    {s:"חנוכה געלט means chocolate coins in Yiddish.", t:false, fix:"Gelt means money; chocolate gelt coins are a newer custom."},
+    {s:"The fifth night of חנוכה is especially for giving gelt.", t:true}
   ],
   gap: [
     {b:"The word dreidel means top or spinning thing in", a:"Yiddish", w:"."},
     {b:"The 4 letters stand for נס גדול היה", a:"שם", w:"- a great miracle happened there."},
     {b:"In ארץ ישראל dreidels say נס גדול היה", a:"פה", w:"- a great miracle happened here."},
     {b:"When you spin a ג, you take the whole", a:"pot", w:"."},
-    {b:"The letters נגהש have the same גמטריא as", a:"משיח", w:"."}
+    {b:"The letters נגהש have the same גמטריא as", a:"משיח", w:"."},
+    {b:"חנוכה געלט means money in", a:"Yiddish", w:"."},
+    {b:"We give 10% of our gelt to", a:"צדקה", w:"."}
   ],
   jeop: [
     {cat:"The letters", qa:[
@@ -261,10 +268,10 @@ window.EXPO_GAMES = {
       ["נ - nothing", "Do nothing",10],
       ["ג - gantz", "Take the whole pot",20],
       ["ש - shtel", "Put one in",30]]},
-    {cat:"The cover-up", qa:[
-      ["Why the Greeks were extra harsh to children", "As long as children learned תורה, their mission would fail",10],
-      ["What the children did when soldiers came", "Hid the books and played dreidel",20],
-      ["Why we spin from the top", "Chanukah's miracle was clearly from Above, higher than nature",30]]}
+    {cat:"חנוכה געלט", qa:[
+      ["What gelt means", "Money, in Yiddish",10],
+      ["Why kids got gelt long ago", "A reward for their learning",20],
+      ["How much of the gelt goes to צדקה", "10%",30]]}
   ]
 },
 "10": {
@@ -423,58 +430,6 @@ window.EXPO_GAMES = {
       ["What the letters stand for", "ח' נרות והלכה כבית הלל - 8 lights and the law follows Beis Hillel",10],
       ["What בית הלל say about lighting", "Add another light every night",20],
       ["The lesson from adding light nightly", "Always add more תורה and מצוות, no matter how well we did before",30]]}
-  ]
-},
-"16": {
-  match: [
-    ["Gelt", "Money, in Yiddish"],
-    ["The fifth night", "Especially for giving חנוכה געלט"],
-    ["10%", "How much of your gelt goes to צדקה"],
-    ["Long ago", "Kids stayed home, learned with parents, and were rewarded with gelt"],
-    ["Chocolate coins", "Popular today, often used in dreidel games"],
-    ["צדקה", "We increase in this during Chanukah, especially for poor תורה learners"]
-  ],
-  seq: [
-    "Long ago, kids stayed home from school on Chanukah",
-    "Parents had more time to learn with them",
-    "Parents heard what they had learned in school",
-    "The kids were rewarded for their learning with חנוכה געלט",
-    "Today gelt still encourages learning - and 10% goes to צדקה"
-  ],
-  who: [
-    {a:"חנוכה געלט", c:["My name is Yiddish.", "I mean money.", "Kids get me on Chanukah, especially on the fifth night."]},
-    {a:"The fifth night", c:["I am one of the nights of Chanukah.", "All nights are fine for gelt, but I am special.", "I am the night especially for giving חנוכה געלט."]},
-    {a:"Chocolate gelt", c:["I am a modern kind of gelt.", "I am wrapped in gold or silver foil.", "I am often used instead of money in dreidel games."]},
-    {a:"10%", c:["I am a fraction of your gelt.", "I do not stay with you.", "I go to צדקה."]}
-  ],
-  tf: [
-    {s:"Gelt means money in Yiddish.", t:true},
-    {s:"Long ago, kids got gelt as a reward for their learning.", t:true},
-    {s:"Half of your gelt should go to צדקה.", t:false, fix:"10% of the money goes to צדקה."},
-    {s:"The first night is especially for gelt.", t:false, fix:"The fifth night is especially for חנוכה געלט."},
-    {s:"Chocolate coins are often used in place of money in dreidel games.", t:true},
-    {s:"On Chanukah we should decrease in צדקה.", t:false, fix:"We should increase in צדקה, especially for poor people who learn תורה."}
-  ],
-  gap: [
-    {b:"Gelt means", a:"money", w:"in Yiddish."},
-    {b:"Kids were rewarded for their fine", a:"learning", w:"with חנוכה געלט."},
-    {b:"10% of the gelt goes to", a:"צדקה", w:"."},
-    {b:"The", a:"fifth", w:"night is especially for חנוכה געלט."},
-    {b:"Chocolate coins are wrapped in gold or silver", a:"foil", w:"."}
-  ],
-  jeop: [
-    {cat:"Gelt basics", qa:[
-      ["What gelt means", "Money, in Yiddish",10],
-      ["The special night for gelt", "The fifth night",20],
-      ["How much goes to צדקה", "10%",30]]},
-    {cat:"Why gelt?", qa:[
-      ["Why kids got gelt long ago", "A reward for their learning",10],
-      ["Why parents had time to learn with the kids", "Kids stayed home from school in celebration of Chanukah",20],
-      ["What gelt encourages today", "Learning תורה - and giving צדקה",30]]},
-    {cat:"Gelt today", qa:[
-      ["Chocolate coins wrapped in foil", "Chocolate gelt",10],
-      ["Where chocolate gelt is often used", "In dreidel games, instead of money",20],
-      ["Who to increase צדקה for on Chanukah", "Poor people who learn תורה",30]]}
   ]
 },
 "17": {

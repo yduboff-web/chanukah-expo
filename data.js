@@ -626,16 +626,18 @@ window.EXPO = {
     },
     {
       "n": 6,
-      "name": "Dreidel",
-      "about": "The letters and the story behind the game.",
-      "focus": "What the letters mean, why kids played it under the Greeks, and how the game works.",
-      "today": "Those kids kept learning when it was dangerous. What keeps you learning?",
+      "name": "Dreidel & Gelt",
+      "about": "The letters and the story behind the game, and why we give gelt.",
+      "focus": "What the dreidel’s letters mean, why kids played it under the Greeks, how the game works, why we give gelt, and giving part of it to tzedakah.",
+      "today": "Those kids kept learning when it was dangerous. What keeps you learning? And how can you use what you have for good?",
       "pages": [
+        "p. 4",
+        "p. 15",
         "p. 23",
         "p. 25",
         "pp. 27–29"
       ],
-      "overview": "The dreidel looks like a simple game, but it hides a secret story from the times of the Greeks. Here you will learn how to play and what the four letters really mean.",
+      "overview": "The dreidel looks like a simple game, but it hides a secret story from the times of the Greeks. Here you will learn how to play and what the four letters really mean. Where did the custom of giving Chanukah gelt come from, and why do we give it? Gelt makes Chanukah exciting, rewards children for learning Torah, and teaches them to give tzedakah.",
       "reading": [
         {
           "h": "The Dreidel"
@@ -722,7 +724,33 @@ window.EXPO = {
         "One explanation for this difference is because the miracle of חנוכה was clearly from Above (the top), in a manner that was higher than nature, while the Miracle of פורים was not so clearly from above. It was a miracle that was “clothed” in nature – “below”.",
         "The miracle of פורים did not all happen at once in a clearly miraculous manner, rather, it happened over a few years and included many steps. Looking back at all that happened, we realize that it was all a slowly unfolding miracle, but it takes thought to understand it. חנוכה's miracles were quick and obvious. The Maccabees won an impossible war, and the one-day measure of oil lasted for eight.",
         "Another explanation: On פורים, the Jewish people fasted and Davened, asking for ה''s help. They “worked hard” to annul Haman's decree, and they “earned” the miracle. That's why the Gragger's handle is on the bottom.",
-        "The miracle of חנוכה came even though the Jewish People did not earn it (as much as they did on פורים). We were saved mainly because of ה''s mercy. This is why the Dreidel's “handle” is on the top."
+        "The miracle of חנוכה came even though the Jewish People did not earn it (as much as they did on פורים). We were saved mainly because of ה''s mercy. This is why the Dreidel's “handle” is on the top.",
+        {
+          "h": "חנוכה געלט"
+        },
+        "On חנוכה, we light the מנורה, thank ה' in our Tefilos, eat foods fried in oil, (לאטקעס and סופגניות - doughnuts), play Dreidel and give “חנוכה געלט” to children. What a special time it is for all!",
+        "Some of the חנוכה customs are:",
+        {
+          "table": {
+            "head": [
+              "What",
+              "Why"
+            ],
+            "rows": [
+              [
+                "חנוכה געלט (-money in Yiddish):\nKids get money from their parents and anyone else… Especially the fifth night of חנוכה. All other nights are fine too!",
+                "It makes חנוכה more exciting for the kids!\nMany years ago, in celebration of חנוכה, kids would stay home from school. Their parents would have more time to learn with them and hear what they'd learned in school. The kids were rewarded for their fine learning with חנוכה געלט.\nToday too, the חנוכה געלט is meant to encourage kids to learn תורה, and to give 10% of the money to צדקה.\nRecently, chocolate coins wrapped in gold or silver foil have become very popular, and kids call them – חנוכה געלט. Chocolate Gelt is often used in place of money in Dreidel games."
+              ]
+            ]
+          }
+        },
+        {
+          "h": "צדקה on חנוכה"
+        },
+        {
+          "p": "One should increase in צדקה during חנוכה, especially for the poor people who learn תורה."
+        },
+        "The Hebrew word Chanukah shares the same root as chinuch, \"education.\" ... After the Greeks were defeated, it was necessary to re-educate the Jews—to reintroduce a large part of the population to Torah values. Appropriately, during Hanukkah it is customary to give gelt to children as a reward for Torah study."
       ],
       "extra": [],
       "ideas": [
@@ -745,6 +773,26 @@ window.EXPO = {
         {
           "short": "Top vs. bottom",
           "how": "Show why a dreidel spins from the top and a gragger from the bottom (p. 23)."
+        },
+        {
+          "short": "Earn your gelt",
+          "how": "Visitors answer a question to earn a chocolate coin with a hechsher."
+        },
+        {
+          "short": "10% for tzedakah",
+          "how": "A tzedakah box at the booth. Visitors figure out 10% of their gelt."
+        },
+        {
+          "short": "Gelt history",
+          "how": "A poster: kids got gelt as a reward for learning (p. 15)."
+        },
+        {
+          "short": "Design a coin",
+          "how": "Visitors design their own gelt coin with a Chanukah message."
+        },
+        {
+          "short": "Why money?",
+          "how": "A board on the good things we can do with money."
         }
       ],
       "quiz": [
@@ -797,11 +845,58 @@ window.EXPO = {
             "Nothing happens"
           ],
           "p": "p. 29"
+        },
+        {
+          "q": "What does gelt mean?",
+          "a": "Money, in Yiddish",
+          "w": [
+            "Chocolate",
+            "A present",
+            "Light"
+          ],
+          "p": "p. 15"
+        },
+        {
+          "q": "Why did kids get gelt long ago?",
+          "a": "As a reward for their learning",
+          "w": [
+            "To buy dreidels",
+            "To pay the Greeks",
+            "For lighting the menorah"
+          ],
+          "p": "p. 15"
+        },
+        {
+          "q": "How much of your gelt should go to tzedakah?",
+          "a": "10%",
+          "w": [
+            "Half",
+            "All of it",
+            "None"
+          ],
+          "p": "p. 15"
+        },
+        {
+          "q": "Which night is especially for gelt, according to the booklet?",
+          "a": "The fifth night",
+          "w": [
+            "The first night",
+            "The eighth night",
+            "Motzei Shabbos"
+          ],
+          "p": "p. 15"
         }
       ],
       "readingSources": [
         {
           "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "16-b",
+          "title": "What Is Gelt?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103084/jewish/What-Is-Gelt.htm",
+          "cites": "Maimonides, Mishneh Torah, Hilchot Teshuvah 10:5; Likutei Levi Yitzchak, Igrot, p. 358."
         }
       ]
     },
@@ -1317,123 +1412,6 @@ window.EXPO = {
           "title": "What Does Chanukah Actually Mean?",
           "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4203685/jewish/What-Does-Chanukah-Actually-Mean.htm",
           "cites": "Numbers 7:84 (chanukat hamizbeach); Machzor Vitri 239; Shibolei Haleket 174; see also Maharsha on Talmud, Shabbat 21a."
-        }
-      ]
-    },
-    {
-      "n": 16,
-      "name": "Chanukah gelt",
-      "about": "Why we give it.",
-      "focus": "Why we give gelt, and giving part of it to tzedakah.",
-      "today": "How can you use what you have for good?",
-      "pages": [
-        "p. 4",
-        "p. 15"
-      ],
-      "overview": "Where did the custom of giving Chanukah gelt come from, and why do we give it? Gelt makes Chanukah exciting, rewards children for learning Torah, and teaches them to give tzedakah.",
-      "reading": [
-        {
-          "h": "חנוכה געלט"
-        },
-        "On חנוכה, we light the מנורה, thank ה' in our Tefilos, eat foods fried in oil, (לאטקעס and סופגניות - doughnuts), play Dreidel and give “חנוכה געלט” to children. What a special time it is for all!",
-        "Some of the חנוכה customs are:",
-        {
-          "table": {
-            "head": [
-              "What",
-              "Why"
-            ],
-            "rows": [
-              [
-                "חנוכה געלט (-money in Yiddish):\nKids get money from their parents and anyone else… Especially the fifth night of חנוכה. All other nights are fine too!",
-                "It makes חנוכה more exciting for the kids!\nMany years ago, in celebration of חנוכה, kids would stay home from school. Their parents would have more time to learn with them and hear what they'd learned in school. The kids were rewarded for their fine learning with חנוכה געלט.\nToday too, the חנוכה געלט is meant to encourage kids to learn תורה, and to give 10% of the money to צדקה.\nRecently, chocolate coins wrapped in gold or silver foil have become very popular, and kids call them – חנוכה געלט. Chocolate Gelt is often used in place of money in Dreidel games."
-              ]
-            ]
-          }
-        },
-        {
-          "h": "צדקה on חנוכה"
-        },
-        {
-          "p": "One should increase in צדקה during חנוכה, especially for the poor people who learn תורה."
-        },
-        "The Hebrew word Chanukah shares the same root as chinuch, \"education.\" ... After the Greeks were defeated, it was necessary to re-educate the Jews—to reintroduce a large part of the population to Torah values. Appropriately, during Hanukkah it is customary to give gelt to children as a reward for Torah study."
-      ],
-      "extra": [],
-      "ideas": [
-        {
-          "short": "Earn your gelt",
-          "how": "Visitors answer a question to earn a chocolate coin with a hechsher."
-        },
-        {
-          "short": "10% for tzedakah",
-          "how": "A tzedakah box at the booth. Visitors figure out 10% of their gelt."
-        },
-        {
-          "short": "Gelt history",
-          "how": "A poster: kids got gelt as a reward for learning (p. 15)."
-        },
-        {
-          "short": "Design a coin",
-          "how": "Visitors design their own gelt coin with a Chanukah message."
-        },
-        {
-          "short": "Why money?",
-          "how": "A board on the good things we can do with money."
-        }
-      ],
-      "quiz": [
-        {
-          "q": "What does gelt mean?",
-          "a": "Money, in Yiddish",
-          "w": [
-            "Chocolate",
-            "A present",
-            "Light"
-          ],
-          "p": "p. 15"
-        },
-        {
-          "q": "Why did kids get gelt long ago?",
-          "a": "As a reward for their learning",
-          "w": [
-            "To buy dreidels",
-            "To pay the Greeks",
-            "For lighting the menorah"
-          ],
-          "p": "p. 15"
-        },
-        {
-          "q": "How much of your gelt should go to tzedakah?",
-          "a": "10%",
-          "w": [
-            "Half",
-            "All of it",
-            "None"
-          ],
-          "p": "p. 15"
-        },
-        {
-          "q": "Which night is especially for gelt, according to the booklet?",
-          "a": "The fifth night",
-          "w": [
-            "The first night",
-            "The eighth night",
-            "Motzei Shabbos"
-          ],
-          "p": "p. 15"
-        }
-      ],
-      "readingSources": [
-        {
-          "label": "Alevsky booklet"
-        },
-        {
-          "label": "chabad.org",
-          "paragraphId": "16-b",
-          "title": "What Is Gelt?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103084/jewish/What-Is-Gelt.htm",
-          "cites": "Maimonides, Mishneh Torah, Hilchot Teshuvah 10:5; Likutei Levi Yitzchak, Igrot, p. 358."
         }
       ]
     },

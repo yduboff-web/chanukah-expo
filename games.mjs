@@ -1,6 +1,6 @@
 /* Chanukah Expo topic games — hardened game engine.
    Keeps the supplied topic content and the existing EXPO topic/quiz data. */
-const TAKEN = [1, 2, 3, 5, 6, 10, 11, 15, 16, 17, 18];
+const TAKEN = [1, 2, 3, 5, 6, 10, 11, 15, 17, 18];
 const GAMES = [
   ["match", "Matching", "Pair each term with its meaning."],
   ["seq", "Put it in order", "Arrange the steps or events in the right order."],
