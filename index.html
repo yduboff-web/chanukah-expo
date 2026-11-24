@@ -409,8 +409,10 @@ function menorahSVG(){
 function lightUp(n){
   document.querySelectorAll(".menorah [data-i]").forEach(el => el.classList.toggle("on", Number(el.dataset.i) < n));
 }
+let pendingLoginMsg = "";  // survives the sign-out re-render
 function renderLogin(msg, teacherMode){
   heldLoaded = [];
+  msg = msg || pendingLoginMsg; pendingLoginMsg = "";
   clearSubs();
   state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
             proposal: undefined, quizBest: {}, unsub: [], groupSubs: {} };
@@ -474,7 +476,8 @@ const TABS = [["topic","Your topic"],["wheel","Idea wheel"],["quiz","Review game
 
 function openGroup(g, preview){
   if (!preview && !topicByN(g.topic)) {
-    signOut(auth).then(() => renderLogin("That code isn't active. Check with your teacher."));
+    pendingLoginMsg = "That code isn't active. Check with your teacher.";
+    signOut(auth).then(() => renderLogin());
     return;
   }
   clearSubs();
@@ -1126,7 +1129,8 @@ onAuthStateChanged(auth, user => {
     const gid = email.slice(0, -GROUP_DOMAIN.length);
     getDoc(doc(db, "groups", gid)).then(snap => {
       if (!snap.exists()) {
-        signOut(auth).then(() => renderLogin("That code isn't set up yet. Check with your teacher."));
+        pendingLoginMsg = "That code isn't set up yet. Check with your teacher.";
+        signOut(auth).then(() => renderLogin());
         return;
       }
       const g = Object.assign({ gid }, snap.data());
