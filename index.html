@@ -412,7 +412,7 @@ function lightUp(n){
 let pendingLoginMsg = "";  // survives the sign-out re-render
 function renderLogin(msg, teacherMode){
   heldLoaded = [];
-  msg = msg || pendingLoginMsg; pendingLoginMsg = "";
+  msg = msg || pendingLoginMsg;
   clearSubs();
   state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
             proposal: undefined, quizBest: {}, unsub: [], groupSubs: {} };
@@ -454,6 +454,7 @@ function loginError(err){
   return null;
 }
 function groupLogin(raw){
+  pendingLoginMsg = "";
   let code;
   try { code = normalizeCode(raw); } catch { renderLogin("Check the code your teacher gave you."); return; }
   signInWithEmailAndPassword(auth, code + GROUP_DOMAIN, groupPassword(code)).catch(err => {
@@ -461,6 +462,7 @@ function groupLogin(raw){
   });
 }
 function teacherLogin(email, pass){
+  pendingLoginMsg = "";
   if (!email || !pass) return;
   signInWithEmailAndPassword(auth, String(email).trim(), pass).catch(err => {
     renderLogin(loginError(err) || "That email and password don't match.", true);
