@@ -13,6 +13,12 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/groups/$(gid)).data.uid == request.auth.uid;
     }
 
+    // Topics nobody took: kept here for the teacher only. Written by the admin script, never by the site.
+    match /heldTopics/{n} {
+      allow read: if isTeacher();
+      allow write: if false;
+    }
+
     match /groups/{gid} {
       allow read: if isTeacher() || (signedIn() && resource.data.uid == request.auth.uid);
       allow write: if false;   // admin script only

@@ -109,6 +109,14 @@ await check("teacher lists groups", getDocs(collection(asTeacher(), "groups")), 
 await check("teacher reads A's proposal", getDoc(prop(asTeacher(), GROUP_A)), true);
 await check("teacher reads A's quiz", getDocs(quizCol(asTeacher(), GROUP_A)), true);
 
+console.log("\n-- held topics (teacher only) --");
+await testEnv.withSecurityRulesDisabled(async (ctx) => { await setDoc(doc(ctx.firestore(), "heldTopics", "4"), { json: "{}" }); });
+await check("teacher reads a held topic", getDoc(doc(asTeacher(), "heldTopics", "4")), true);
+await check("group A cannot read a held topic", getDoc(doc(asA(), "heldTopics", "4")), false);
+await check("anonymous cannot read a held topic", getDoc(doc(asAnon(), "heldTopics", "4")), false);
+await check("group A cannot list held topics", getDocs(collection(asA(), "heldTopics")), false);
+await check("teacher cannot write a held topic from the site", setDoc(doc(asTeacher(), "heldTopics", "4"), { json: "x" }), false);
+
 console.log("\n-- happy paths --");
 await check("A reads its own group doc", getDoc(doc(asA(), "groups", GROUP_A)), true);
 await check("A reads its own proposal", getDoc(prop(asA(), GROUP_A)), true);

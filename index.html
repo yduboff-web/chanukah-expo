@@ -375,7 +375,8 @@ const store = {
   set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
   del(k){ try { localStorage.removeItem(k); } catch(e){} }
 };
-const topicByN = n => D.topics.find(t => t.n === Number(n));
+let heldLoaded = [];  // teacher session only: held topics read from Firestore
+const topicByN = n => D.topics.find(t => t.n === Number(n)) || heldLoaded.find(t => t.n === Number(n));
 // Classroom topics selected by the teacher. Other readings stay available by code and in teacher preview.
 // Topics nobody took are not in this file; their content is kept in the repo (teacher-only/) and D.heldTopics lists their numbers.
 const HELD = new Set(D.heldTopics || []);
@@ -409,6 +410,7 @@ function lightUp(n){
   document.querySelectorAll(".menorah [data-i]").forEach(el => el.classList.toggle("on", Number(el.dataset.i) < n));
 }
 function renderLogin(msg, teacherMode){
+  heldLoaded = [];
   clearSubs();
   state = { group: null, teacher: false, preview: false, tab: "topic", quiz: null, wheelRot: 0,
             proposal: undefined, quizBest: {}, unsub: [], groupSubs: {} };
@@ -1002,7 +1004,7 @@ function renderTeacher(){
       <div class="section"><h2>Preview a topic</h2>
         <p class="muted">Opens the page a group with that topic will see.</p>
         <div class="tgrid">${D.topics.map(t => `<button type="button" data-n="${t.n}"><span class="n">${t.n}</span>${txt(t.name)}</button>`).join("")}</div>
-        ${HELD.size ? `<p class="muted">Not taken, kept off the site: topics ${[...HELD].sort((a, b) => a - b).join(", ")}. Their codes still exist but show "That code isn't active."</p>` : ""}
+        ${HELD.size ? `<h3 class="muted" style="margin-top:18px">Not taken (teacher only, hidden from students)</h3><p class="muted">Their codes still exist but students see "That code isn't active."</p><div class="tgrid" id="heldgrid"><span class="muted">Loading…</span></div>` : ""}
       </div>
     </div></main>`;
   app.querySelector("#logout").addEventListener("click", () => signOut(auth));
@@ -1010,6 +1012,16 @@ function renderTeacher(){
     openGroup({ gid: "", code: "PREVIEW", grade: "", topic: Number(b.dataset.n) }, true);
     window.scrollTo({ top: 0 });
   }));
+  const hg = app.querySelector("#heldgrid");
+  if (hg) getDocs(collection(db, "heldTopics")).then(qs => {
+    heldLoaded = qs.docs.map(d => { try { return JSON.parse(d.data().json); } catch (e) { return null; } }).filter(Boolean).sort((a, b) => a.n - b.n);
+    hg.innerHTML = heldLoaded.length ? heldLoaded.map(t => `<button type="button" data-n="${t.n}"><span class="n">${t.n}</span>${txt(t.name)}</button>`).join("") : '<span class="muted">Could not load.</span>';
+    hg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      openGroup({ gid: "", code: "PREVIEW", grade: "", topic: Number(b.dataset.n) }, true);
+      window.scrollTo({ top: 0 });
+    }));
+    renderGroupRows();
+  }).catch(() => { hg.innerHTML = '<span class="muted">Could not load.</span>'; });
   state.unsub.push(onSnapshot(collection(db, "groups"), qs => {
     const groups = qs.docs.map(d => {
       const existing = (state.groups || []).find(g => g.gid === d.id);
@@ -1054,7 +1066,7 @@ function renderGroupRows(){
     const status = p ? (STATUS_LABEL[p.status] || p.status || "Draft").split(" ")[0] : "–";
     const updated = p && p.updatedAt && p.updatedAt.toDate ? p.updatedAt.toDate().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "–";
     const best = g.best ? `${g.best.score}/${g.best.total}` : "–";
-    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${g.grade ? esc(g.grade) : "Not assigned"}</td><td>${t ? t.n + ". " + txt(t.name) : (HELD.has(Number(g.topic)) ? g.topic + ". (held, not on site)" : "?")}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
+    return `<tr class="clickable" data-gid="${esc(g.gid)}"><td><b>${esc(String(g.code || "").toUpperCase())}</b></td><td>${g.grade ? esc(g.grade) : "Not assigned"}</td><td>${t ? t.n + ". " + txt(t.name) : (HELD.has(Number(g.topic)) ? g.topic + ". (not on site)" : "?")}</td><td>${esc(status)}</td><td>${esc(updated)}</td><td>${esc(best)}</td></tr>`;
   }).join("");
   body.querySelectorAll("tr.clickable").forEach(r => r.addEventListener("click", () => renderTeacherDetail(r.dataset.gid)));
   if (state.detail) renderTeacherDetail(state.detail);
