@@ -22,5 +22,5 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHANUKAH_EXPO }}
           projectId: chanukah-expo
-          channelId: pr-1
+          channelId: pr-games
           expires: 7d
