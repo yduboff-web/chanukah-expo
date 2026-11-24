@@ -1,0 +1,12 @@
+node_modules/
+serviceAccount*.json
+service-account*.json
+groups.json
+code-sheet*.txt
+*-password-sheet.txt
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+expo-export-*.csv
+public/

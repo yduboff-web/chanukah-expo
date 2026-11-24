@@ -1,0 +1,9 @@
+{
+  "name": "expo-admin",
+  "private": true,
+  "type": "module",
+  "description": "Admin scripts for the Chanukah Expo Firebase project. Run from this folder.",
+  "dependencies": {
+    "firebase-admin": "^13.5.0"
+  }
+}

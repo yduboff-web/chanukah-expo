@@ -1,59 +1,86 @@
 # Chanukah Expo site
 
-A static site for the 5th and 6th grade Chanukah Expo. Each group types a code and gets its own page: its topic, booklet pages, reading sheets, a booth idea wheel, a review game, a proposal form it can print, and the deadlines.
+The site for the 5th and 6th grade Chanukah Expo. Each group types its code and gets its own page: its topic, booklet pages, reading sheets, a booth idea wheel, a review game, and a proposal form. Proposals and review-game scores save online, and the teacher watches every group's progress live, approves proposals, or sends them back with a note.
 
-There is no server and nothing to install. It is two files:
+It runs on Firebase (free Spark plan): Authentication for the logins, Firestore for saving, Hosting for the site. The topic content is still one file, `data.js`, exactly like before.
+
+## Files
 
 - `index.html`: the whole site (layout, styles, and code)
-- `data.js`: everything the site shows (groups, codes, topics, readings, quiz questions, dates)
+- `data.js`: all the content – topics, booklet pages, readings, wheel ideas, quiz questions, deadlines. **All normal content updates happen here.**
+- `firebase-config.js`: the project's public web config (not a secret)
+- `firestore.rules`: who may read and write what
+- `admin/`: scripts to make logins, reset a group's code, and clean up after the expo
+- `test/`: automated tests for the security rules
 
-**All normal updates happen in `data.js`.** `index.html` only changes if the design or features change.
+## Logins
 
-## Put it online with GitHub Pages
+- **Groups** type one code (topic label plus one digit, any case). The code IS the login – there is no separate password. Codes are made by `admin/create-groups.js`, never written in this repo, and no student names are stored anywhere. The teacher keeps the code-to-name list offline. These chosen codes are predictable: anyone who guesses a code can access that group. The public password expansion only meets Firebase length requirements; it adds no secrecy.
+- **Teacher** taps "Teacher sign in" on the login screen and uses email + password, made by `admin/create-teacher.js`.
 
-1. Create a new GitHub repository called `chanukah-expo`. It must be **public** for GitHub Pages on a free account.
-2. Put `index.html`, `data.js`, and this `README.md` in the root of the `main` branch.
-3. In the repository, go to **Settings → Pages**. Under **Source**, choose **Deploy from a branch**, pick **main** and **/ (root)**, and save.
-4. After a minute or two, the site is live at `https://<github-username>.github.io/chanukah-expo/`.
+## First-time Firebase setup (once)
 
-Suggested workflow for changes: make edits on a branch called `edits`, check them, then merge into `main`. Every merge to `main` updates the live site automatically.
+1. Create the project in the Firebase console under the school Google account, free Spark plan.
+2. **Authentication:** enable the Email/Password provider. In Authentication → Settings → User actions, turn **off** "Enable create (sign-up)" so only the admin scripts can make accounts.
+3. **Firestore:** create the database in production mode, in a US location.
+4. **Hosting:** add a web app, copy its config into `firebase-config.js`, and connect Hosting to this GitHub repo so merges to `main` deploy and pull requests get preview channels.
+5. Put the project id in `.firebaserc`, put the teacher UID (printed by `admin/create-teacher.js`) in `firestore.rules` in place of `TEACHER_UID`, and deploy the rules: `firebase deploy --only firestore:rules`.
 
-## Codes for testing
+## Before the expo: make the groups
 
-- `DEMO5` and `DEMO6`: sample groups
-- `RD5787`: teacher view (all groups, plus a preview of any topic)
+In the `admin/` folder:
 
-Codes are not case-sensitive.
-
-## After the matching: add the real groups
-
-In `data.js`, replace the two DEMO groups in `groups` with one line per group:
-
-```js
-{ code: "OLIVE7", grade: 5, members: ["Moshe", "Dovid"], topic: 2 },
+```sh
+npm install
+# save the service account key from the Firebase console as admin/serviceAccount.json
+cp groups.example.json groups.json   # then fill in one line per group: code, topic and optional grade
+node create-groups.js                # creates the logins, prints a code sheet to copy names onto
+node create-teacher.js you@baderhillel.org /private/path/to/password.txt
 ```
 
-- `code`: short and easy to type. Don't build it from the students' names.
-- `members`: **first names only**. The site is public.
-- `topic`: the topic number, 1–18.
+`groups.json`, `serviceAccount.json`, and the printed code sheet are all in `.gitignore`. Never commit them.
 
-Change `teacherCode` too, before the site goes live.
+## During the expo
 
-## Add a reading sheet or an extra reading
+- A group lost its code or shared it around: `node admin/reset-password.js <old code>` – the group gets a fresh code and keeps its work; the old code stops working.
 
-Each topic in `data.js` has `reading` and `extra`, both `null` until they're ready. Either one can be:
+## After the expo
 
-- a list of paragraphs: `reading: ["First paragraph.", "Second paragraph."]`
-- or a link: `reading: "https://…"`
+```sh
+node admin/export-and-cleanup.js         # exports everything to a CSV, deletes nothing
+node admin/export-and-cleanup.js --yes   # then deletes all group logins and data
+```
 
-`reading` shows as **Reading sheet**. `extra` shows as **More to read**, and only appears once it's filled in.
+## Editing content (data.js)
 
-## Change dates
+Same as before. Reading sheets: edit each topic's `reading` and `extra` paragraphs or links. Deadlines: edit `deadlines`; `proposalDeadline` is the position of the proposal due date in that list, counting from 0. Every merge to `main` deploys automatically.
 
-Edit `deadlines` in `data.js`. Dates are written `"2026-11-30"`. Leave a date as `""` to show "Date coming". `proposalDeadline` is the position of the proposal due date in that list, counting from 0.
+## Hosting build
+
+Run `node build-hosting.mjs` before deploying. Only four website files are copied to `public/`; admin data, logs, and repository metadata are never hosted. GitHub Actions runs this build automatically.
+
+## Testing changes
+
+Work on a branch and open a pull request – Firebase gives the PR its own preview link, and `main` stays live until the PR is merged.
+
+The security rules have automated tests (needs Java for the emulator):
+
+```sh
+npx firebase-tools emulators:start --only firestore --project demo-expo
+cd test && npm install && npm test
+```
 
 ## Good to know
 
-- Proposals save in each student's browser as they type. They hand them in by printing; nothing is sent anywhere.
-- Codes are not real passwords. Anyone who opens the page source can see them. Keep everything on the site non-private.
-- The site works on phones, Chromebooks, and laptops, in light and dark mode.
+- The site works on phones, Chromebooks, and laptops, in light and dark mode, and keeps working through shaky school Wi-Fi (offline cache).
+- Firestore stores group codes, assigned topics and grades, proposals, teacher notes, and quiz scores. Authentication stores generated group login identifiers and the teacher login. No student names are stored.
+
+## Hebrew reading practice
+
+`reading.html` is open without a group login. It has a stopwatch and tap-to-mark word practice. The three blessings, Hanerot Halalu, Al Hanissim and Ya'aleh V'yavo have separate Nusach Ashkenaz, Nusach Ari (Alter Rebbe), Nusach Sefard and Edot HaMizrach options. Texts are copied from the named Hebrew editions on Sefaria, not inferred from the mixed-nusach booklet. Ya'aleh V'yavo uses each edition's own Rosh Chodesh alternative. HTML/rubrics are omitted, vowels, words and punctuation are retained. Source editions can differ within a nusach. `reading-sources.json` records source references, editions, licenses and exact included text; `reading-texts.mjs` contains the website text. Metsudah Hebrew is CC-BY, attributed next to its source link.
+
+Solo practice is held in the current page only and is lost on refresh. A partner session shares only a passage id, marked word indexes and timer state. Its 128-bit random code is a bearer secret: anyone with it may read/change the session. Sessions cannot be listed. They expire after at most two hours and can be explicitly closed/deleted from either screen. Expired records are inaccessible but may remain stored until manually cleaned up. Open room creation uses the project's Spark quota; no paid functions or scheduled cleanup are configured. Group rules and data are separate.
+
+Run `node test/reading-rules.test.js` with the Firestore emulator to test room access, expiry, field limits and group isolation.
+
+Partner sessions show an on-device QR code for the same secret link. QR generation uses the bundled MIT-licensed qrcode-generator 2.0.4 by Kazuhiko Arase (`qr-code.mjs`), with no external QR service or tracking request. The privacy/expiry rules are identical to the link.

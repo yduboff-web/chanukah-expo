@@ -1,0 +1,86 @@
+rules_version = '2';
+
+// Chanukah Expo – Firestore security rules.
+// Teacher access is tied to the configured account UID.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn()  { return request.auth != null; }
+    function isTeacher() { return signedIn() && request.auth.uid == "yGiW0H7NHteL49G6dBu1nx1Hz5Y2"; }
+    function ownsGroup(gid) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/groups/$(gid))
+        && get(/databases/$(database)/documents/groups/$(gid)).data.uid == request.auth.uid;
+    }
+
+    match /groups/{gid} {
+      allow read: if isTeacher() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow write: if false;   // admin script only
+
+      match /work/{doc} {
+        allow read: if isTeacher() || ownsGroup(gid);
+        allow write: if doc == 'proposal' && (isTeacher() || (ownsGroup(gid) && groupMayWrite()));
+      }
+      match /quiz/{id} {
+        allow read: if isTeacher() || ownsGroup(gid);
+        allow create: if ownsGroup(gid) && validQuiz();
+        allow update, delete: if false;
+      }
+    }
+
+    // Partner reading sessions are bearer-link rooms, unrelated to group accounts.
+    // Random 128-bit ids; no listing, names, text entry or audio.
+    match /readingSessions/{sid} {
+      function alive() { return resource.data.expiresAt > request.time; }
+      function shape(d) {
+        return d.keys().hasAll(['passage','marks','elapsedMs','startedAt','createdAt','updatedAt','expiresAt'])
+          && d.keys().hasOnly(['passage','marks','elapsedMs','startedAt','createdAt','updatedAt','expiresAt'])
+          && d.passage in ['blessing1-ash', 'blessing1-ari', 'blessing1-sef', 'blessing1-edot', 'blessing2-ash', 'blessing2-ari', 'blessing2-sef', 'blessing2-edot', 'blessing3-ash', 'blessing3-ari', 'blessing3-sef', 'blessing3-edot', 'hanerot-ash', 'hanerot-ari', 'hanerot-sef', 'hanerot-edot', 'alhanissim-ash', 'alhanissim-ari', 'alhanissim-sef', 'alhanissim-edot', 'yaaleh-ash', 'yaaleh-ari', 'yaaleh-sef', 'yaaleh-edot']
+          && d.marks is list && d.marks.size() <= 256
+          && d.marks.hasOnly([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255])
+          && d.elapsedMs is int && d.elapsedMs >= 0 && d.elapsedMs <= 7200000
+          && (d.startedAt == null || (d.startedAt is timestamp && d.startedAt <= request.time + duration.value(1,'m') && d.startedAt >= d.createdAt))
+          && d.updatedAt == request.time;
+      }
+      allow get: if sid.matches('^[0-9a-f]{32}$') && alive();
+      allow list: if false;
+      allow create: if sid.matches('^[0-9a-f]{32}$') && shape(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.expiresAt > request.time
+        && request.resource.data.expiresAt <= request.time + duration.value(2,'h');
+      allow update: if alive() && shape(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['marks','elapsedMs','startedAt','updatedAt']);
+      allow delete: if alive();
+    }
+
+    // A group may: only write the allowed fields; text fields are strings of
+    // at most 4000 characters; only set status to draft or submitted; never
+    // change teacherNote; never edit once approved.
+    function groupMayWrite() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['idea','see','make','today','materials','status','teacherNote','updatedAt'])
+        && textOk(d, 'idea') && textOk(d, 'see') && textOk(d, 'make')
+        && textOk(d, 'today') && textOk(d, 'materials')
+        && d.status in ['draft', 'submitted']
+        && d.updatedAt == request.time
+        && (resource == null
+              ? !('teacherNote' in d)
+              : resource.data.status != 'approved'
+                && d.get('teacherNote', null) == resource.data.get('teacherNote', null));
+    }
+    function textOk(d, f) {
+      return !d.keys().hasAny([f]) || (d[f] is string && d[f].size() <= 4000);
+    }
+
+    // A finished review-game round: create-only, fixed shape.
+    function validQuiz() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['score','total','mode','at'])
+        && d.score is int && d.score >= 0 && d.score <= 100
+        && d.total is int && d.total > 0 && d.total <= 100
+        && d.score <= d.total
+        && d.mode in ['mine', 'all']
+        && d.at == request.time;
+    }
+  }
+}
