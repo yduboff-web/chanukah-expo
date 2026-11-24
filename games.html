@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172442">
+  <title>Topic Games · Chanukah Expo</title>
+  <link rel="stylesheet" href="games.css">
+</head>
+<body>
+  <div class="bsd" lang="he">בס״ד</div>
+  <header>
+    <div class="inner">
+      <a href="./">Chanukah Expo</a>
+      <h1>Topic games</h1>
+      <p>Seven ways to review. Choose your team's topic and play.</p>
+    </div>
+  </header>
+  <main>
+    <div id="app" aria-live="polite">
+      <p class="muted">Loading games…</p>
+    </div>
+    <p class="muted page-note">Questions are based on each topic's reading and review material. Your teacher has the games code. No names are needed; scores stay on this screen.</p>
+  </main>
+  <script src="data.js"></script>
+  <script src="games-data.js"></script>
+  <script type="module" src="games.mjs"></script>
+</body>
+</html>
