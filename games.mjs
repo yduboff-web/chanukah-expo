@@ -42,7 +42,7 @@ function renderTopics() {
   c.append(div(null, "<h2>Pick your topic</h2><p class='muted'>Your team's info is inside its own games.</p>"));
   const g = div("pick");
   for (const t of topics) {
-    g.append(btn(`<span class="tname">Topic ${t.n}</span> <span class="he">${t.name}</span><span class="tsub">${t.about}</span>`,
+    g.append(btn(`<span class="tname">Topic ${t.n}</span> <span dir="auto">${t.name}</span><span class="tsub">${t.about}</span>`,
       () => { state.topic = t.n; render(); }));
   }
   c.append(g); app.append(c);
@@ -52,7 +52,7 @@ function renderGames() {
   const t = topics.find(x => x.n === state.topic);
   const c = div("card");
   c.append(nav());
-  c.append(div(null, `<h2>Topic ${t.n} · <span class="he">${t.name}</span></h2><p class="muted">${t.overview}</p>`));
+  c.append(div(null, `<h2>Topic ${t.n} · <span dir="auto">${t.name}</span></h2><p class="muted">${t.overview}</p>`));
   const g = div("pick");
   for (const [id, name, sub] of GAMES) {
     g.append(btn(`<span class="tname">${name}</span><span class="tsub">${sub}</span>`, () => { state.game = id; render(); }));
@@ -66,7 +66,7 @@ function renderGame() {
   const c = div("card");
   c.append(nav());
   const name = GAMES.find(g => g[0] === state.game)[1];
-  c.append(div(null, `<h2>${name} · Topic ${t.n} <span class="he">${t.name}</span></h2>`));
+  c.append(div(null, `<h2>${name} · Topic ${t.n} <span dir="auto">${t.name}</span></h2>`));
   const body = div();
   c.append(body); app.append(c);
   ({ match: gMatch, seq: gSeq, who: gWho, tf: gTf, escape: gEscape, gap: gGap, jeop: gJeop })[state.game](body, t, d);
