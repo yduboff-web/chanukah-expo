@@ -283,6 +283,7 @@ body.has-tabs.topic-wide .top .wrap,body.has-tabs.topic-wide .tabs .wrap,body.ha
   .br-he{font-size:1.65rem}
 }
 
+.reading-sources{margin-top:28px;overflow-wrap:anywhere}.reading-sources h2{font-size:1.1rem}.reading-sources li{font-size:.88rem;line-height:1.5;margin:0 0 8px}
 @media (prefers-reduced-motion: reduce){
   .wheel{transition-duration:.4s}
   .menorah .flame,.menorah .glow{transition:none}
@@ -548,10 +549,9 @@ function customHTML(it){
   const T = D.customTexts || {};
   const have = CUSTOMS.filter(([k]) => T[it.custom + "-" + k]);
   const he = have.map(([k]) => `<div data-k="${k}" class="${k === curCustom ? "on" : ""}">${T[it.custom + "-" + k].he.map(p => `<p lang="he" dir="rtl">${esc(shem(p))}</p>`).join("")}</div>`).join("");
-  const src = have.map(([k]) => { const t = T[it.custom + "-" + k]; return `<span data-k="${k}" class="${k === curCustom ? "on" : ""}">Hebrew (${esc(customLabel(k))}): ${esc(t.ref)}, ${esc(t.ver)}, on Sefaria.</span>`; }).join("");
   return `<div class="cust"><div class="cust-head"><h4 dir="ltr">${rich(it.title)}</h4><div class="cust-bar" role="group" aria-label="Custom">${have.map(([k, l]) => `<button type="button" data-cust="${k}" aria-pressed="${k === curCustom}">${esc(l)}</button>`).join("")}</div></div>
     <div class="cust-body"><div class="cust-he">${he}</div><p class="cust-en" dir="ltr">${rich(it.en)}</p></div>
-    <p class="cust-src">${src}<span>English: ${rich(it.enSrc)}</span></p></div>`;
+    </div>`;
 }
 /* Booklet reading. Each item is either a plain paragraph (a string) or one of:
    { h: "Section heading" }  starts a new drop-down section
@@ -591,6 +591,18 @@ function cdoHTML(x){
       <p class="cites">Sources: ${rich(c.cites || "The article gives no specific source for this paragraph.")}</p>
     </li>`).join("")}</ul>`;
 }
+function readingSourcesHTML(t, printing = false){
+  const rows = (t.readingSources || []).map(x => {
+    const title = x.title ? (printing || !x.url ? esc(x.title) : '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.title) + '</a>') : '';
+    return '<li>' + [esc(x.label), title, esc(x.author), rich(x.note || ''), rich(x.cites || ''), rich(x.supports || ''), printing && x.url ? esc(x.url) : ''].filter(Boolean).join(' · ') + '</li>';
+  });
+  const prayers = (t.reading || []).filter(x => x && x.custom);
+  prayers.forEach(it => CUSTOMS.forEach(([k, label]) => {
+    const tx = (D.customTexts || {})[it.custom + '-' + k];
+    if (tx) rows.push('<li>' + rich(it.title) + ' (' + esc(label) + '): ' + esc(tx.ref) + ', ' + esc(tx.ver) + ', Sefaria.</li>');
+  }));
+  return rows.length ? '<section class="reading-sources" id="sec-sources"><h2>Sources</h2><ul>' + rows.join('') + '</ul></section>' : '';
+}
 function panelTopic(panel, t){
   const secs = Array.isArray(t.reading) ? readingSecs(t.reading) : [];
   const ex = Array.isArray(t.extra) ? t.extra : [];
@@ -625,6 +637,7 @@ function panelTopic(panel, t){
     }
   }
   menu.push(["sec-today", "Connect it to today"]);
+  if (t.readingSources?.length) menu.push(["sec-sources", "Sources"]);
   panel.innerHTML = `
     <div class="topic-layout">
       <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol>${menu.map(([id, l]) => `<li><button type="button" data-go="${id}">${rich(l)}</button></li>`).join("")}</ol></nav>
@@ -636,10 +649,7 @@ function panelTopic(panel, t){
           <h2>Connect it to today</h2>
           <p dir="ltr">${rich(t.today)}</p>
         </div>
-        <div class="booklet-ref">
-          <h2>Where this is in your booklet</h2>
-          <ul class="pages">${t.pages.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
-        </div>
+        ${readingSourcesHTML(t)}
       </div>
     </div>`;
   const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -674,7 +684,7 @@ function printReading(t){
     if (it.prayer) { body += `<table>${it.prayer.map(([he, en]) => `<tr><td>${rich(en)}</td><td class="phe" lang="he" dir="rtl">${esc(he)}</td></tr>`).join("")}</table>`; return; }
     if (it.table) { const hd = it.table.head || []; body += `<table class="t2">${hd.length ? `<tr>${hd.map(x => `<th>${rich(x)}</th>`).join("")}</tr>` : ""}${it.table.rows.map(r => `<tr>${r.map(c => `<td>${String(c).split("\n").map(x => `<p>${rich(x)}</p>`).join("")}</td>`).join("")}</tr>`).join("")}</table>`; return; }
     if (it.gap) { body += `<p class="gp">• • •</p>`; return; }
-    if (it.custom) { const tx = (D.customTexts || {})[it.custom + "-" + curCustom] || (D.customTexts || {})[it.custom + "-ash"]; if (tx) body += `<div class="cs"><div class="ch">${rich(it.title)} (custom shown: ${esc(customLabel(curCustom))})</div><table><tr><td>${rich(it.en)}</td><td class="phe" lang="he" dir="rtl">${tx.he.map(p => esc(shem(p))).join("\n")}</td></tr></table><div class="cm">Hebrew: ${esc(tx.ref)}, ${esc(tx.ver)}, on Sefaria. English: ${rich(it.enSrc)}</div></div>`; return; }
+    if (it.custom) { const tx = (D.customTexts || {})[it.custom + "-" + curCustom] || (D.customTexts || {})[it.custom + "-ash"]; if (tx) body += `<div class="cs"><div class="ch">${rich(it.title)} (custom shown: ${esc(customLabel(curCustom))})</div><table><tr><td>${rich(it.en)}</td><td class="phe" lang="he" dir="rtl">${tx.he.map(p => esc(shem(p))).join("\n")}</td></tr></table></div>`; return; }
     if (it.banner) { body += `<p style="text-align:center;font-weight:bold;font-size:13pt">${rich(it.banner)}</p>`; return; }
     if (it.heline) { body += `<p class="hl" lang="he" dir="rtl">${esc(it.heline)}</p>`; return; }
     if (it.hsrc) { body += `<div class="hs" lang="he" dir="rtl"><b>${esc(it.hsrc.label)}</b>${esc(it.hsrc.he)}</div>`; return; }
@@ -696,7 +706,8 @@ function printReading(t){
     <h1>Topic ${t.n}: ${rich(t.name)}</h1>
     ${t.overview ? `<div class="ov">${rich(t.overview)}</div>` : ""}
     ${body}${ex}
-    <div class="today"><h2>Connect it to today</h2><p>${rich(t.today)}</p></div>`;
+    <div class="today"><h2>Connect it to today</h2><p>${rich(t.today)}</p></div>
+    ${readingSourcesHTML(t, true)}`;
   window.print();
 }
 window.addEventListener("afterprint", () => { const pr = document.getElementById("print"); if (pr.className === "rp") { pr.className = ""; pr.innerHTML = ""; } });

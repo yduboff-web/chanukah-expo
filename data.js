@@ -1,4 +1,4 @@
-/* Chanukah Expo site data. Group credentials are stored separately in Firebase. */
+/* Chanukah Expo static site data. */
 window.EXPO = {
   "deadlines": [
     {
@@ -78,12 +78,10 @@ window.EXPO = {
         },
         "The lights must be in one straight row of equal height. (Unfortunately, many of the artistic מנורות that are sold in Judaica stores are not Kosher, because their lights are at different heights. Like on stairs or different objects etc.)",
         {
-          "p": "Two people cannot light different sides of the same מנורה or candelabra. If they would, it would not be clear (to another who sees it afterwards) how many lights are meant to be lit.",
-          "src": "Kitzur Shulchan Aruch 139:9"
+          "p": "Two people cannot light different sides of the same מנורה or candelabra. If they would, it would not be clear (to another who sees it afterwards) how many lights are meant to be lit."
         },
         {
-          "p": "The מנורה should (best) be made of a metal. If you can afford it, a silver מנורה is best.",
-          "src": "Kitzur Shulchan Aruch 139:5"
+          "p": "The מנורה should (best) be made of a metal. If you can afford it, a silver מנורה is best."
         },
         "The original מנורה was stolen from the בית המקדש. On חנוכה, they used an iron replacement.",
         {
@@ -92,8 +90,7 @@ window.EXPO = {
         "During the time of the מצוה – the half hour – we are forbidden to benefit from the light of the מנורה (they are holy, מצוה lights).",
         "We make sure to place the שמש near the lights, so that if someone uses the מנורה's light - he will be using the שמש light.",
         {
-          "p": "The שמש should be a little higher than the rest of the lights, so it will be noticeable that it is not part of the חנוכה lights.",
-          "src": "Kitzur Shulchan Aruch 139:14"
+          "p": "The שמש should be a little higher than the rest of the lights, so it will be noticeable that it is not part of the חנוכה lights."
         },
         {
           "h": "Why is the שמש above the rest?"
@@ -101,24 +98,11 @@ window.EXPO = {
         "Why is the שמש higher than the rest of the candles?",
         "The “regular” reason is so that it should be recognizable that the שמש is not part of the חנוכה Lights.",
         "The ILLUMINATED explanation: The שמש lights the other candles. Spiritually, we are שמשים, as we light up our surroundings by our good example and by teaching others who know less than we do.",
-        "One who lights up others with the light of תורה and מצוות – becomes elevated and higher – closer to ה'. This is why the שמש is placed above the others."
+        "One who lights up others with the light of תורה and מצוות – becomes elevated and higher – closer to ה'. This is why the שמש is placed above the others.",
+        "There are not very many requirements for a kosher menorah, and most—but not all—of the menorahs on the market are just fine. The basic elements of the menorah are eight candle (or oil) holders, and one more, that is set apart from the rest, for the shamash (attendant) candle.",
+        "Whenever purchasing a mitzvah article, we try to buy the most beautiful one that is within our means. So, if at all possible, go for the silver menorah. Beautifying a mitzvah is our way of expressing our appreciation to G-d, and how dearly we hold His commandments."
       ],
-      "extra": [
-        {
-          "id": "1-a",
-          "text": "There are not very many requirements for a kosher menorah, and most—but not all—of the menorahs on the market are just fine. The basic elements of the menorah are eight candle (or oil) holders, and one more, that is set apart from the rest, for the shamash (attendant) candle.",
-          "title": "What Constitutes a Kosher Chanukah Menorah?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/591946/jewish/What-Is-a-Kosher-Menorah.htm",
-          "cites": "The article is a practical guide and does not cite primary sources."
-        },
-        {
-          "id": "1-c",
-          "text": "Whenever purchasing a mitzvah article, we try to buy the most beautiful one that is within our means. So, if at all possible, go for the silver menorah. Beautifying a mitzvah is our way of expressing our appreciation to G-d, and how dearly we hold His commandments.",
-          "title": "What Constitutes a Kosher Chanukah Menorah?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/591946/jewish/What-Is-a-Kosher-Menorah.htm",
-          "cites": "The article is a practical guide and does not cite primary sources."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Kosher or not?",
@@ -192,6 +176,25 @@ window.EXPO = {
           ],
           "p": "p. 19"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "1-a",
+          "title": "What Constitutes a Kosher Chanukah Menorah?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/591946/jewish/What-Is-a-Kosher-Menorah.htm",
+          "cites": "The article is a practical guide and does not cite primary sources."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "1-c",
+          "title": "What Constitutes a Kosher Chanukah Menorah?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/591946/jewish/What-Is-a-Kosher-Menorah.htm",
+          "cites": "The article is a practical guide and does not cite primary sources."
+        }
       ]
     },
     {
@@ -221,8 +224,7 @@ window.EXPO = {
         "There were many other jugs of oil, but they were not טהור.",
         "The הלכה is that טומאה הותרה בציבור – In a situation where the public congregation needs it – the regular laws of טמא/טהור are pushed off.",
         {
-          "p": "This means that the חשמונאים were really able to light the מנורה, even if they wouldn't have found the one jug of pure oil.",
-          "src": "Booklet footnote: טמא oil was allowed to be used in the מנורה, and (according to the opinion that we waited for eight days for the Kohanim to become pure - ) the Kohanim who were טמא were allowed to press new oil right then - for the benefit of the congregation."
+          "p": "This means that the חשמונאים were really able to light the מנורה, even if they wouldn't have found the one jug of pure oil."
         },
         "Why then did the חשמונאים not use the טמא oil to light the מנורה?",
         "One answer is that the חשמונאים were operating on such a high spiritual level at the time – the level of יחידה – מסירת נפש – that it was unthinkable for them to do a מצוה - anything less than the best possible way.",
@@ -246,27 +248,12 @@ window.EXPO = {
         "All kinds of oil are fit to light the מנורה.",
         "It is best to use olive oil, because the miracle happened with olive oil.",
         {
-          "p": "If you don't have olive oil, choose an oil that burns with a clean, clear flame.",
-          "src": "Kitzur Shulchan Aruch 139:4"
-        }
-      ],
-      "extra": [
-        {
-          "id": "2-b",
-          "text": "Ritual purity is a state that has no parallel in the physical universe; it exists solely in the world of the spirit. The Jewish tenacity in adhering to their rigorous rules of purity and impurity drove the rationalistic Greeks berserk. This was why, when plundering the Holy Temple, they defiled every jar of oil that they could get their hands on.",
-          "title": "Pure Oil",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/221817/jewish/Pure-Oil.htm",
-          "cites": "The article is an essay and does not cite primary sources."
+          "p": "If you don't have olive oil, choose an oil that burns with a clean, clear flame."
         },
-        {
-          "id": "2-c",
-          "text": "The preferred way to fulfill the mitzvah of lighting the Chanukah Menorah is to use pure olive oil and wicks of cotton, for the resulting light is pure and clear; it also commemorates the Menorah in the Holy Temple which was lit with olive oil.",
-          "title": "Oil or Candles for the Menorah?",
-          "by": "Rabbi Eliyahu Kitov",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105044/jewish/Oil-or-Candles-for-the-Menorah.htm",
-          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The article gives no other source."
-        }
+        "Ritual purity is a state that has no parallel in the physical universe; it exists solely in the world of the spirit. The Jewish tenacity in adhering to their rigorous rules of purity and impurity drove the rationalistic Greeks berserk. This was why, when plundering the Holy Temple, they defiled every jar of oil that they could get their hands on.",
+        "The preferred way to fulfill the mitzvah of lighting the Chanukah Menorah is to use pure olive oil and wicks of cotton, for the resulting light is pure and clear; it also commemorates the Menorah in the Holy Temple which was lit with olive oil."
       ],
+      "extra": [],
       "ideas": [
         {
           "short": "Oil floats",
@@ -340,6 +327,29 @@ window.EXPO = {
           ],
           "p": "p. 25"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "טמא oil was allowed to be used in the מנורה, and (according to the opinion that we waited for eight days for the Kohanim to become pure - ) the Kohanim who were טמא were allowed to press new oil right then - for the benefit of the congregation."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "2-b",
+          "title": "Pure Oil",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/221817/jewish/Pure-Oil.htm",
+          "cites": "The article is an essay and does not cite primary sources."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "2-c",
+          "title": "Oil or Candles for the Menorah?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105044/jewish/Oil-or-Candles-for-the-Menorah.htm",
+          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The article gives no other source."
+        }
       ]
     },
     {
@@ -380,8 +390,7 @@ window.EXPO = {
           }
         },
         {
-          "p": "Some eat dairy foods to remember the miracle (of Yehudis) that happened with dairy foods.",
-          "src": "Kitzur Shulchan Aruch 139:3"
+          "p": "Some eat dairy foods to remember the miracle (of Yehudis) that happened with dairy foods."
         },
         {
           "h": "Selections from the story of Yehudis"
@@ -475,6 +484,11 @@ window.EXPO = {
             "Olive cakes"
           ],
           "p": "p. 4"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
         }
       ]
     },
@@ -581,24 +595,15 @@ window.EXPO = {
           "h": "How we light"
         },
         {
-          "p": "The first night we light one candle. We add an additional light each night (the 2nd night, two candles, the third night, three and so on) until the eighth night, on which we light eight.",
-          "src": "Kitzur Shulchan Aruch 139:6"
+          "p": "The first night we light one candle. We add an additional light each night (the 2nd night, two candles, the third night, three and so on) until the eighth night, on which we light eight."
         },
         "On the first night, light the candle on the far right. On the second night, add a candle to its left and so on.",
         {
-          "p": "Always light the newest candle first – the one on the left, and make your way towards the one on the right.",
-          "src": "Kitzur Shulchan Aruch 139:11"
-        }
+          "p": "Always light the newest candle first – the one on the left, and make your way towards the one on the right."
+        },
+        "“מצות נר חנוכה נר איש וביתו והמהדרין נר לכל אחד ואחד והמהדרין מן המהדרין בית שמאי אומרים יום ראשון מדליק שמנה מכאן ואילך פוחת והולך בית הלל אומרים יום ראשון מדליק אחת מכאן ואילך מוסיף והולך” — “The basic commandment of Chanukah lights is for the head of the household to light one candle for the entire family each night. Those who want to enhance their fulfillment of mitzvot light one candle each night for each member of the household. Those who desire to enhance their observance of mitzvot even further... According to Beit Shammai, the first day one kindles eight candles, and henceforth continuously decreases. According to Beit Hillel, the first day one lights one candle, and henceforth continuously increases.” (Shabbat 21b)"
       ],
-      "extra": [
-        {
-          "id": "4-a",
-          "text": "“מצות נר חנוכה נר איש וביתו והמהדרין נר לכל אחד ואחד והמהדרין מן המהדרין בית שמאי אומרים יום ראשון מדליק שמנה מכאן ואילך פוחת והולך בית הלל אומרים יום ראשון מדליק אחת מכאן ואילך מוסיף והולך” — “The basic commandment of Chanukah lights is for the head of the household to light one candle for the entire family each night. Those who want to enhance their fulfillment of mitzvot light one candle each night for each member of the household. Those who desire to enhance their observance of mitzvot even further... According to Beit Shammai, the first day one kindles eight candles, and henceforth continuously decreases. According to Beit Hillel, the first day one lights one candle, and henceforth continuously increases.” (Shabbat 21b)",
-          "title": "Questions and Answers on the Dispute on How the Menorah Is Lit",
-          "url": "https://www.chabad.org/library/article_cdo/aid/2829782/jewish/The-Dispute-on-How-the-Menorah-Is-Lit.htm",
-          "cites": "The quotation itself is from the Talmud, Shabbat 21b."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Up or down?",
@@ -672,6 +677,18 @@ window.EXPO = {
           ],
           "p": "p. 22"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "4-a",
+          "title": "Questions and Answers on the Dispute on How the Menorah Is Lit",
+          "url": "https://www.chabad.org/library/article_cdo/aid/2829782/jewish/The-Dispute-on-How-the-Menorah-Is-Lit.htm",
+          "cites": "The quotation itself is from the Talmud, Shabbat 21b."
+        }
       ]
     },
     {
@@ -718,8 +735,7 @@ window.EXPO = {
         {
           "custom": "alhanissim",
           "title": "על הנסים",
-          "en": "[We thank You ה']\nFor the Miracles, the Redemption, the Mighty Acts, the Saving Acts and for the Wars (Wonders) that You have done for our fathers, in those days at this time.\n[Thank You!]\nIn the days of מַתִּתְיָהוּ the son of יוֹחָנָן the כֹּהֵן גָּדוֹל (from the) חַשְׁמוֹנָאִי (family) and his sons.\nWhen the wicked Syrian-Greek-Hellenistic government rose up against Your People יִשְׂרָאֵל,\nto make them forget Your תּוֹרָה\nand to move them away from the decrees of your will.\nBut you, in your great mercies\nstood by them in the time of their distress.\nYou waged their battles,\ndefended their rights\nand avenged the wrong done to them,\nYou delivered;\nthe mighty into the hands of the weak,\nthe many into the hands of the few,\nthe impure into the hands of the pure,\nthe wicked into the hands of the righteous,\nthe sinners into the hands of those who occupy themselves with Your תּוֹרָה.\nYou made a great and holy Name for Yourself in Your world, and brought about the great deliverance and the redemption for your People יִשְׂרָאֵל, to this very day.\nThen Your children entered the holy place of your house, cleansed your הֵיכָל, purified your בֵּית הַמִּקְדָּשׁ, kindled the lights of your holy courtyards and instituted these eight days of חֲנוּכָּה, to give thanks and praise to your great Name.",
-          "enSrc": "the booklet’s translation (page 13). Each custom’s Hebrew is worded a little differently."
+          "en": "[We thank You ה']\nFor the Miracles, the Redemption, the Mighty Acts, the Saving Acts and for the Wars (Wonders) that You have done for our fathers, in those days at this time.\n[Thank You!]\nIn the days of מַתִּתְיָהוּ the son of יוֹחָנָן the כֹּהֵן גָּדוֹל (from the) חַשְׁמוֹנָאִי (family) and his sons.\nWhen the wicked Syrian-Greek-Hellenistic government rose up against Your People יִשְׂרָאֵל,\nto make them forget Your תּוֹרָה\nand to move them away from the decrees of your will.\nBut you, in your great mercies\nstood by them in the time of their distress.\nYou waged their battles,\ndefended their rights\nand avenged the wrong done to them,\nYou delivered;\nthe mighty into the hands of the weak,\nthe many into the hands of the few,\nthe impure into the hands of the pure,\nthe wicked into the hands of the righteous,\nthe sinners into the hands of those who occupy themselves with Your תּוֹרָה.\nYou made a great and holy Name for Yourself in Your world, and brought about the great deliverance and the redemption for your People יִשְׂרָאֵל, to this very day.\nThen Your children entered the holy place of your house, cleansed your הֵיכָל, purified your בֵּית הַמִּקְדָּשׁ, kindled the lights of your holy courtyards and instituted these eight days of חֲנוּכָּה, to give thanks and praise to your great Name."
         }
       ],
       "extra": [],
@@ -795,6 +811,15 @@ window.EXPO = {
             "They lit late on the first night"
           ],
           "p": "p. 24"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "Alevsky booklet translation. Each custom’s Hebrew is worded a little differently."
         }
       ]
     },
@@ -972,6 +997,11 @@ window.EXPO = {
           ],
           "p": "p. 29"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        }
       ]
     },
     {
@@ -1008,31 +1038,22 @@ window.EXPO = {
         "1 top, 2 bottom, 3 right, 4 left, 5 front, 6 back, 7 center.",
         "The usual way Hashem relates to this world is through Nature. The נסים of חנוכה however, were obvious, revealed miracles, both at war and with the מנורה.",
         {
-          "p": "“The Nature” in Hebrew – הטבע 86 has the same גמטריא as א-להים. What people call “Nature” is really ה' in disguise. Now this level of ה' runs the world through “the program” we call “Nature”. There are higher levels to ה' – than just the Nature level. When ה' performs a נס – it is above Nature. When a צדיק Davens to ה' and causes a נס – the צדיק is reaching beyond the powers of Nature to change what should “naturally” happen. Through our תפילות and מעשים טובים we are able to rise above the laws of nature and cause nature to change – and miracles to happen – as it says, “אין מזל לישראל” meaning that we can rise above the “מזל” that rules nature.",
-          "src": "Footnote in the booklet"
+          "p": "“The Nature” in Hebrew – הטבע 86 has the same גמטריא as א-להים. What people call “Nature” is really ה' in disguise. Now this level of ה' runs the world through “the program” we call “Nature”. There are higher levels to ה' – than just the Nature level. When ה' performs a נס – it is above Nature. When a צדיק Davens to ה' and causes a נס – the צדיק is reaching beyond the powers of Nature to change what should “naturally” happen. Through our תפילות and מעשים טובים we are able to rise above the laws of nature and cause nature to change – and miracles to happen – as it says, “אין מזל לישראל” meaning that we can rise above the “מזל” that rules nature."
         },
         "The number eight symbolizes “higher than nature”. Our ברית at 8 days old symbolizes that our connection with ה' is above Nature. The oil lasted in the מנורה for Eight days. The כהן גדול wears eight garments.",
         {
           "h": "חשמונאי Illuminated!"
         },
         {
-          "p": "The name of the חשמונאים hints to that special number eight. In Hebrew “חש – Chash” means “feels” and שמונה is eight. The Chash-Shmona'im “felt the eight” – they felt and were connected to a level that is higher than nature.",
-          "src": "Booklet footnote: Rabbi Yechezkel Sofer, of Be'er Sheva"
+          "p": "The name of the חשמונאים hints to that special number eight. In Hebrew “חש – Chash” means “feels” and שמונה is eight. The Chash-Shmona'im “felt the eight” – they felt and were connected to a level that is higher than nature."
         },
         "In a different way, we see the number eight twice in their name:",
         {
           "heline": "חַ (8) שְׁמוֹנָ (8) אִי"
-        }
+        },
+        "While seven represents the natural order of the world (seven days of the week, cycle of seven years for Shemitah, etc.), the number eight represents the connection between G-d and the Jewish people that is higher than the natural order. It is for this reason that Chanukah, which represents this suprarational connection, was established for eight days. Likewise, we find in Midrashic sources that the era of the final redemption is represented by the number eight, which reflects a relationship with G-d that is higher than nature."
       ],
-      "extra": [
-        {
-          "id": "7-a",
-          "text": "While seven represents the natural order of the world (seven days of the week, cycle of seven years for Shemitah, etc.), the number eight represents the connection between G-d and the Jewish people that is higher than the natural order. It is for this reason that Chanukah, which represents this suprarational connection, was established for eight days. Likewise, we find in Midrashic sources that the era of the final redemption is represented by the number eight, which reflects a relationship with G-d that is higher than nature.",
-          "title": "Why Is Chanukah 8 (Not 7) Days Long? (answer #13)",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/459286/jewish/Why-Is-Chanukah-8-Not-7-Days-Long.htm",
-          "cites": "Maharal, Ner Mitzvah; Kli Yakar, Leviticus 9:1 (the article’s footnote for this explanation)."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Find the 8s",
@@ -1105,6 +1126,22 @@ window.EXPO = {
             "The Menorah had eight branches"
           ],
           "p": "p. 25"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "Rabbi Yechezkel Sofer, of Be'er Sheva"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "7-a",
+          "title": "Why Is Chanukah 8 (Not 7) Days Long? (answer #13)",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/459286/jewish/Why-Is-Chanukah-8-Not-7-Days-Long.htm",
+          "cites": "Maharal, Ner Mitzvah; Kli Yakar, Leviticus 9:1 (the article’s footnote for this explanation)."
         }
       ]
     },
@@ -1253,6 +1290,11 @@ window.EXPO = {
           ],
           "p": "p. 30"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        }
       ]
     },
     {
@@ -1294,12 +1336,10 @@ window.EXPO = {
         },
         "So we see that on חנוכה, everybody does the מצוה in the best of the best way!",
         {
-          "p": "In doing the מצוה the best possible way, each person lights their own מנורה.",
-          "src": "Kitzur Shulchan Aruch 139:6"
+          "p": "In doing the מצוה the best possible way, each person lights their own מנורה."
         },
         {
-          "p": "The מנורה should (best) be made of a metal. If you can afford it, a silver מנורה is best.",
-          "src": "Kitzur Shulchan Aruch 139:5"
+          "p": "The מנורה should (best) be made of a metal. If you can afford it, a silver מנורה is best."
         },
         {
           "h": "Why do we all light this way?"
@@ -1317,20 +1357,12 @@ window.EXPO = {
             "Many Ashkenazi families: each person lights their own מנורה. This is the custom the booklet describes above.",
             "Many Sephardi families: one מנורה for the whole household, usually lit by the head of the family. That way anyone looking can tell which night of חנוכה it is.",
             "In many families, including Chabad families, girls and women do not light their own מנורה. They are included in the lighting of the head of the household."
-          ],
-          "src": "Sources: Shulchan Aruch and Rema, Orach Chaim 671:2. chabad.org: “16 Menorah Facts Every Jew Should Know” https://www.chabad.org/holidays/chanukah/article_cdo/aid/4568648/jewish/16-Menorah-Facts-Every-Jew-Should-Know.htm and “Questions and Answers on the Dispute on How the Menorah Is Lit” https://www.chabad.org/library/article_cdo/aid/2829782/jewish/The-Dispute-on-How-the-Menorah-Is-Lit.htm"
+          ]
         },
-        "How does your family light? Ask at home, then compare with your partner's family."
+        "How does your family light? Ask at home, then compare with your partner's family.",
+        "As you may have realized, the Jewish people decided unanimously that they want to do this mitzvah in the most beautiful of the beautiful way. It doesn't matter that they don't all necessarily do every other mitzvah in the best way possible. The light of Chanukah gets special treatment. Because the light of Chanukah is lit in the dark of winter when darkness is strongest."
       ],
-      "extra": [
-        {
-          "id": "9-b",
-          "text": "As you may have realized, the Jewish people decided unanimously that they want to do this mitzvah in the most beautiful of the beautiful way. It doesn't matter that they don't all necessarily do every other mitzvah in the best way possible. The light of Chanukah gets special treatment. Because the light of Chanukah is lit in the dark of winter when darkness is strongest.",
-          "title": "The Most Beautiful Way To Light a Menorah",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4960149/jewish/The-Most-Beautiful-Way-To-Light-a-Menorah.htm",
-          "cites": "The article gives no specific source for this explanation."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Three steps",
@@ -1393,6 +1425,22 @@ window.EXPO = {
             "The Menorah was broken"
           ],
           "p": "p. 34"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "note": "Shulchan Aruch and Rema, Orach Chaim 671:2. chabad.org: “16 Menorah Facts Every Jew Should Know” https://www.chabad.org/holidays/chanukah/article_cdo/aid/4568648/jewish/16-Menorah-Facts-Every-Jew-Should-Know.htm and “Questions and Answers on the Dispute on How the Menorah Is Lit” https://www.chabad.org/library/article_cdo/aid/2829782/jewish/The-Dispute-on-How-the-Menorah-Is-Lit.htm"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "9-b",
+          "title": "The Most Beautiful Way To Light a Menorah",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4960149/jewish/The-Most-Beautiful-Way-To-Light-a-Menorah.htm",
+          "cites": "The article gives no specific source for this explanation."
         }
       ]
     },
@@ -1486,24 +1534,11 @@ window.EXPO = {
         "What the Greeks did not know, was that this new game of Dreidel was just a big cover-up…",
         "You see, the kids knew that they would never stop learning תורה – no matter what! But they did have a challenge: How do you learn תורה without getting killed…?",
         "Their plan was simple. Bring along a Dreidel, wherever you go. Whenever and wherever they met to study תורה, at home or in the fields and caves, they brought along their trusty Dreidels. When the hard, cold footsteps of the Greek soldiers were heard marching toward them – coming to check up on the kids – suddenly the books and manuscripts from which they studied disappeared, and the soldiers were invited to join a lively game of Dreidel!",
-        "Since then, the game of Dreidel has become one of חנוכה's most fun and famous customs."
+        "Since then, the game of Dreidel has become one of חנוכה's most fun and famous customs.",
+        "It is not clearly known when the story which we are about to tell actually took place... According to one version, it happened during the time of the Maccabean revolt against Syrian oppression, and Yehudit was a daughter of Yochanan the high priest, father of the Hasmonean family. At any rate, the heroic deed of Yehudit has inspired faith and courage in the hearts of Jews throughout the ages.",
+        "The town of Bethulia, in the land of Judea, came under siege by Holofernes, a mighty Syrian-Greek general, at the head of a huge army... Seeing that he couldn't take the fortified town by force, Holofernes decided to starve the inhabitants into submission. He cut off the food and water supply, and before long the town was indeed brought to the verge of surrender."
       ],
-      "extra": [
-        {
-          "id": "10-a",
-          "text": "It is not clearly known when the story which we are about to tell actually took place... According to one version, it happened during the time of the Maccabean revolt against Syrian oppression, and Yehudit was a daughter of Yochanan the high priest, father of the Hasmonean family. At any rate, the heroic deed of Yehudit has inspired faith and courage in the hearts of Jews throughout the ages.",
-          "title": "The Story of Yehudit",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103019/jewish/The-Story-of-Yehudit.htm",
-          "cites": "Based on the ancient Book of Yehudit (Judith), which survives in a Greek translation; the article notes that the story exists in different versions."
-        },
-        {
-          "id": "10-b",
-          "text": "The town of Bethulia, in the land of Judea, came under siege by Holofernes, a mighty Syrian-Greek general, at the head of a huge army... Seeing that he couldn't take the fortified town by force, Holofernes decided to starve the inhabitants into submission. He cut off the food and water supply, and before long the town was indeed brought to the verge of surrender.",
-          "title": "The Story of Yehudit",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103019/jewish/The-Story-of-Yehudit.htm",
-          "cites": "Based on the ancient Book of Yehudit (Judith), which survives in a Greek translation; the article notes that the story exists in different versions."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Put it in order",
@@ -1566,6 +1601,25 @@ window.EXPO = {
             "Hiding food"
           ],
           "p": "p. 27"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "10-a",
+          "title": "The Story of Yehudit",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103019/jewish/The-Story-of-Yehudit.htm",
+          "cites": "Based on the ancient Book of Yehudit (Judith), which survives in a Greek translation; the article notes that the story exists in different versions."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "10-b",
+          "title": "The Story of Yehudit",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103019/jewish/The-Story-of-Yehudit.htm",
+          "cites": "Based on the ancient Book of Yehudit (Judith), which survives in a Greek translation; the article notes that the story exists in different versions."
         }
       ]
     },
@@ -1650,17 +1704,10 @@ window.EXPO = {
         "One explanation for this difference is because the miracle of חנוכה was clearly from Above (the top), in a manner that was higher than nature, while the Miracle of פורים was not so clearly from above. It was a miracle that was “clothed” in nature – “below”.",
         "The miracle of פורים did not all happen at once in a clearly miraculous manner, rather, it happened over a few years and included many steps. Looking back at all that happened, we realize that it was all a slowly unfolding miracle, but it takes thought to understand it. חנוכה's miracles were quick and obvious. The Maccabees won an impossible war, and the one-day measure of oil lasted for eight.",
         "Another explanation: On פורים, the Jewish people fasted and Davened, asking for ה''s help. They “worked hard” to annul Haman's decree, and they “earned” the miracle. That's why the Gragger's handle is on the bottom.",
-        "The miracle of חנוכה came even though the Jewish People did not earn it (as much as they did on פורים). We were saved mainly because of ה''s mercy. This is why the Dreidel's “handle” is on the top."
+        "The miracle of חנוכה came even though the Jewish People did not earn it (as much as they did on פורים). We were saved mainly because of ה''s mercy. This is why the Dreidel's “handle” is on the top.",
+        "Chanukah is commemorated with oil. Chanukah celebrates the innerness of the Jewish soul... On Purim we pour out the wine. Purim is a noisy party, a showy parade, a costumed extravaganza. Purim celebrates the fact that the Jew is more than a soul—he is a body as well."
       ],
-      "extra": [
-        {
-          "id": "11-b",
-          "text": "Chanukah is commemorated with oil. Chanukah celebrates the innerness of the Jewish soul... On Purim we pour out the wine. Purim is a noisy party, a showy parade, a costumed extravaganza. Purim celebrates the fact that the Jew is more than a soul—he is a body as well.",
-          "title": "Oil and Wine",
-          "url": "https://www.chabad.org/holidays/purim/article_cdo/aid/2815/jewish/Oil-and-Wine.htm",
-          "cites": "The article opens with two quotations (Shulchan Aruch, Yoreh De’ah 105:5; Talmud, Eruvin 65a). This paragraph gives no source of its own."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Sort it",
@@ -1734,6 +1781,18 @@ window.EXPO = {
           ],
           "p": "p. 21"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "11-b",
+          "title": "Oil and Wine",
+          "url": "https://www.chabad.org/holidays/purim/article_cdo/aid/2815/jewish/Oil-and-Wine.htm",
+          "cites": "The article opens with two quotations (Shulchan Aruch, Yoreh De’ah 105:5; Talmud, Eruvin 65a). This paragraph gives no source of its own."
+        }
       ]
     },
     {
@@ -1757,8 +1816,7 @@ window.EXPO = {
         {
           "custom": "alhanissim",
           "title": "על הנסים",
-          "en": "[We thank You ה']\nFor the Miracles, the Redemption, the Mighty Acts, the Saving Acts and for the Wars (Wonders) that You have done for our fathers, in those days at this time.\n[Thank You!]\nIn the days of מַתִּתְיָהוּ the son of יוֹחָנָן the כֹּהֵן גָּדוֹל (from the) חַשְׁמוֹנָאִי (family) and his sons.\nWhen the wicked Syrian-Greek-Hellenistic government rose up against Your People יִשְׂרָאֵל,\nto make them forget Your תּוֹרָה\nand to move them away from the decrees of your will.\nBut you, in your great mercies\nstood by them in the time of their distress.\nYou waged their battles,\ndefended their rights\nand avenged the wrong done to them,\nYou delivered;\nthe mighty into the hands of the weak,\nthe many into the hands of the few,\nthe impure into the hands of the pure,\nthe wicked into the hands of the righteous,\nthe sinners into the hands of those who occupy themselves with Your תּוֹרָה.\nYou made a great and holy Name for Yourself in Your world, and brought about the great deliverance and the redemption for your People יִשְׂרָאֵל, to this very day.\nThen Your children entered the holy place of your house, cleansed your הֵיכָל, purified your בֵּית הַמִּקְדָּשׁ, kindled the lights of your holy courtyards and instituted these eight days of חֲנוּכָּה, to give thanks and praise to your great Name.",
-          "enSrc": "the booklet’s translation (page 13). Each custom’s Hebrew is worded a little differently."
+          "en": "[We thank You ה']\nFor the Miracles, the Redemption, the Mighty Acts, the Saving Acts and for the Wars (Wonders) that You have done for our fathers, in those days at this time.\n[Thank You!]\nIn the days of מַתִּתְיָהוּ the son of יוֹחָנָן the כֹּהֵן גָּדוֹל (from the) חַשְׁמוֹנָאִי (family) and his sons.\nWhen the wicked Syrian-Greek-Hellenistic government rose up against Your People יִשְׂרָאֵל,\nto make them forget Your תּוֹרָה\nand to move them away from the decrees of your will.\nBut you, in your great mercies\nstood by them in the time of their distress.\nYou waged their battles,\ndefended their rights\nand avenged the wrong done to them,\nYou delivered;\nthe mighty into the hands of the weak,\nthe many into the hands of the few,\nthe impure into the hands of the pure,\nthe wicked into the hands of the righteous,\nthe sinners into the hands of those who occupy themselves with Your תּוֹרָה.\nYou made a great and holy Name for Yourself in Your world, and brought about the great deliverance and the redemption for your People יִשְׂרָאֵל, to this very day.\nThen Your children entered the holy place of your house, cleansed your הֵיכָל, purified your בֵּית הַמִּקְדָּשׁ, kindled the lights of your holy courtyards and instituted these eight days of חֲנוּכָּה, to give thanks and praise to your great Name."
         },
         {
           "h": "The brachos before lighting"
@@ -1766,20 +1824,17 @@ window.EXPO = {
         {
           "custom": "blessing1",
           "title": "Blessing #1 – before lighting the Menorah",
-          "en": "Blessed are You Hashem our G-d, King of the Universe, Who made us holy with His commandments and commanded us to kindle the light(s) of Chanukah",
-          "enSrc": "the booklet’s translation."
+          "en": "Blessed are You Hashem our G-d, King of the Universe, Who made us holy with His commandments and commanded us to kindle the light(s) of Chanukah"
         },
         {
           "custom": "blessing2",
           "title": "Blessing #2 – before lighting the Menorah",
-          "en": "Blessed are You Hashem our G-d, King of the Universe, Who made miracles for our fathers, in those days, at this time.",
-          "enSrc": "the booklet’s translation."
+          "en": "Blessed are You Hashem our G-d, King of the Universe, Who made miracles for our fathers, in those days, at this time."
         },
         {
           "custom": "blessing3",
           "title": "Blessing #3 – Say only the first time you light this year.",
-          "en": "Blessed are You Hashem our G-d, King of the Universe, Who kept us alive, sustained us, and allowed us to reach this occasion.",
-          "enSrc": "the booklet’s translation."
+          "en": "Blessed are You Hashem our G-d, King of the Universe, Who kept us alive, sustained us, and allowed us to reach this occasion."
         },
         {
           "h": "When we say the brachos"
@@ -1794,8 +1849,7 @@ window.EXPO = {
         },
         "On the rest of the nights we skip the ברכה of שהחיינו.",
         {
-          "p": "After the ברכות are said, light the first candle. Say הנרות הללו as you light the rest.",
-          "src": "Kitzur Shulchan Aruch 139:12"
+          "p": "After the ברכות are said, light the first candle. Say הנרות הללו as you light the rest."
         },
         {
           "h": "Haneiros Halalu"
@@ -1803,8 +1857,7 @@ window.EXPO = {
         {
           "custom": "hanerot",
           "title": "הנרות הללו",
-          "en": "We kindle these lights on account of the miracles, the deliverances and the wonders which thou didst work for our fathers, by means of thy holy priests. During all the eight days of Chanukah these lights are sacred, neither is it permitted us to make any profane use of them; but we are only to look at them, in order that we may give thanks unto thy name for thy miracles, thy deliverances and thy wonders.",
-          "enSrc": "Siddur Ashkenaz on Sefaria (Singer’s Standard Prayer Book, 1915). It follows the Ashkenaz wording."
+          "en": "We kindle these lights on account of the miracles, the deliverances and the wonders which thou didst work for our fathers, by means of thy holy priests. During all the eight days of Chanukah these lights are sacred, neither is it permitted us to make any profane use of them; but we are only to look at them, in order that we may give thanks unto thy name for thy miracles, thy deliverances and thy wonders."
         },
         {
           "h": "Maoz Tzur – Our Rock – Hashem"
@@ -1829,8 +1882,7 @@ window.EXPO = {
           "h": "Al Hanissim in davening and bentching"
         },
         {
-          "p": "All eight days of חנוכה we say “על הנסים” in the שמונה עשרה.",
-          "src": "Kitzur Shulchan Aruch 139:21"
+          "p": "All eight days of חנוכה we say “על הנסים” in the שמונה עשרה."
         },
         {
           "p": "If you forgot to say “על הנסים”:",
@@ -1840,40 +1892,22 @@ window.EXPO = {
           ]
         },
         {
-          "p": "We also say the “על הנסים” during ברכת המזון – Bentching. If you did not say it in its proper place, and already said ה''s name of the next ברכה, then, when you reach the “הרחמן's” you say a special “הרחמן” and continue with “בימי מתתיהו” etc.",
-          "src": "Kitzur Shulchan Aruch 139:21"
+          "p": "We also say the “על הנסים” during ברכת המזון – Bentching. If you did not say it in its proper place, and already said ה''s name of the next ברכה, then, when you reach the “הרחמן's” you say a special “הרחמן” and continue with “בימי מתתיהו” etc."
         },
         {
           "h": "Hallel and the Torah reading"
         },
         "We complete the הלל all eight days of חנוכה.",
         {
-          "p": "During חנוכה, we do not say תחנון.",
-          "src": "Kitzur Shulchan Aruch 139:22"
+          "p": "During חנוכה, we do not say תחנון."
         },
         {
-          "p": "The תורה is read every day of חנוכה. Each day, we read about the קרבנות הנשיאים – the presents the leaders of the שבטים brought at the original חנוכת המשכן, when they completed building the משכן in the desert.",
-          "src": "Kitzur Shulchan Aruch 139:23"
-        }
-      ],
-      "extra": [
-        {
-          "id": "12-a",
-          "text": "On all eight days of Chanukah, full Hallel is recited after Shacharit morning prayers. Additionally, the Al haNissim blessing is inserted into the Amidah prayers and the Grace after Meals.",
-          "title": "Additional Prayers",
-          "by": "Rabbi Eliyahu Kitov",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105099/jewish/Additional-Prayers.htm",
-          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The article gives no specific source for this paragraph."
+          "p": "The תורה is read every day of חנוכה. Each day, we read about the קרבנות הנשיאים – the presents the leaders of the שבטים brought at the original חנוכת המשכן, when they completed building the משכן in the desert."
         },
-        {
-          "id": "12-b",
-          "text": "In the synagogue, the portion of the nesi'im (Bamidbar 7), which recounts the offerings brought by the nasi [prince] of each of the twelve tribes when the Mishkan, the Tabernacle, was dedicated, is read from the Torah.",
-          "title": "Additional Prayers",
-          "by": "Rabbi Eliyahu Kitov",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105099/jewish/Additional-Prayers.htm",
-          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The paragraph names the Torah reading itself (Bamidbar 7); it gives no other source."
-        }
+        "On all eight days of Chanukah, full Hallel is recited after Shacharit morning prayers. Additionally, the Al haNissim blessing is inserted into the Amidah prayers and the Grace after Meals.",
+        "In the synagogue, the portion of the nesi'im (Bamidbar 7), which recounts the offerings brought by the nasi [prince] of each of the twelve tribes when the Mishkan, the Tabernacle, was dedicated, is read from the Torah."
       ],
+      "extra": [],
       "ideas": [
         {
           "short": "When do we say it?",
@@ -1947,6 +1981,37 @@ window.EXPO = {
           ],
           "p": "Reading section"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "Alevsky booklet translation. Each custom’s Hebrew is worded a little differently."
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "Alevsky booklet translation."
+        },
+        {
+          "label": "Prayer translation",
+          "note": "Siddur Ashkenaz on Sefaria (Singer’s Standard Prayer Book, 1915). It follows the Ashkenaz wording."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "12-a",
+          "title": "Additional Prayers",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105099/jewish/Additional-Prayers.htm",
+          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The article gives no specific source for this paragraph."
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "12-b",
+          "title": "Additional Prayers",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105099/jewish/Additional-Prayers.htm",
+          "cites": "Excerpted from Rabbi Eliyahu Kitov’s The Book of Our Heritage (Feldheim). The paragraph names the Torah reading itself (Bamidbar 7); it gives no other source."
+        }
       ]
     },
     {
@@ -1976,8 +2041,7 @@ window.EXPO = {
           "h": "The Maccabees"
         },
         {
-          "p": "מתתיהו's message: “מי לה' אלי” spread like wildfire and his small band grew day by day.",
-          "src": "מי לה' אלי means “whoever is for ה' follow me!” (booklet p. 10)"
+          "p": "מתתיהו's message: “מי לה' אלי” spread like wildfire and his small band grew day by day."
         },
         "The Jewish warriors waged guerrilla warfare against the mighty armies of אנטיכוס IV. When the King's armies would march toward the hills - the Jews would ambush them from caves, behind trees, and it seemed like from everywhere. The Syrian-Greek armies were terrified to fight the Jews and were beaten every time.",
         "יהודה gathered his men together and reminded them that it is not the military power or sophisticated weapons that win a war – it is ה''s help! “Few can win against many and the weak can win against the strong, as we've seen so many times before – if only ה' wants! ה' will surely fight for us in this final battle.”",
@@ -2050,6 +2114,15 @@ window.EXPO = {
             "Nothing changes"
           ],
           "p": "p. 3"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "מי לה' אלי means “whoever is for ה' follow me!”"
         }
       ]
     },
@@ -2124,17 +2197,10 @@ window.EXPO = {
         {
           "h": "The hidden light"
         },
-        "The חנוכה lights that shone then – and now – also come from the holy light that ה' hid at the beginning of Creation. This light is hidden in the תורה, and is available to צדיקים today, and will also shine for us all when משיח comes."
+        "The חנוכה lights that shone then – and now – also come from the holy light that ה' hid at the beginning of Creation. This light is hidden in the תורה, and is available to צדיקים today, and will also shine for us all when משיח comes.",
+        "According to the accepted Jewish custom, we begin the first night of Chanukah by lighting just one candle, and each night we add another, until all eight are lit on the final night. Because though a little light might push away much darkness, the world often shows us that a little light isn't enough. So we shine more. And we shine more. And we don't stop until the night itself has been entirely lit up."
       ],
-      "extra": [
-        {
-          "id": "14-b",
-          "text": "According to the accepted Jewish custom, we begin the first night of Chanukah by lighting just one candle, and each night we add another, until all eight are lit on the final night. Because though a little light might push away much darkness, the world often shows us that a little light isn't enough. So we shine more. And we shine more. And we don't stop until the night itself has been entirely lit up.",
-          "title": "5 Ways to Fight Darkness With Light",
-          "url": "https://www.chabad.org/library/article_cdo/aid/6690837/jewish/5-Ways-to-Fight-Darkness-With-Light.htm",
-          "cites": "Sefer Hamaamarim Melukat, vol. 2 (the maamar “Tanu Rabbanan, Mitzvat Ner Chanukah”), the article’s footnote for this paragraph."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Dark tent",
@@ -2207,6 +2273,18 @@ window.EXPO = {
             "So it won’t go out"
           ],
           "p": "p. 35"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "14-b",
+          "title": "5 Ways to Fight Darkness With Light",
+          "url": "https://www.chabad.org/library/article_cdo/aid/6690837/jewish/5-Ways-to-Fight-Darkness-With-Light.htm",
+          "cites": "Sefer Hamaamarim Melukat, vol. 2 (the maamar “Tanu Rabbanan, Mitzvat Ner Chanukah”), the article’s footnote for this paragraph."
         }
       ]
     },
@@ -2292,19 +2370,11 @@ window.EXPO = {
         "It is also called חנוכה because they made a חנוכה - celebrated the re-dedication for the בית המקדש, that was defiled (made impure) by the enemies.",
         "For this reason some say we should have a festive meal on חנוכה.",
         {
-          "p": "Another reason for the name חנוכה – is that the Mishkan was completed on this same day, many years earlier in the desert.",
-          "src": "Kitzur Shulchan Aruch 139:2"
-        }
+          "p": "Another reason for the name חנוכה – is that the Mishkan was completed on this same day, many years earlier in the desert."
+        },
+        "On a basic level, the word chanukah means \"inauguration.\" Indeed, Chanukah celebrates the inauguration of a newly built altar in the Temple in Jerusalem. After the Maccabees defeated the Greek interlopers and drove them from Judea, they found that much of the Temple, including the altar, had been defiled and used for idolatry. The Maccabees buried the stones of the altar and built a new one. Thus, Chanukah celebrates the rededication of the Holy Temple and the altar."
       ],
-      "extra": [
-        {
-          "id": "15-a",
-          "text": "On a basic level, the word chanukah means \"inauguration.\" Indeed, Chanukah celebrates the inauguration of a newly built altar in the Temple in Jerusalem. After the Maccabees defeated the Greek interlopers and drove them from Judea, they found that much of the Temple, including the altar, had been defiled and used for idolatry. The Maccabees buried the stones of the altar and built a new one. Thus, Chanukah celebrates the rededication of the Holy Temple and the altar.",
-          "title": "What Does Chanukah Actually Mean?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4203685/jewish/What-Does-Chanukah-Actually-Mean.htm",
-          "cites": "Numbers 7:84 (chanukat hamizbeach); Machzor Vitri 239; Shibolei Haleket 174; see also Maharsha on Talmud, Shabbat 21a."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Decode the name",
@@ -2368,6 +2438,18 @@ window.EXPO = {
           ],
           "p": "p. 18"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "15-a",
+          "title": "What Does Chanukah Actually Mean?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4203685/jewish/What-Does-Chanukah-Actually-Mean.htm",
+          "cites": "Numbers 7:84 (chanukat hamizbeach); Machzor Vitri 239; Shibolei Haleket 174; see also Maharsha on Talmud, Shabbat 21a."
+        }
       ]
     },
     {
@@ -2405,19 +2487,11 @@ window.EXPO = {
           "h": "צדקה on חנוכה"
         },
         {
-          "p": "One should increase in צדקה during חנוכה, especially for the poor people who learn תורה.",
-          "src": "Kitzur Shulchan Aruch 139:2"
-        }
+          "p": "One should increase in צדקה during חנוכה, especially for the poor people who learn תורה."
+        },
+        "The Hebrew word Chanukah shares the same root as chinuch, \"education.\" ... After the Greeks were defeated, it was necessary to re-educate the Jews—to reintroduce a large part of the population to Torah values. Appropriately, during Hanukkah it is customary to give gelt to children as a reward for Torah study."
       ],
-      "extra": [
-        {
-          "id": "16-b",
-          "text": "The Hebrew word Chanukah shares the same root as chinuch, \"education.\" ... After the Greeks were defeated, it was necessary to re-educate the Jews—to reintroduce a large part of the population to Torah values. Appropriately, during Hanukkah it is customary to give gelt to children as a reward for Torah study.",
-          "title": "What Is Gelt?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103084/jewish/What-Is-Gelt.htm",
-          "cites": "Maimonides, Mishneh Torah, Hilchot Teshuvah 10:5; Likutei Levi Yitzchak, Igrot, p. 358."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Earn your gelt",
@@ -2481,6 +2555,18 @@ window.EXPO = {
           ],
           "p": "p. 15"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "16-b",
+          "title": "What Is Gelt?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/103084/jewish/What-Is-Gelt.htm",
+          "cites": "Maimonides, Mishneh Torah, Hilchot Teshuvah 10:5; Likutei Levi Yitzchak, Igrot, p. 358."
+        }
       ]
     },
     {
@@ -2500,8 +2586,7 @@ window.EXPO = {
         },
         "Each year we celebrate חנוכה to commemorate and publicize these miracles.",
         {
-          "p": "We kindle lights each night at the entrance of the house, to publicize the miracle.",
-          "src": "Kitzur Shulchan Aruch 139:1"
+          "p": "We kindle lights each night at the entrance of the house, to publicize the miracle."
         },
         {
           "h": "Where we light"
@@ -2509,8 +2594,7 @@ window.EXPO = {
         "The מנורה should be lit at the entrance (front door) of your home, facing the outside (the street) where most people can see it, to publicize the miracle.",
         "You may also light the מנורה inside your home at a window that faces the street or near your front door.",
         {
-          "p": "If you are lighting at the door, the מנורה should be placed inside the doorway, within one Tefach of the left doorpost. This way, with your Mezuzah on the right and the מנורה on the left, you are surrounded by מצוות!",
-          "src": "Kitzur Shulchan Aruch 139:7"
+          "p": "If you are lighting at the door, the מנורה should be placed inside the doorway, within one Tefach of the left doorpost. This way, with your Mezuzah on the right and the מנורה on the left, you are surrounded by מצוות!"
         },
         {
           "table": {
@@ -2531,21 +2615,18 @@ window.EXPO = {
         },
         "The מנורה should be placed between three and ten Tefochim above the ground. (A Tefach is about 4 inches.)",
         {
-          "p": "If the מנורה was placed higher than ten Tefochim, you have still fulfilled the mitzvah.",
-          "src": "Kitzur Shulchan Aruch 139:8"
+          "p": "If the מנורה was placed higher than ten Tefochim, you have still fulfilled the mitzvah."
         },
         "If a מנורה is placed higher than 20 Amos, you have not fulfilled the mitzvah – because people don't usually look up that high, and you need to light again. (An Amah is about 18 inches.)",
         {
-          "p": "If you live in a tall building, you may light the מנורה in your window – as long as it is below 20 Amos. If your window is higher than 20 Amos, then it is best to light your מנורה in your doorway.",
-          "src": "Kitzur Shulchan Aruch 139:8"
+          "p": "If you live in a tall building, you may light the מנורה in your window – as long as it is below 20 Amos. If your window is higher than 20 Amos, then it is best to light your מנורה in your doorway."
         },
         {
           "h": "The מנורה in Shul"
         },
         "The מנורה is lit in the Shul, with a ברכה, for Pirsumei Nisa – to publicize the miracle. It is placed on the south side of the Shul, and lit between מנחה & מעריב.",
         {
-          "p": "No-one fulfills the mitzvah through the Shul מנורה lighting. Each person needs to light his own מנורה at home.",
-          "src": "Kitzur Shulchan Aruch 139:15"
+          "p": "No-one fulfills the mitzvah through the Shul מנורה lighting. Each person needs to light his own מנורה at home."
         },
         {
           "h": "Pirsumei Nisa in the Torah reading"
@@ -2558,8 +2639,7 @@ window.EXPO = {
           ]
         },
         {
-          "p": "There is a rule, that the most common מצוה should be done first, therefore we read the ראש חודש Kriyah before the חנוכה one.",
-          "src": "Kitzur Shulchan Aruch 139:24"
+          "p": "There is a rule, that the most common מצוה should be done first, therefore we read the ראש חודש Kriyah before the חנוכה one."
         },
         "When ראש חודש Teves (which is also חנוכה) falls on שבת, we read from three ספרי תורה.",
         {
@@ -2571,19 +2651,16 @@ window.EXPO = {
           ]
         },
         {
-          "p": "Although we usually do the more common מצוה first, in this case we read the הפטרה of חנוכה instead of ראש חודש, for Pirsumei Nissa – to publicize the miracle.",
-          "src": "Kitzur Shulchan Aruch 139:25"
-        }
-      ],
-      "extra": [
+          "p": "Although we usually do the more common מצוה first, in this case we read the הפטרה of חנוכה instead of ראש חודש, for Pirsumei Nissa – to publicize the miracle."
+        },
+        "The ideal place for the menorah—where it was placed it in Talmudic times—is at the front door of the home facing the street. However, the harsh realities of the Diaspora, both sociopolitical and meteorological, forced the menorah indoors, and the custom developed in some communities to put it on the windowsill instead.",
         {
-          "id": "17-a",
-          "text": "The ideal place for the menorah—where it was placed it in Talmudic times—is at the front door of the home facing the street. However, the harsh realities of the Diaspora, both sociopolitical and meteorological, forced the menorah indoors, and the custom developed in some communities to put it on the windowsill instead.",
-          "title": "Why Is Your Menorah not in the Window?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/1370967/jewish/Why-Is-Your-Menorah-not-in-the-Window.htm",
-          "cites": "The article refers to the Talmud’s description of the mezuzah on the right and the menorah on the left, and cites Likkutei Sichot, vol. 5, p. 456. It gives no specific source for this paragraph."
-        }
+          "h": "Chanukah lights in Israel"
+        },
+        "In Israel, many families light the Chanukah menorah outside their homes, near the doorway or the entrance to a courtyard. Some place it in a glass box. This lets people passing in the street see the lights and remember the Chanukah miracles. This is pirsumei nisa, publicizing the miracle.",
+        "The original placement described by our Sages was at the entrance to the home, facing the street. Other communities light at a window or an inside doorway. Chabad families commonly use an inside doorway. Different families follow different customs; the message of the lights reaches beyond the home."
       ],
+      "extra": [],
       "ideas": [
         {
           "short": "Where does it go?",
@@ -2657,6 +2734,39 @@ window.EXPO = {
           ],
           "p": "Kitzur p. 9"
         }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "17-a",
+          "title": "Why Is Your Menorah not in the Window?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/1370967/jewish/Why-Is-Your-Menorah-not-in-the-Window.htm",
+          "cites": "The article refers to the Talmud’s description of the mezuzah on the right and the menorah on the left, and cites Likkutei Sichot, vol. 5, p. 456. It gives no specific source for this paragraph."
+        },
+        {
+          "label": "Dallas Area Torah Association",
+          "title": "Chanukah: Lighting Outside or Inside the House",
+          "url": "https://dallastorah.org/chanukah-lighting-outside-or-inside-the-house/",
+          "author": "Rabbi Yerachmiel Fried",
+          "supports": "Current Israeli household outdoor/glass-box custom and publicizing the miracle."
+        },
+        {
+          "label": "chabad.org",
+          "title": "Where to Light",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/105046/jewish/Where-to-Light.htm",
+          "author": "Eliyahu Kitov",
+          "supports": "Original street-facing entrance; editorial note that Chabad and other communities use a doorway."
+        },
+        {
+          "label": "chabad.org",
+          "title": "Why Is Your Menorah not in the Window?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/1370967/jewish/Why-Doesnt-Chabad-Light-the-Menorah-in-the-Window.htm",
+          "author": "Menachem Posner",
+          "supports": "Indoor/window customs and Chabad internal doorway custom."
+        }
       ]
     },
     {
@@ -2706,8 +2816,7 @@ window.EXPO = {
         "The word חשמונאי means distinguished (great and famous). Some say that מתתיהו's family was given the title being that they were an extraordinary, honorable family. Others say that the family originally came from the town of חשמון.",
         "Some say that חשמון was the name of an ancient ancestor in their family.",
         {
-          "p": "The name of the חשמונאים hints to that special number eight. In Hebrew “חש – Chash” means “feels” and שמונה is eight. The Chash-Shmona'im “felt the eight” – they felt and were connected to a level that is higher than nature.",
-          "src": "Booklet footnote: Rabbi Yechezkel Sofer, of Be'er Sheva"
+          "p": "The name of the חשמונאים hints to that special number eight. In Hebrew “חש – Chash” means “feels” and שמונה is eight. The Chash-Shmona'im “felt the eight” – they felt and were connected to a level that is higher than nature."
         },
         "In a different way, we see the number eight twice in their name:",
         {
@@ -2717,17 +2826,10 @@ window.EXPO = {
           "h": "The battles were not yet over"
         },
         "Unfortunately, the battles were not yet over.",
-        "When אנטיכוס died, his son also sent massive armies to fight יהודה and his men. During these and many other future battles, one by one, יהודה and all but one of his brothers were killed. Each of the brothers led the Jewish People – until ה' took them back to Himself, in שמים. Shimon was the last remaining survivor, and with ה''s help he led the Jewish People to complete peace and freedom."
+        "When אנטיכוס died, his son also sent massive armies to fight יהודה and his men. During these and many other future battles, one by one, יהודה and all but one of his brothers were killed. Each of the brothers led the Jewish People – until ה' took them back to Himself, in שמים. Shimon was the last remaining survivor, and with ה''s help he led the Jewish People to complete peace and freedom.",
+        "The one time the story is briefly told, the leaders of the group (and their descendants) are referred to as the House of Chashmonai, the ancestral family of Matityahu, the pious and brave priest who led the group until his passing."
       ],
-      "extra": [
-        {
-          "id": "18-b",
-          "text": "The one time the story is briefly told, the leaders of the group (and their descendants) are referred to as the House of Chashmonai, the ancestral family of Matityahu, the pious and brave priest who led the group until his passing.",
-          "title": "Who Were the Maccabees?",
-          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4588772/jewish/Who-Were-the-Maccabees.htm",
-          "cites": "The article attributes this detail to the Talmud, but does not give the tractate or page."
-        }
-      ],
+      "extra": [],
       "ideas": [
         {
           "short": "Who am I?",
@@ -2800,6 +2902,22 @@ window.EXPO = {
             "Elazar"
           ],
           "p": "p. 11"
+        }
+      ],
+      "readingSources": [
+        {
+          "label": "Alevsky booklet"
+        },
+        {
+          "label": "Alevsky booklet",
+          "note": "Rabbi Yechezkel Sofer, of Be'er Sheva"
+        },
+        {
+          "label": "chabad.org",
+          "paragraphId": "18-b",
+          "title": "Who Were the Maccabees?",
+          "url": "https://www.chabad.org/holidays/chanukah/article_cdo/aid/4588772/jewish/Who-Were-the-Maccabees.htm",
+          "cites": "The article attributes this detail to the Talmud, but does not give the tractate or page."
         }
       ]
     }
