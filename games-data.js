@@ -136,7 +136,7 @@ window.EXPO_GAMES = {
     {s:"We eat dairy on Chanukah because there was no meat then.", t:false, fix:"We eat dairy to remember the miracle of Yehudis and her cheese."},
     {s:"Yehudis gave the general sweet cake to make him sleepy.", t:false, fix:"She fed him salty cheese, which made him thirsty for strong wine."},
     {s:"סופגניות are doughnuts.", t:true},
-    {s:"The Maccabees ate potato latkes at the first Chanukah.", t:false, fix:"Potatoes were not around then - that is the booklet's riddle."},
+    {s:"The Maccabees ate potato latkes at the first Chanukah.", t:false, fix:"Potatoes were not around then."},
     {s:"Yehudis was the daughter of Yochanan the כהן גדול.", t:true}
   ],
   gap: [

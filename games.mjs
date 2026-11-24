@@ -237,7 +237,7 @@ function gEscape(body, t, d) {
     }
     const q = qs[lock];
     box.innerHTML = "";
-    box.append(div("muted", `Lock ${lock + 1} of ${qs.length} · hint: booklet ${q.p}`));
+    box.append(div("muted", `Lock ${lock + 1} of ${qs.length} · stuck? Check your topic's reading page`));
     box.append(div(null, `<p style="font-size:19px">${q.q}</p>`));
     const opts = div("opts");
     shuffle([q.a, ...q.w]).forEach(o => {
