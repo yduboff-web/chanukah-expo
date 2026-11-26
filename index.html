@@ -494,7 +494,7 @@ function openGroup(g, preview){
       state.proposal = snap.exists() ? snap.data() : null;
       if (state.tab === "proposal") {
         if (first) renderDash();
-        else updateProposalStatus();
+        else { updateProposalStatus(); if (!snap.metadata.hasPendingWrites) syncProposalFields(); }
       }
     }, () => {}));
     loadQuizBest();
@@ -916,30 +916,55 @@ function panelProposal(panel, t){
   updateProposalStatus();
 
   let timer;
+  dirtyFields = new Set();
+  const dirtyData = () => { const d = {}; dirtyFields.forEach(k => { const ta = panel.querySelector(`textarea[data-k="${k}"]`); if (ta) d[k] = ta.value.slice(0, 4000); }); return d; };
   const save = () => {
-    const d = {};
-    panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value.slice(0, 4000));
+    const d = dirtyData(); const sent = Array.from(dirtyFields);
+    if (!sent.length) return;
     const cur = (state.proposal && state.proposal.status) || "draft";
     const status = cur === "changes" ? "draft" : cur;
     panel.querySelector("#saved").textContent = "Saving…";
     setDoc(propRef(), Object.assign(d, { status, updatedAt: serverTimestamp() }), { merge: true })
-      .then(() => { const s = panel.querySelector("#saved"); if (s) s.textContent = "Saved."; })
+      .then(() => { sent.forEach(k => { const ta = panel.querySelector(`textarea[data-k="${k}"]`); if (ta && ta.value.slice(0, 4000) === d[k]) dirtyFields.delete(k); }); const s = panel.querySelector("#saved"); if (s) s.textContent = "Saved."; })
       .catch(() => { const s = panel.querySelector("#saved"); if (s) s.textContent = "Not saved – check your connection."; });
   };
   panel.querySelectorAll("textarea").forEach(ta => ta.addEventListener("input", () => {
+    dirtyFields.add(ta.dataset.k);
     clearTimeout(timer);
     timer = setTimeout(save, 1000);
   }));
   panel.querySelector("#submit-btn").addEventListener("click", () => {
     clearTimeout(timer);
-    const d = {};
-    panel.querySelectorAll("textarea").forEach(ta => d[ta.dataset.k] = ta.value.slice(0, 4000));
+    const d = dirtyData(); const sent = Array.from(dirtyFields);
+    const full = {};
+    panel.querySelectorAll("textarea").forEach(ta => full[ta.dataset.k] = ta.value.slice(0, 4000));
     const btn = panel.querySelector("#submit-btn");
     btn.disabled = true; btn.textContent = "Submitting…";
     setDoc(propRef(), Object.assign(d, { status: "submitted", updatedAt: serverTimestamp() }), { merge: true })
+      .then(() => { sent.forEach(k => dirtyFields.delete(k)); notifySubmit(full, t); })
       .catch(() => { btn.disabled = false; btn.textContent = "Submit for approval"; });
   });
   panel.querySelector("#print-btn").addEventListener("click", () => printProposal(panel, t));
+}
+/* Partners share one proposal. Show the other person's edits live, but never overwrite a box that is being typed in or has unsaved text. */
+let dirtyFields = new Set();
+function syncProposalFields(){
+  const p = state.proposal || {};
+  document.querySelectorAll("#panel textarea[data-k]").forEach(ta => {
+    const k = ta.dataset.k;
+    if (ta === document.activeElement || dirtyFields.has(k)) return;
+    const v = typeof p[k] === "string" ? p[k] : "";
+    if (ta.value !== v) ta.value = v;
+  });
+}
+// Optional: set to the Apps Script web app URL to get an email each time a group submits.
+const SUBMIT_HOOK = "";
+function notifySubmit(d, t){
+  if (!SUBMIT_HOOK) return;
+  try {
+    fetch(SUBMIT_HOOK, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ code: String(state.group.code || "").toUpperCase(), grade: state.group.grade || "", topic: t.n, topicName: String(t.name || "").replace(/<[^>]*>/g, ""), fields: d }) }).catch(() => {});
+  } catch (e) {}
 }
 function updateProposalStatus(){
   const area = document.querySelector("#status-area");
