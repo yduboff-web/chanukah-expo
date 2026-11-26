@@ -962,8 +962,11 @@ const SUBMIT_HOOK = "https://script.google.com/macros/s/AKfycbwVrsEOGmQ1ZN_-mjBz
 function notifySubmit(d, t){
   if (!SUBMIT_HOOK) return;
   try {
-    fetch(SUBMIT_HOOK, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ code: String(state.group.code || "").toUpperCase(), grade: state.group.grade || "", topic: t.n, topicName: String(t.name || "").replace(/<[^>]*>/g, ""), fields: d }) }).catch(() => {});
+    // Only the signed-in group's token is sent. The email script checks it and reads the saved proposal itself.
+    auth.currentUser.getIdToken().then(token => {
+      fetch(SUBMIT_HOOK, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ token }) }).catch(() => {});
+    }).catch(() => {});
   } catch (e) {}
 }
 function updateProposalStatus(){
